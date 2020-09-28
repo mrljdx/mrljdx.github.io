@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Picasso&amp;Glide&amp;Fresco比较 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Picasso&amp;Glide&amp;Fresco比较" />
+<meta property="og:description" content="
+前言:在Android开发中,图片加载OOM一直困扰着很多开发者,在各种不合理的设计之下也容易导致图片加载OOM的问题,目前开源的比较常用的图片加载库也很多,比如老牌的UIL,Volley,AQuery还有比较优秀的Picasso,Glide,Fresco等.
+本文仅简单地比较Fresco&amp;Glide&amp;Picasoo,如有错误还请斧正.
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/picasso-glide-fresco%E6%AF%94%E8%BE%83/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-12-22T13:15:04+00:00" />
+<meta property="article:modified_time" content="2015-12-22T13:15:04+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Picasso&amp;Glide&amp;Fresco比较"/>
+<meta name="twitter:description" content="
+前言:在Android开发中,图片加载OOM一直困扰着很多开发者,在各种不合理的设计之下也容易导致图片加载OOM的问题,目前开源的比较常用的图片加载库也很多,比如老牌的UIL,Volley,AQuery还有比较优秀的Picasso,Glide,Fresco等.
+本文仅简单地比较Fresco&amp;Glide&amp;Picasoo,如有错误还请斧正.
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/picasso-glide-fresco%E6%AF%94%E8%BE%83/" /><link rel="prev" href="http://mrljdx.com/%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86%E6%96%B9%E6%A1%88%E4%B9%8B%E5%BE%AE%E4%BF%A1vs%E7%BE%8E%E5%9B%A2/" /><link rel="next" href="http://mrljdx.com/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Picasso\u0026Glide\u0026Fresco比较",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/picasso-glide-fresco%E6%AF%94%E8%BE%83\/"
+        },"genre": "posts","keywords": "Android图片加载","wordcount":  1734 ,
+        "url": "http:\/\/mrljdx.com\/picasso-glide-fresco%E6%AF%94%E8%BE%83\/","datePublished": "2015-12-22T13:15:04+00:00","dateModified": "2015-12-22T13:15:04+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Picasso&amp;Glide&amp;Fresco比较</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-12-22">2015-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1734 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#picassohttpsquaregithubiopicasso"><a href="http://square.github.io/picasso/"><strong>Picasso</strong></a></a></li>
+    <li><a href="#glidehttpsgithubcombumptechglide"><a href="https://github.com/bumptech/glide"><strong>Glide</strong></a></a></li>
+    <li><a href="#frescohttpfrescoliborg"><a href="http://frescolib.org/"><strong>Fresco</strong></a></a></li>
+    <li><a href="#frescoglidepicasso-比较">Fresco&amp;Glide&amp;Picasso 比较</a></li>
+    <li><a href="#图片加载库的选择">图片加载库的选择</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>前言:在Android开发中,图片加载OOM一直困扰着很多开发者,在各种不合理的设计之下也容易导致图片加载OOM的问题,目前开源的比较常用的图片加载库也很多,比如老牌的UIL,Volley,AQuery还有比较优秀的Picasso,Glide,Fresco等.
+本文仅简单地比较Fresco&amp;Glide&amp;Picasoo,如有错误还请斧正.</p>
+</blockquote>
+<h2 id="picassohttpsquaregithubiopicasso"><a href="http://square.github.io/picasso/" target="_blank" rel="noopener noreffer"><strong>Picasso</strong></a></h2>
+<p>由Square公司开源的一款图片加载和缓存的库,不过Picasso不支持磁盘缓存.也就是说如果想要做磁盘缓存的话需要另外想办法.(可以利用<a href="https://github.com/JakeWharton/DiskLruCache" target="_blank" rel="noopener noreffer">JakeWharton/DiskLruCache</a>)</p>
+<h2 id="glidehttpsgithubcombumptechglide"><a href="https://github.com/bumptech/glide" target="_blank" rel="noopener noreffer"><strong>Glide</strong></a></h2>
+<p>一款和Picasso类似的图片加载和缓存的开源库.虽然在函数定义和调用上和Picasso相差无几,但是Glide确实在性能方面比Picasso要好,值得注意的是Glide库仅支持Android 2.3.3及以上的版本.(PS:目前市面上貌似也很少看到Android 4.1以下的机型了,所以版本向下兼容可以不用担心.)</p>
+<p><strong>关于Glide和Picasso的比较文章推荐:</strong>
+<a href="http://inthecheesefactory.com/blog/get-to-know-glide-recommended-by-google/en" target="_blank" rel="noopener noreffer"><font color="#98FB98">Introduction to Glide, Image Loader Library for Android, recommended by Google</font></a></p>
+<h2 id="frescohttpfrescoliborg"><a href="http://frescolib.org/" target="_blank" rel="noopener noreffer"><strong>Fresco</strong></a></h2>
+<p>一款由Facebook今年推出的一个强大的图片加载库,Fresco 中设计有一个叫做 image pipeline 的模块。它负责从网络，从本地文件系统，本地资源加载图片。为了最大限度节省空间和CPU时间，它含有3级缓存设计（2级内存，1级文件）。Fresco 中设计有一个叫做 Drawees 模块，方便地显示loading图，当图片不再显示在屏幕上时，及时地释放内存和空间占用。Fresco 支持 Android2.3(API level 9) 及其以上系统。(摘自:http://fresco-cn.org/)
+有关Fresco的使用教程请绕道:http://fresco-cn.org/docs/index.html#_</p>
+<p>** Fresco相比其他图片库如Picasso，UIL，Glide相比，所具有的最重要的几个独有特性：**</p>
+<blockquote>
+</blockquote>
+<ul>
+<li>在Android 5.0以下系统，图片不存储在Java heap，而是存储在ashmemheap，中间的字节buffer同样位于native heap。使应用有更多内存空间，降低OOM风险，减少GC次数。
+渐进式的JPEG呈现。</li>
+<li>图片可以在任意点进行裁剪，而不是中心，即自定义居中焦点。</li>
+<li>JPEG可以在native进行resize，避免了在缩小图片时的OOM风险。</li>
+<li>支持Gif和WebP。</li>
+</ul>
+<h2 id="frescoglidepicasso-比较">Fresco&amp;Glide&amp;Picasso 比较</h2>
+<p>Facebook也提供了,关于Fresco和其他图片加载器的比较例子.下载地址:<a href="https://github.com/facebook/fresco" target="_blank" rel="noopener noreffer">Fresco</a></p>
+<p>** 加载本地图片:**
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://7u2j5d.com1.z0.glb.clouddn.com/cmp_fgp.png"
+        data-srcset="http://7u2j5d.com1.z0.glb.clouddn.com/cmp_fgp.png, http://7u2j5d.com1.z0.glb.clouddn.com/cmp_fgp.png 1.5x, http://7u2j5d.com1.z0.glb.clouddn.com/cmp_fgp.png 2x"
+        data-sizes="auto"
+        alt="http://7u2j5d.com1.z0.glb.clouddn.com/cmp_fgp.png"
+        title="Fresco&amp;amp;Glide&amp;amp;Picasso" />
+由于图片数量比较少,很难看出差别,不过可以发现,在一般的情况下,Fresco和Glide在内存占用上,Fresco更优,这是由于Fresco将图片放置到一块特殊的Native内存，这块内存的管理是由Fresco进行的，所以Fresco的体积比较庞大，会为应用增加接近2M的体积，这算是Fresco的一个缺点.</p>
+<p>** 加载网络图片: **
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://7u2j5d.com1.z0.glb.clouddn.com/net_fgp.png"
+        data-srcset="http://7u2j5d.com1.z0.glb.clouddn.com/net_fgp.png, http://7u2j5d.com1.z0.glb.clouddn.com/net_fgp.png 1.5x, http://7u2j5d.com1.z0.glb.clouddn.com/net_fgp.png 2x"
+        data-sizes="auto"
+        alt="http://7u2j5d.com1.z0.glb.clouddn.com/net_fgp.png"
+        title="net" />
+在加载网络图片时,由于机型和网络环境不同,可能也会导致现实的数据有问题,不过在比较的时候,可以发现,Fresco在加载网络图片时,刚开始Heap内存占用也是58M左右,不过随着时间的推移,Heap内存占用的值会变大,可能是由于Fresco内存释放存在问题导致的.可见Fresco虽然在加载图片上独辟蹊径但是并没有传说中那么完美.</p>
+<h2 id="图片加载库的选择">图片加载库的选择</h2>
+<p>根据自己平时在项目中的体会,在综合包的大小及图片加载器的稳定性后觉得Glide是比较适合用在产品中的图片加载库.
+选择的原因如下:</p>
+<blockquote>
+<ol>
+<li>Glide默认提供配置支持本地图片缓存,缓存的机制是DiskLruCache.可以根据自己的需要,自定义图片缓存的路径.所以在考虑节省用户流量来看可以不考虑Picasso;</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>虽然Fresco也提供更强大的图片缓存和加载机制,不过在比较之后,感觉Fresco还是有待完善.Glide可以很简单的获取网络图片的Bitmap对象,而Fresco需要通过订阅数据源克隆Bitmap对象的引用才能存储值.操作方式不够简洁和友好.</li>
+<li>Fresco的库文件中,以最新的0.8.1为例,imagepipeline-0.8.1.aar光包得大小就有3.5M ,而Glide包的大小为465K为了让Apk包得体积更小,所以考虑使用Glide.</li>
+</ol></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-12-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/picasso-glide-fresco%E6%AF%94%E8%BE%83/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD/">Android图片加载</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86%E6%96%B9%E6%A1%88%E4%B9%8B%E5%BE%AE%E4%BF%A1vs%E7%BE%8E%E5%9B%A2/" class="prev" rel="prev" title="资源混淆方案之微信vs美团"><i class="fas fa-angle-left fa-fw"></i>资源混淆方案之微信vs美团</a>
+            <a href="/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" class="next" rel="next" title="AA中@Background实现原理详解">AA中@Background实现原理详解<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

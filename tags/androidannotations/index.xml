@@ -1,0 +1,235 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>androidannotations - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/androidannotations/</link>
+        <description>androidannotations - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 28 Apr 2016 13:50:35 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/androidannotations/" rel="self" type="application/rss+xml" /><item>
+    <title>AA-4.0升级指南</title>
+    <link>http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/</link>
+    <pubDate>Thu, 28 Apr 2016 13:50:35 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/</guid>
+    <description><![CDATA[<blockquote>
+<p>笔者注：AA-4.0为AndroidAnnotations-4.0的简称</p>
+</blockquote>
+<h2 id="aa40已经模块化了">AA4.0已经模块化了</h2>
+<p>现在AA-4.0的库被分割为一些小的模块，这意味着你以前在AA-3.x版本之前库中使用的一些注解方法都被分拆为一些单独的模块，你需要在Gradle配置文件中添加新的依赖库，改变import的包名。</p>]]></description>
+</item><item>
+    <title>AA中@Background实现原理详解</title>
+    <link>http://mrljdx.com/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Wed, 30 Dec 2015 10:39:10 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[<p>AndroidAnnotations中引入了@Background的注解方法,极大的简化了编写异步代码的工作量.使我们摆脱了麻烦的AsyncTask.
+下面我们来看一下官方介绍中,介绍的一个关于获取书签(BookMarks)的请求代码:</p>]]></description>
+</item><item>
+    <title>Receiving intents</title>
+    <link>http://mrljdx.com/receiving-intents/</link>
+    <pubDate>Mon, 06 Apr 2015 22:24:35 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/receiving-intents/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Receiving-intents">https://github.com/excilys/androidannotations/wiki/Receiving-intents</a></p>
+</blockquote>
+<h2 id="接收意图">接收意图</h2>
+<p><code>@Receiver</code>注释通知你的代码的意图,而不必手工申报和注册一个BroadcastReceiver。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_1&#34;</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAction1</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// Will be called when an org.androidannotations.ACTION_1 intent is sent.
+</span><span class="c1"></span>  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>@EReceiver加强广播接收器</title>
+    <link>http://mrljdx.com/ereceiver%E5%8A%A0%E5%BC%BA%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8/</link>
+    <pubDate>Mon, 06 Apr 2015 22:23:10 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/ereceiver%E5%8A%A0%E5%BC%BA%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Enhance-broadcastreceivers">https://github.com/excilys/androidannotations/wiki/Enhance-broadcastreceivers</a></p>
+</blockquote>
+<p>你可以使用@EReceiver注释增强一个Android BroadcastReceiver ：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EReceiver</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyReceiver</span> <span class="kd">extends</span> <span class="n">BroadcastReceiver</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>@EProvider加强contentprovider</title>
+    <link>http://mrljdx.com/eprovider%E5%8A%A0%E5%BC%BAcontentprovider/</link>
+    <pubDate>Mon, 06 Apr 2015 22:21:44 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/eprovider%E5%8A%A0%E5%BC%BAcontentprovider/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Enhance-contentproviders">https://github.com/excilys/androidannotations/wiki/Enhance-contentproviders</a></p>
+</blockquote>
+<p>你可以使用@EProvider注释加强一个Android内容提供商与:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EProvider</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyContentProvider</span> <span class="kd">extends</span> <span class="n">ContentProvider</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>Extra</title>
+    <link>http://mrljdx.com/extra/</link>
+    <pubDate>Mon, 06 Apr 2015 22:20:31 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/extra/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Extras#executing-code-after-extras-injection">https://github.com/excilys/androidannotations/wiki/Extras#executing-code-after-extras-injection</a></p>
+</blockquote>
+<h2 id="extra">@Extra</h2>
+<p>@Extra注释一个从Activity中启动意图中获取正确值的字段，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+  <span class="nd">@Extra</span><span class="o">(</span><span class="s">&#34;myStringExtra&#34;</span><span class="o">)</span>
+  <span class="n">String</span> <span class="n">myMessage</span><span class="o">;</span>
+
+  <span class="nd">@Extra</span><span class="o">(</span><span class="s">&#34;myDateExtra&#34;</span><span class="o">)</span>
+  <span class="n">Date</span> <span class="n">myDateExtraWithDefaultValue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Date</span><span class="o">();</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>@EFragment增强碎片</title>
+    <link>http://mrljdx.com/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87/</link>
+    <pubDate>Mon, 06 Apr 2015 22:19:36 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Enhance-Fragments">https://github.com/excilys/androidannotations/wiki/Enhance-Fragments</a></p>
+</blockquote>
+<h2 id="支持fragmentactivity">支持FragmentActivity</h2>
+<p>在AndroidAnnotations 2.6之前,没有支持片段注入。然而,我们确保至少继承FragmentActivity的活动不会打破AndroidAnnotations的规则：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">main</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DetailsActivity</span> <span class="kd">extends</span> <span class="n">FragmentActivity</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>@AfterXXX调用顺序</title>
+    <link>http://mrljdx.com/afterxxx%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F/</link>
+    <pubDate>Mon, 06 Apr 2015 22:18:09 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/afterxxx%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/%40AfterXXX-call-order">https://github.com/excilys/androidannotations/wiki/%40AfterXXX-call-order</a></p>
+</blockquote>
+<h2 id="用afterxxx标注的方法调用次序">用@AfterXXX标注的方法调用次序</h2>
+<p>同一个类中的同一个注释的方法调用顺序不能保证，你不应该依赖于它。如果你想多种方法按照可靠的顺序被被调用，你应该只创建创建一个注解的方法，并用它来调用它们所需顺序的其他方法。</p>]]></description>
+</item><item>
+    <title>Injecting Views</title>
+    <link>http://mrljdx.com/injecting-views/</link>
+    <pubDate>Mon, 06 Apr 2015 22:16:52 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/injecting-views/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Injecting-Views">https://github.com/excilys/androidannotations/wiki/Injecting-Views</a></p>
+</blockquote>
+<h2 id="viewbyid">@ViewById</h2>
+<p>在Activity中@ViewById标注的字段，必须的在activity所在的布局layout中可以找到相应的ID，类似于调用findViewById()方法。
+注释的视图id可以设置参数,即@ViewById(R.id.myTextView)。如果没有设置视图id,将使用的名称字段。字段不能是私有的。</p>]]></description>
+</item><item>
+    <title>@EBean增强自定义类</title>
+    <link>http://mrljdx.com/ebean%E5%A2%9E%E5%BC%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/</link>
+    <pubDate>Mon, 06 Apr 2015 22:14:53 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/ebean%E5%A2%9E%E5%BC%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/</guid>
+    <description><![CDATA[<blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Enhance-custom-classes">https://github.com/excilys/androidannotations/wiki/Enhance-custom-classes</a></p>
+</blockquote>
+<h2 id="加强自定义类">加强自定义类</h2>
+<p>您可以在一个不是一个标准的Android组件（如Activity，Service）的类使用注解@EBean。
+你只需要使用@EBean注释这个类即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EBean</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item></channel>
+</rss>

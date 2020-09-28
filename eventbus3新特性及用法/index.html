@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>EventBus3新特性及用法 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="EventBus3新特性及用法" />
+<meta property="og:description" content="
+本文首发于简书：EventBus3新特性及用法，欢迎关注我的简书。
+
+
+EventBus 3 简介
+EventBus是一种为了优化Android组件之间事件传递的解耦工具，通过发布/订阅事件总线来实现事件在不同组件之间的事件传递。
+在EventBus 3之前，greenrobot团队因为考虑性能原因所以比较抵触使用注解框架。目前的EventBus3开始使用注解来申明订阅事件的处理方法。虽然目前Android 6 和ART都有了，但是对于Java反射造成的性能影响还是没能很好的解决。
+在EventBus3中，greenrobot团队通过利用在编译时检索所有注解代码，然后生成一个包含所有在运行时要花很大代价才能获取的数据的类，通过这种新的注解处理方式来提升性能，让EventBus3比其他的eventbus会更加快。在后文中会贴出和otto的性能比较。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-03-18T10:32:12+00:00" />
+<meta property="article:modified_time" content="2016-03-18T10:32:12+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="EventBus3新特性及用法"/>
+<meta name="twitter:description" content="
+本文首发于简书：EventBus3新特性及用法，欢迎关注我的简书。
+
+
+EventBus 3 简介
+EventBus是一种为了优化Android组件之间事件传递的解耦工具，通过发布/订阅事件总线来实现事件在不同组件之间的事件传递。
+在EventBus 3之前，greenrobot团队因为考虑性能原因所以比较抵触使用注解框架。目前的EventBus3开始使用注解来申明订阅事件的处理方法。虽然目前Android 6 和ART都有了，但是对于Java反射造成的性能影响还是没能很好的解决。
+在EventBus3中，greenrobot团队通过利用在编译时检索所有注解代码，然后生成一个包含所有在运行时要花很大代价才能获取的数据的类，通过这种新的注解处理方式来提升性能，让EventBus3比其他的eventbus会更加快。在后文中会贴出和otto的性能比较。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/" /><link rel="prev" href="http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" /><link rel="next" href="http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "EventBus3新特性及用法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95\/"
+        },"genre": "posts","keywords": "EventBus3","wordcount":  3054 ,
+        "url": "http:\/\/mrljdx.com\/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95\/","datePublished": "2016-03-18T10:32:12+00:00","dateModified": "2016-03-18T10:32:12+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">EventBus3新特性及用法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-03-18">2016-03-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3054 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#eventbus-3-简介">EventBus 3 简介</a></li>
+    <li><a href="#eventbus-3-和-eventbus-2x-的区别">EventBus 3 和 EventBus 2.x 的区别</a>
+      <ul>
+        <li><a href="#回调方法改动">回调方法改动</a></li>
+        <li><a href="#异常容错处理">异常容错处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#eventbus-3的使用">EventBus 3的使用</a>
+      <ul>
+        <li><a href="#引入eventbus库文件">引入EventBus库文件</a></li>
+        <li><a href="#定义一个事件集合">定义一个事件集合</a></li>
+        <li><a href="#注册事件及声明事件处理方法">注册事件及声明事件处理方法</a></li>
+        <li><a href="#发送事件">发送事件</a></li>
+        <li><a href="#stickyevent">StickyEvent</a></li>
+        <li><a href="#事件处理优先级及事件拦截">事件处理优先级及事件拦截</a></li>
+        <li><a href="#注意事项">注意事项</a></li>
+        <li><a href="#混淆">混淆</a></li>
+      </ul>
+    </li>
+    <li><a href="#eventbus与otto的对比">EventBus与otto的对比</a>
+      <ul>
+        <li><a href="#功能对比">功能对比</a></li>
+        <li><a href="#性能对比">性能对比</a></li>
+      </ul>
+    </li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/2737b4a22cac" target="_blank" rel="noopener noreffer">EventBus3新特性及用法</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://upload-images.jianshu.io/upload_images/115071-06255b488bb0ae86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        data-srcset="http://upload-images.jianshu.io/upload_images/115071-06255b488bb0ae86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240, http://upload-images.jianshu.io/upload_images/115071-06255b488bb0ae86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 1.5x, http://upload-images.jianshu.io/upload_images/115071-06255b488bb0ae86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 2x"
+        data-sizes="auto"
+        alt="http://upload-images.jianshu.io/upload_images/115071-06255b488bb0ae86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        title="题图来自greenrobot官网.png" /></p>
+<h2 id="eventbus-3-简介">EventBus 3 简介</h2>
+<p>EventBus是一种为了优化Android组件之间事件传递的解耦工具，通过发布/订阅事件总线来实现事件在不同组件之间的事件传递。
+在EventBus 3之前，greenrobot团队因为考虑性能原因所以比较抵触使用注解框架。目前的EventBus3开始使用注解来申明订阅事件的处理方法。虽然目前Android 6 和ART都有了，但是对于Java反射造成的性能影响还是没能很好的解决。
+在EventBus3中，greenrobot团队通过利用在编译时检索所有注解代码，然后生成一个包含所有在运行时要花很大代价才能获取的数据的类，通过这种新的注解处理方式来提升性能，让EventBus3比其他的eventbus会更加快。在后文中会贴出和otto的性能比较。</p>
+<h2 id="eventbus-3-和-eventbus-2x-的区别">EventBus 3 和 EventBus 2.x 的区别</h2>
+<h3 id="回调方法改动">回调方法改动</h3>
+<p>由于API的改动，会导致EventBus3和之前使用老版本的EventBus不兼容，因为之前版本（EventBus 2.x），在注册完事件之后，会要求写相应 onEvent()方法，包括<code>onEvent()</code>、<code>onEventAsync()</code>、<code>onEventBackground()</code>、<code>onEventMainThread()</code> 分别对应 <code>@Subscrible</code> 、<code>@Subscrible(threadMode = ThreadMode.ASYNC)</code>、<code>@Subscribe(threadMode = ThreadMode.BACKGROUND)</code>、<code>@Subscribe(threadMode = ThreadMode.MAIN)</code> 。EventBus 3中在未声明threadMob时，默认的线程模式为<code>ThreadMode.POSTING</code>。</p>
+<h3 id="异常容错处理">异常容错处理</h3>
+<p>在EventBus3中，如果在@Subscrible标注的方法中，如果程序出错，不会立即使程序crash，而是由EventBus拦截异常，并打印错误日志。
+用户可以通过EventBusBuilder来配置获取EventBus实例后的对象，来决定在处理event时是否需要抛出异常信息：</p>
+<pre><code>  eventBus = EventBus.builder().sendNoSubscriberEvent(false)        
+              .sendSubscriberExceptionEvent(false)                       
+              .throwSubscriberException(BuildConfig.DEBUG) //只有在debug模式下，会抛出错误异常 
+              .build();
+</code></pre>
+<p>以上代码使用Builder设计模式，来构建返回一个eventBus实例。在调试阶段，可以在程序出现异常时直接Crash发现错误。</p>
+<h2 id="eventbus-3的使用">EventBus 3的使用</h2>
+<h3 id="引入eventbus库文件">引入EventBus库文件</h3>
+<p>在这里以<code>gradle</code>引用EventBus3库为例进行说明</p>
+<pre><code>  compile 'org.greenrobot:eventbus:3.0.0'
+</code></pre>
+<h3 id="定义一个事件集合">定义一个事件集合</h3>
+<p>在使用EventBus时，由于我个人比较喜欢将事件进行统一管理和注释（代码如下），在其中定义了一个常用事件CommonEvent 实现了BaseEvents接口的两个方法。</p>
+<pre><code>  public interface BaseEvents{
+          setObject(Object obj);
+          Object getObject();
+          //事件定义
+         enum CommonEvent implements BaseEvent {    
+                LOGIN, //登录    
+                LOGOUT; //登出    
+                private Object obj;    
+                @Override    
+                public void setObject(Object obj) {
+                        this.obj = obj;    
+                }    
+                @Override    
+                public Object getObject() {        
+                        return obj;    
+                }
+          }
+          // ... 其他事件定义
+  }
+</code></pre>
+<p>这样定义基本事件，主要是为了便于事件管理添加和维护。避免新建很多不必要的类和重载过多的事件处理方法。</p>
+<h3 id="注册事件及声明事件处理方法">注册事件及声明事件处理方法</h3>
+<p>在Activity/Frament中，可以定义一个基类，在基类的onStart()和onStop()方法中对EventBus进行注册和注销（官方推荐）。然后其他的子类集成基类，复写和实现对应的注册方法即可。</p>
+<pre><code>  @Override
+  public void onStart() {    
+      super.onStart();  
+      registEventBus();
+  }
+
+  @Override
+  public void onStop() {   
+      unRegistEventBus(); 
+      super.onStop(); 
+  }
+  
+  protected void registEventBus(){
+      //子类如果需要注册eventbus，则重写此方法
+      //EventBus.getDefault().register(this);
+  }
+  
+  protected void unRegistEventBus(){
+      //子类如果需要注销eventbus，则重写此方法
+      //EventBus.getDefault().unregister(this);
+  }
+</code></pre>
+<p>注册方法后，需要使用注解@Subscribe声明处理事件的方法，以下代码摘自<a href="http://greenrobot.org/eventbus/documentation/how-to-get-started/" target="_blank" rel="noopener noreffer">官方介绍</a></p>
+<pre><code>  // This method will be called when a MessageEvent is posted
+  @Subscribe
+  public void onMessageEvent(MessageEvent event){    
+        Toast.makeText(getActivity(), event.message, Toast.LENGTH_SHORT).show();
+  }
+  // This method will be called when a SomeOtherEvent is posted
+  @Subscribe
+  public void handleSomethingElse(SomeOtherEvent event){  
+      doSomethingWith(event);
+  }
+</code></pre>
+<h3 id="发送事件">发送事件</h3>
+<p>在发送事件时，可以利用我们定义的一个BaseEvent进行值的传递，因为定义的是一个Object对象，只需要保证类型转换正确的前提下就可以随意传值了。示例如下：</p>
+<pre><code>  BaseEvents. CommonEvent event = BaseEvents.CommonEvent.LOGIN;
+  event.setObject(&quot;Send Event&quot;); //传入一个String对象
+  eventBus.post(event); //发布事件
+</code></pre>
+<p>如此就简单的实现了一个EventBus事件的发布。</p>
+<h3 id="stickyevent">StickyEvent</h3>
+<p>有时候，我们会面对这样一个问题，那就是我们要把一个Event发送到一个还没有初始化的Activity/Fragment，即尚未订阅事件。那么如果只是简单的post一个事件，那么是无法收到的，这时候，需要使用 StickyEvent，实例说明：</p>
+<pre><code>BaseEvents. CommonEvent event = BaseEvents.CommonEvent.LOGIN;
+event.setObject(&quot;Send StickyEvent&quot;); 
+EventBus.getDefault().postSticky(event);
+</code></pre>
+<p>在启动的Activity，暂且定义为StickyActivity 继承 BaseActivity 实现    <code>registEventBus()</code>和<code>unRegistEventBus()</code>，代码片段如下：</p>
+<pre><code>  @Override
+  public void onStart() {    
+      super.onStart();  
+      registEventBus();
+  }
+
+  @Override
+  public void onStop() {   
+      unRegistEventBus(); 
+      super.onStop(); 
+  }
+  
+  @Subscribe(sticky = true)    
+  public void onEvent(BaseEvents. CommonEvent event) {        
+      // UI updates must run on MainThread  
+      if(event==BaseEvent.CommonEvent.LOGIN){
+             String conent = (String)event.getObject();
+             Log.d(TAG,&quot;Content is : &quot;+content);
+      } 
+      
+  }      
+
+  protected void registEventBus(){
+      EventBus.getDefault().register(this);
+  }
+  
+  protected void unRegistEventBus(){
+      //EventBus.getDefault().unregister(this);
+  }
+</code></pre>
+<p>以上就是发送一个stickyEvent的全过程，下面讲一下event的优先级和拦截</p>
+<h3 id="事件处理优先级及事件拦截">事件处理优先级及事件拦截</h3>
+<p>有时候在开发中，需要定义处理相同事件的优先级，我们先来看一下EventBus3对于Subscrible的注解定义源码：</p>
+<pre><code>@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface Subscribe {   
+       ThreadMode threadMode() default ThreadMode.POSTING;    
+        /**    
+         * If true, delivers the most recent sticky event (posted with    
+         * {@link EventBus#postSticky(Object)}) to this subscriber (if event available).     
+         */    
+        boolean sticky() default false;    
+        /** Subscriber priority to influence the order of event delivery.     
+          * Within the same delivery thread ({@link ThreadMode}), higher priority subscribers will receive events before     
+          * others with a lower priority. The default priority is 0. Note: the priority does *NOT* affect the order of     
+          * delivery among subscribers with different {@link ThreadMode}s! 
+          */    
+        int priority() default 0;
+}
+</code></pre>
+<p>可以看到 priority 的值默认为0，优先级随定义的priority的值越大优先级越高。注意，在注解<code>@Retention(RetentionPolicy.RUNTIME)</code> 这一项是将注解写入编译的class文件中，这个也是前面介绍到EventBus3解决注解反射导致性能问题的一个关键点。
+priority 实例简介：</p>
+<pre><code>@Subscribe(priority = 10)
+public void handleEvent(BaseEvents.CommonEvent event){
+      //....
+}
+</code></pre>
+<p>有了事件处理优先级的定义，那么我们就可以在高优先级的事件处理中，将事件传递拦截下来，经过实际测试，只能在 <code>threadMode = ThreadMode.POSTING</code> 的注释方法中才能拦截事件。官方如下介绍的：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://upload-images.jianshu.io/upload_images/115071-bd882c9936e7a143.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        data-srcset="http://upload-images.jianshu.io/upload_images/115071-bd882c9936e7a143.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240, http://upload-images.jianshu.io/upload_images/115071-bd882c9936e7a143.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 1.5x, http://upload-images.jianshu.io/upload_images/115071-bd882c9936e7a143.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 2x"
+        data-sizes="auto"
+        alt="http://upload-images.jianshu.io/upload_images/115071-bd882c9936e7a143.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        title="Paste_Image.png" /></p>
+<p>事件通常是被高优先级的订阅者取消，目前取消事件的处理方法仅限在ThreadMode 为 POSTING才能取消拦截事件。</p>
+<blockquote>
+<p>注：POSTING的事件，表示当前的post event和subscribe event两者在同一个线程之中。</p>
+</blockquote>
+<h3 id="注意事项">注意事项</h3>
+<ul>
+<li>工作线程和UI线程之间的事件传递</li>
+</ul>
+<blockquote>
+<p>在使用EventBus3时，由于event 在任何地方都可以发布一个事件，那么在不同线程之间传递事件，比如在工作线程传递一个事件更新UI线程中的一个控件，则需要注意threadMode的切换。</p>
+</blockquote>
+<ul>
+<li>取消线程仅限于 threadMode处于POSTING模式才可以
+<blockquote>
+<p>否则容易导致错误:
+org.greenrobot.eventbus.EventBusException: This method may only be called from inside event handling methods on the posting thread</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="混淆">混淆</h3>
+<p>关于正式打包签名，混淆就不多说了，把下面的混淆代码，粘贴到你的<code>proguard-rules.pro</code>下就ok了</p>
+<pre><code>  -keepattributes *Annotation*
+  -keepclassmembers class ** {    
+      @org.greenrobot.eventbus.Subscribe &lt;methods&gt;;
+  }
+  -keep enum org.greenrobot.eventbus.ThreadMode { 
+        *; 
+  }
+  # Only required if you use AsyncExecutor
+  -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {    
+      &lt;init&gt;(java.lang.Throwable);
+  }
+</code></pre>
+<h2 id="eventbus与otto的对比">EventBus与otto的对比</h2>
+<p>这里的对比图来自官方Github网站，对于线程之间传递Event的比较做了一个简化，简化为不同线程之间的事件传递。</p>
+<h3 id="功能对比">功能对比</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>EventBus</th>
+<th>otto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>声明事件处理方法</td>
+<td>注解（从3.0开始使用预编译解决性能问题）</td>
+<td>注解</td>
+</tr>
+<tr>
+<td>事件可扩展</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>订阅者扩展</td>
+<td>可以</td>
+<td>不行</td>
+</tr>
+<tr>
+<td>缓存大量最近事件</td>
+<td>可以（用sticky events）</td>
+<td>不行</td>
+</tr>
+<tr>
+<td>事件生产者(比如编码缓存的事件)</td>
+<td>不行</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>事件相同线程中传递</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>事件不同线程之间传递</td>
+<td>可以</td>
+<td>不可以</td>
+</tr>
+</tbody>
+</table>
+<h3 id="性能对比">性能对比</h3>
+<p>性能对比，由于个人没有去写具体的Demo测试，不过<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="noopener noreffer">官方源码</a>有关于性能的比较测试源码，一下截图来自官方Github的比较结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://upload-images.jianshu.io/upload_images/115071-4db9bc75ac0d66eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        data-srcset="http://upload-images.jianshu.io/upload_images/115071-4db9bc75ac0d66eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240, http://upload-images.jianshu.io/upload_images/115071-4db9bc75ac0d66eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 1.5x, http://upload-images.jianshu.io/upload_images/115071-4db9bc75ac0d66eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 2x"
+        data-sizes="auto"
+        alt="http://upload-images.jianshu.io/upload_images/115071-4db9bc75ac0d66eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        title="Compare.png" />
+总体而言，EventBus在各个方面完爆otto，当然在实际项目中，还是应该考虑性能和稳定做出取舍。</p>
+<h2 id="end">END</h2>
+<p>由于本人水平有限，文中难免有所疏漏，有问题还请斧正，开卷有益多多交流。如有疑问可以直接留言讨论~ O(∩_∩)O哈哈~</p>
+<blockquote>
+<p>参考资料：
+<a href="http://greenrobot.org/eventbus/documentation/" target="_blank" rel="noopener noreffer">EventBus官网文档</a>
+ </p>
+</blockquote>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-03-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/eventbus3/">EventBus3</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" class="prev" rel="prev" title="Gradle实战及学习建议"><i class="fas fa-angle-left fa-fw"></i>Gradle实战及学习建议</a>
+            <a href="/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/" class="next" rel="next" title="JNI&amp;NDK编程小结及建议">JNI&amp;NDK编程小结及建议<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

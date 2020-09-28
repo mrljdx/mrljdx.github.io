@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>在Android中嵌入Lua脚本-基于AndroidStudio开发环境 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="在Android中嵌入Lua脚本-基于AndroidStudio开发环境" />
+<meta property="og:description" content="翻看自己在2011-11-11（光棍节）当天写的博客《Android中嵌入lua脚本，初步进阶》 发现博客中的内容部分已经无效了，随着Android的发展AndroidStudio开发工具已经成为主流。下面重新开始，简单的说一下在Android中如何嵌入Lua脚本语言。
+在开始介绍之前，说一下为什么今天又想到怎么在Android嵌入Lua脚本语言，因为这有可能成为一种Android应用技术解决方案。在游戏方面早在很早以前就有“愤怒的小鸟”把Lua作为关卡脚本语言运用其中。
+准备工作
+
+下载lua5.3.2源码和luajava 1.1源码。
+使用Android NDK ，JNI编译下载的Lua 和LuaJava源码生成.so文件。
+按照以下步骤配置AndroidLua库文件：
+
+luajava下的org文件夹拷贝到工程src/main/java目录下
+将jniLibs/armeabi下的libluajava.so重命名为libluajava-1.1.so
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-01-11T17:20:56+00:00" />
+<meta property="article:modified_time" content="2016-01-11T17:20:56+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="在Android中嵌入Lua脚本-基于AndroidStudio开发环境"/>
+<meta name="twitter:description" content="翻看自己在2011-11-11（光棍节）当天写的博客《Android中嵌入lua脚本，初步进阶》 发现博客中的内容部分已经无效了，随着Android的发展AndroidStudio开发工具已经成为主流。下面重新开始，简单的说一下在Android中如何嵌入Lua脚本语言。
+在开始介绍之前，说一下为什么今天又想到怎么在Android嵌入Lua脚本语言，因为这有可能成为一种Android应用技术解决方案。在游戏方面早在很早以前就有“愤怒的小鸟”把Lua作为关卡脚本语言运用其中。
+准备工作
+
+下载lua5.3.2源码和luajava 1.1源码。
+使用Android NDK ，JNI编译下载的Lua 和LuaJava源码生成.so文件。
+按照以下步骤配置AndroidLua库文件：
+
+luajava下的org文件夹拷贝到工程src/main/java目录下
+将jniLibs/armeabi下的libluajava.so重命名为libluajava-1.1.so
+
+
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" /><link rel="prev" href="http://mrljdx.com/android%E9%85%8D%E7%BD%AEgradle%E4%BD%BF%E7%94%A8java-8/" /><link rel="next" href="http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "在Android中嵌入Lua脚本-基于AndroidStudio开发环境",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83\/"
+        },"genre": "posts","keywords": "Lua","wordcount":  892 ,
+        "url": "http:\/\/mrljdx.com\/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83\/","datePublished": "2016-01-11T17:20:56+00:00","dateModified": "2016-01-11T17:20:56+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">在Android中嵌入Lua脚本-基于AndroidStudio开发环境</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-01-11">2016-01-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 892 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#准备工作">准备工作</a></li>
+    <li><a href="#在android中运行lua简单示例">在Android中运行Lua简单示例</a></li>
+    <li><a href="#本文源码下载">本文源码下载</a></li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>翻看自己在2011-11-11（光棍节）当天写的博客<a href="http://mrljdx.blog.51cto.com/2251374/711618" target="_blank" rel="noopener noreffer">《Android中嵌入lua脚本，初步进阶》</a> 发现博客中的内容部分已经无效了，随着Android的发展AndroidStudio开发工具已经成为主流。下面重新开始，简单的说一下在Android中如何嵌入Lua脚本语言。
+在开始介绍之前，说一下为什么今天又想到怎么在Android嵌入Lua脚本语言，因为这有可能成为一种Android应用技术解决方案。在游戏方面早在很早以前就有“愤怒的小鸟”把Lua作为关卡脚本语言运用其中。</p>
+<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>下载<a href="http://www.lua.org/ftp/" target="_blank" rel="noopener noreffer">lua5.3.2源码</a>和<a href="http://files.luaforge.net/releases/luajava/luajava/LuaJava1.1" target="_blank" rel="noopener noreffer">luajava 1.1源码</a>。</li>
+<li>使用Android NDK ，JNI编译下载的<code>Lua</code> 和<code>LuaJava</code>源码生成.so文件。</li>
+<li>按照以下步骤配置AndroidLua库文件：
+<ul>
+<li>luajava下的org文件夹拷贝到工程<code>src/main/java</code>目录下</li>
+<li>将<code>jniLibs/armeabi</code>下的<code>libluajava.so</code>重命名为<code>libluajava-1.1.so</code></li>
+</ul>
+</li>
+</ol>
+<p>在做完准备工作后，就可以在Android中简单的使用Lua脚本语言了。</p>
+<p>由于本文并不是介绍Lua语法细节的，所以只是把部分代码拷贝运行查看即可。</p>
+<h2 id="在android中运行lua简单示例">在Android中运行Lua简单示例</h2>
+<pre><code>package com.mrljdx.androidlua;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.TextView;
+
+import org.keplerproject.luajava.LuaState;
+import org.keplerproject.luajava.LuaStateFactory;
+
+/**
+ * Created by Mrljdx on 16/1/4.
+ */
+public class AndroidLuaActivity extends AppCompatActivity {
+    public static final String TAG = &quot;AndroidLuaActivity&quot;;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_android_lua);
+
+        TextView tvLua = (TextView) findViewById(R.id.tvLua);
+
+        LuaState luaState = LuaStateFactory.newLuaState();
+        luaState.openLibs();//打开标准库
+
+        luaState.LdoString(&quot;text = 'Hello Android, I am Lua.'&quot;);
+
+        luaState.getGlobal(&quot;text&quot;);
+
+        String text = luaState.toString(-1);
+        Log.e(TAG, &quot;text is ： &quot; + text);
+        tvLua.setText(text);
+
+        luaState.LdoFile(&quot;hello.lua&quot;);
+
+    }
+
+}
+</code></pre>
+<h2 id="本文源码下载">本文源码下载</h2>
+<p>AndroidLua 源码地址：<a href="https://github.com/mrljdx/AndroidLua" target="_blank" rel="noopener noreffer">https://github.com/mrljdx/AndroidLua</a> 喜欢的star一下~</p>
+<h2 id="end">END</h2>
+<p>基于AndroidStudio编译在Android中使用Lua的so参考和查阅了很多资料，之前也做过使用Lua脚本写的游戏。那时候Nokia还健在~以前的Lua语法都忘得差不多，不过以后在Android中使用Lua的情景应该会很多！
+希望有想把Lua运用在Android应用开发中的朋友一起探讨学习，废话就不多说了，多多交流开卷有益~</p>
+<p>** 参考资料**</p>
+<ul>
+<li><a href="https://github.com/mkottman/AndroLua" target="_blank" rel="noopener noreffer">AndroLua ：Lua and LuaJava ported to Android ， Eclipse上编译的</a></li>
+<li><a href="http://coolerfall.com/tools/use-ndk-in-android-studio/" target="_blank" rel="noopener noreffer">在Android Studio中利用gradle来自动编译jni</a></li>
+</ul>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-01-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/lua/">Lua</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android%E9%85%8D%E7%BD%AEgradle%E4%BD%BF%E7%94%A8java-8/" class="prev" rel="prev" title="Android配置Gradle使用Java 8"><i class="fas fa-angle-left fa-fw"></i>Android配置Gradle使用Java 8</a>
+            <a href="/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/" class="next" rel="next" title="Android中实用的Gradle配置">Android中实用的Gradle配置<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

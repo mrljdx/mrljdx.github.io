@@ -1,0 +1,27 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/android/</link>
+        <description>Android - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Apr 2015 11:18:34 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/android/" rel="self" type="application/rss+xml" /><item>
+    <title>AndroidManifest配置文件简介</title>
+    <link>http://mrljdx.com/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/</link>
+    <pubDate>Mon, 13 Apr 2015 11:18:34 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/</guid>
+    <description><![CDATA[<p>在Android开发接触的最多的可能就是AndroidManifest.xml这个配置文件了，这里配置文件中包括了应用程序中的大部分信息，系统在运行代码时，需要知道这些基本信息。比如开发中的Activity、Service、Broadcast都需要在这里定义。如果用到了一些系统自带的服务比如拨号、应用安装、GPS定位等服务也需要在这里声明。</p>]]></description>
+</item><item>
+    <title>Android开发最佳实践(转载)</title>
+    <link>http://mrljdx.com/android%E5%BC%80%E5%8F%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E8%BD%AC%E8%BD%BD/</link>
+    <pubDate>Sat, 28 Mar 2015 21:25:33 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%BC%80%E5%8F%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E8%BD%AC%E8%BD%BD/</guid>
+    <description><![CDATA[<blockquote>
+<p>这篇文章转自Github非原创，其中一些建议非常不错。值得好好学习，废话不多说，进入正文好好体会。</p>
+</blockquote>
+<p>从<a href="http://www.futurice.com" target="_blank" rel="noopener noreffer">Futurice</a>公司Android开发者中学到的经验。
+遵循以下准则，避免重复发明轮子。若您对开发iOS或Windows Phone 有兴趣，
+请看<a href="https://github.com/futurice/ios-good-practices" target="_blank" rel="noopener noreffer"><strong>iOS Good Practices</strong></a> 和 <a href="https://github.com/futurice/win-client-dev-good-practices" target="_blank" rel="noopener noreffer"><strong>Windows client Good Practices</strong></a> 这两篇文章。</p>]]></description>
+</item></channel>
+</rss>

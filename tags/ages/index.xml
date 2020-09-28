@@ -1,0 +1,23 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>AGES - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/ages/</link>
+        <description>AGES - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 17 Apr 2016 16:57:59 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/ages/" rel="self" type="application/rss+xml" /><item>
+    <title>Android应用开发框架经验小结</title>
+    <link>http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/</link>
+    <pubDate>Sun, 17 Apr 2016 16:57:59 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在Android应用开发过程中一般会涉及到如下几个方面的问题：
+1.多张大图的加载OOM
+2.本地数据库存储
+3.事件/消息的传递
+4.在非Root设备上查看应用数据
+5.网络请求，Json/XML数据解析
+6.方法数超过65535限制
+7.混淆代码</p>]]></description>
+</item></channel>
+</rss>

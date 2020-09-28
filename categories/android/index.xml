@@ -1,0 +1,124 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android - 分类 - 追云似梦</title>
+        <link>http://mrljdx.com/categories/android/</link>
+        <description>Android - 分类 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 06 Mar 2018 18:15:24 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/categories/android/" rel="self" type="application/rss+xml" /><item>
+    <title>Lottie踩坑笔记</title>
+    <link>http://mrljdx.com/lottie%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Tue, 06 Mar 2018 18:15:24 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/lottie%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[参考链接 Lottie文件验证官方网站: https://www.lottiefiles.com Lottie官方文档: http://airbnb.io/lottie/ Lottie渐变色相关示例下载地址: https://www.lottiefiles.com/download/644]]></description>
+</item><item>
+    <title>浅聊Android布局优化</title>
+    <link>http://mrljdx.com/%E6%B5%85%E8%81%8Aandroid%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96/</link>
+    <pubDate>Sun, 26 Jun 2016 01:51:11 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E6%B5%85%E8%81%8Aandroid%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在Android开发中，常用的布局就只有FrameLayout&amp;LinearLayout&amp;RelativeLayout，这些布局由于年代恒久远，一直流传下来。但是也存在着一些遗留问题，在Activity展开布局时用到setContentView()方法也许大家并不陌生。在使用这个方法时发生了什么呢？</p>]]></description>
+</item><item>
+    <title>AA-4.0升级指南</title>
+    <link>http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/</link>
+    <pubDate>Thu, 28 Apr 2016 13:50:35 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/</guid>
+    <description><![CDATA[<blockquote>
+<p>笔者注：AA-4.0为AndroidAnnotations-4.0的简称</p>
+</blockquote>
+<h2 id="aa40已经模块化了">AA4.0已经模块化了</h2>
+<p>现在AA-4.0的库被分割为一些小的模块，这意味着你以前在AA-3.x版本之前库中使用的一些注解方法都被分拆为一些单独的模块，你需要在Gradle配置文件中添加新的依赖库，改变import的包名。</p>]]></description>
+</item><item>
+    <title>Android应用开发框架经验小结</title>
+    <link>http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/</link>
+    <pubDate>Sun, 17 Apr 2016 16:57:59 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在Android应用开发过程中一般会涉及到如下几个方面的问题：
+1.多张大图的加载OOM
+2.本地数据库存储
+3.事件/消息的传递
+4.在非Root设备上查看应用数据
+5.网络请求，Json/XML数据解析
+6.方法数超过65535限制
+7.混淆代码</p>]]></description>
+</item><item>
+    <title>JNI&amp;NDK编程小结及建议</title>
+    <link>http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/</link>
+    <pubDate>Sat, 16 Apr 2016 12:25:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/a9fc9e41f952" target="_blank" rel="noopener noreffer">JNI&amp;NDK编程小结及建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>由于网上关于JNI/NDK相关的知识点介绍的比较零散而且不具备参照性，所以写了这篇JNI/NDK笔记，便于作为随时查阅的工具类型的文章，本文主要的介绍了在平时项目中常用的命令、JNI数据类型、签名等，便于查阅相关资料。文末相关参考资料比较适合刚接触或者不熟悉Android NDK开发的朋友参阅。</p>]]></description>
+</item><item>
+    <title>EventBus3新特性及用法</title>
+    <link>http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/</link>
+    <pubDate>Fri, 18 Mar 2016 10:32:12 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/2737b4a22cac" target="_blank" rel="noopener noreffer">EventBus3新特性及用法</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<p></p>
+<h2 id="eventbus-3-简介">EventBus 3 简介</h2>
+<p>EventBus是一种为了优化Android组件之间事件传递的解耦工具，通过发布/订阅事件总线来实现事件在不同组件之间的事件传递。
+在EventBus 3之前，greenrobot团队因为考虑性能原因所以比较抵触使用注解框架。目前的EventBus3开始使用注解来申明订阅事件的处理方法。虽然目前Android 6 和ART都有了，但是对于Java反射造成的性能影响还是没能很好的解决。
+在EventBus3中，greenrobot团队通过利用在编译时检索所有注解代码，然后生成一个包含所有在运行时要花很大代价才能获取的数据的类，通过这种新的注解处理方式来提升性能，让EventBus3比其他的eventbus会更加快。在后文中会贴出和otto的性能比较。</p>]]></description>
+</item><item>
+    <title>Gradle实战及学习建议</title>
+    <link>http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/</link>
+    <pubDate>Thu, 17 Mar 2016 16:32:40 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/b7fc7a6abffb" target="_blank" rel="noopener noreffer">Gradle实战及学习建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>相信不少使用Android Studio开发Android的朋友都在为Gradle中的一些配置疑惑，今天来介绍一下我在学习Gradle的一些经验和总结，希望能对大家有所帮助。先大致的看一张Gradle学习的结构图，对正片文章有个大致的了解，其次逐一说明一些Android Gradle 插件中的一些变量的含义及用法实例。</p>]]></description>
+</item><item>
+    <title>Mac下配置Battery Historian 2.0测试环境</title>
+    <link>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEbattery-historian-2-0%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/</link>
+    <pubDate>Tue, 15 Mar 2016 16:25:07 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEbattery-historian-2-0%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在介绍本文之前扯点淡，就是最近AlphaGo和李世石的围棋比赛，今天最后一场。估计AlphaGo拿四杀应该没问题。有一段时间没写写东西了，听说Google早就弄了个Battery Historian的电量测试神器，今天来介绍一下，这款基于Go语言构建的Android设备电量用量测试分析工具~ 
+本文首发于<a href="http://www.jianshu.com/p/bde860ee903c" target="_blank" rel="noopener noreffer">简书</a>(一款适合写作的平台)，推荐各位用一下，一款不错的产品！ 好了，不扯了，进入正题~</p>
+<h2 id="battery-historian-简介">Battery Historian 简介</h2>
+<p>Battery Historian是一款Google开源的分析设备电量用量情况的测试工具，可以通过导出设备的<code>bugreport</code>文件，导入到Battery Historian中分析数据。
+不过需要注意的是，Battery Historian 2.0 目前只支持分析 Android 5.0及以上的设备，其他版本的暂不支持。</p>]]></description>
+</item><item>
+    <title>Android开发减少Apk大小及统计方法数实践</title>
+    <link>http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/</link>
+    <pubDate>Mon, 22 Feb 2016 10:10:42 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>一款好的App首先需要保证功能稳定性（在用户手上不Crash），同时也要考虑节省用户的流量，电量等。不过现在的App市场同类型的App已经很多了，那么如何保证你的产品能在做推广时用户愿意下载呢？就是通过精简APK大小来减少用户的下载成本。</p>
+<p>下面就Androdi开发中一些控制APK大小的经验来简单说明一下。</p>]]></description>
+</item><item>
+    <title>Android中实用的Gradle配置</title>
+    <link>http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/</link>
+    <pubDate>Tue, 12 Jan 2016 14:49:21 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/</guid>
+    <description><![CDATA[<p>AndroidStudio已经成为Android开发的主流开发工具，如果你还在使用Eclipse，那么赶紧换吧。在AndroidStudio中，包的导入、插件的配置、打包编译等都是通过<code>/app/buidl.gradle</code>文件配置的。
+在平时的开发中，经常碰到的问题如下：</p>
+<ul>
+<li>友盟多渠道包打包</li>
+<li>包的混淆</li>
+<li>签名</li>
+<li>集成微博、微信等三方平台登录</li>
+<li>集成高德、百度等三方地图</li>
+<li>环信集成</li>
+<li>方法数超过65535数量限制</li>
+</ul>
+<p>下面简单介绍使用AndroidStudio使用Gradle编译的好处。</p>]]></description>
+</item></channel>
+</rss>

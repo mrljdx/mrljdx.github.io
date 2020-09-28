@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android测试 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/android%E6%B5%8B%E8%AF%95/</link>
+        <description>Android测试 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 15 Mar 2016 16:25:07 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/android%E6%B5%8B%E8%AF%95/" rel="self" type="application/rss+xml" /><item>
+    <title>Mac下配置Battery Historian 2.0测试环境</title>
+    <link>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEbattery-historian-2-0%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/</link>
+    <pubDate>Tue, 15 Mar 2016 16:25:07 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEbattery-historian-2-0%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在介绍本文之前扯点淡，就是最近AlphaGo和李世石的围棋比赛，今天最后一场。估计AlphaGo拿四杀应该没问题。有一段时间没写写东西了，听说Google早就弄了个Battery Historian的电量测试神器，今天来介绍一下，这款基于Go语言构建的Android设备电量用量测试分析工具~ 
+本文首发于<a href="http://www.jianshu.com/p/bde860ee903c" target="_blank" rel="noopener noreffer">简书</a>(一款适合写作的平台)，推荐各位用一下，一款不错的产品！ 好了，不扯了，进入正题~</p>
+<h2 id="battery-historian-简介">Battery Historian 简介</h2>
+<p>Battery Historian是一款Google开源的分析设备电量用量情况的测试工具，可以通过导出设备的<code>bugreport</code>文件，导入到Battery Historian中分析数据。
+不过需要注意的是，Battery Historian 2.0 目前只支持分析 Android 5.0及以上的设备，其他版本的暂不支持。</p>]]></description>
+</item></channel>
+</rss>

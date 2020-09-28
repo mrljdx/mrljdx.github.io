@@ -1,0 +1,133 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>所有文章 - 追云似梦</title>
+        <link>http://mrljdx.com/posts/</link>
+        <description>所有文章 | 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 06 Mar 2018 18:15:24 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Lottie踩坑笔记</title>
+    <link>http://mrljdx.com/lottie%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Tue, 06 Mar 2018 18:15:24 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/lottie%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[参考链接 Lottie文件验证官方网站: https://www.lottiefiles.com Lottie官方文档: http://airbnb.io/lottie/ Lottie渐变色相关示例下载地址: https://www.lottiefiles.com/download/644]]></description>
+</item><item>
+    <title>浅聊Android布局优化</title>
+    <link>http://mrljdx.com/%E6%B5%85%E8%81%8Aandroid%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96/</link>
+    <pubDate>Sun, 26 Jun 2016 01:51:11 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E6%B5%85%E8%81%8Aandroid%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在Android开发中，常用的布局就只有FrameLayout&amp;LinearLayout&amp;RelativeLayout，这些布局由于年代恒久远，一直流传下来。但是也存在着一些遗留问题，在Activity展开布局时用到setContentView()方法也许大家并不陌生。在使用这个方法时发生了什么呢？</p>]]></description>
+</item><item>
+    <title>连接同一wifi配置Charles代理的问题</title>
+    <link>http://mrljdx.com/%E8%BF%9E%E6%8E%A5%E5%90%8C%E4%B8%80wifi%E9%85%8D%E7%BD%AEcharles%E4%BB%A3%E7%90%86%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Thu, 16 Jun 2016 11:28:49 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E8%BF%9E%E6%8E%A5%E5%90%8C%E4%B8%80wifi%E9%85%8D%E7%BD%AEcharles%E4%BB%A3%E7%90%86%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[<p>关于Charles的使用网上有很多文章，这篇文章主要是由于博主最近在mac上使用Charles碰到了一个很蛋疼的问题，分享出来让一些遇到同样问题的人有个解决思路。</p>
+<h2 id="问题描述">问题描述</h2>
+<h3 id="环境描述">环境描述</h3>
+<ol>
+<li>Mac + 连接Wifi + 打开Charles 设置好端口号，勾选代理。</li>
+<li>App 连接同样的Wifi + 手动设置代理 + Mac的IP地址+设置好的端口号</li>
+</ol>
+<h3 id="出现的异常">出现的异常</h3>
+<ol>
+<li>手机代理已经设置好了，但是Charles没有弹出提示框，告诉用户有ip地址连接了代理。</li>
+<li>手机连接代理后，无法连接网络，抓包窗口没有发现相关的网络请求。</li>
+</ol>]]></description>
+</item><item>
+    <title>关于开源的一些注意事项</title>
+    <link>http://mrljdx.com/%E5%85%B3%E4%BA%8E%E5%BC%80%E6%BA%90%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</link>
+    <pubDate>Mon, 13 Jun 2016 12:04:17 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E5%85%B3%E4%BA%8E%E5%BC%80%E6%BA%90%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/72fe46d4b5ae" target="_blank" rel="noopener noreffer">《关于开源的一些注意事项》</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h1 id="开源协议概要">开源协议概要</h1>
+<p>目前开源的协议可以参考GNU组织的开源许可协议：[具体参考链]。(<a href="http://www.gnu.org/licenses/license-list.html">http://www.gnu.org/licenses/license-list.html</a>)
+现今存在的开源协议很多，而经过Open Source Initiative组织通过批准的开源协议目前有58种：<a href="https://opensource.org/licenses/alphabetical" target="_blank" rel="noopener noreffer">具体参考链</a>。
+下面来看几个例子：
+<a href="https://github.com/facebook" target="_blank" rel="noopener noreffer">Facebook的Github</a>中的开源项目大部分都是使用BSD开源协议，BSD协议允许使用者修改和重新发布代码（以其他协议形式），允许闭源商业发布和销售，如果在再发布的产品中包含源码，则必须带有原来代码中的BSD协议，不可以使用Facebook的名字来做市场推广等。</p>]]></description>
+</item><item>
+    <title>推荐几篇技术好文</title>
+    <link>http://mrljdx.com/%E6%8E%A8%E8%8D%90%E5%87%A0%E7%AF%87%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%96%87/</link>
+    <pubDate>Sat, 28 May 2016 16:29:38 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E6%8E%A8%E8%8D%90%E5%87%A0%E7%AF%87%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%96%87/</guid>
+    <description><![CDATA[<p>最近瞎忙，做的事不少但是也没怎么总结。闲暇之余先推荐几篇不错的Android文章供各位参考。</p>
+<h2 id="设计模式基础-solid">设计模式基础-SOLID</h2>
+<ul>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-1/" target="_blank" rel="noopener noreffer">S 代表着单一职责原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-2/" target="_blank" rel="noopener noreffer">O 代表着开闭原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-3/" target="_blank" rel="noopener noreffer">L 代表着里氏替换原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-4/" target="_blank" rel="noopener noreffer">I 是接口隔离原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-5/" target="_blank" rel="noopener noreffer">D 代表依赖倒置原则</a></li>
+</ul>
+<p>关于设计模式的文章很多，不过这几篇文章内容干货十足，从设计代码的角度告诉你该如何理解设计模式的基本原则SOLID的精髓。</p>]]></description>
+</item><item>
+    <title>AA-4.0升级指南</title>
+    <link>http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/</link>
+    <pubDate>Thu, 28 Apr 2016 13:50:35 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/</guid>
+    <description><![CDATA[<blockquote>
+<p>笔者注：AA-4.0为AndroidAnnotations-4.0的简称</p>
+</blockquote>
+<h2 id="aa40已经模块化了">AA4.0已经模块化了</h2>
+<p>现在AA-4.0的库被分割为一些小的模块，这意味着你以前在AA-3.x版本之前库中使用的一些注解方法都被分拆为一些单独的模块，你需要在Gradle配置文件中添加新的依赖库，改变import的包名。</p>]]></description>
+</item><item>
+    <title>Android应用开发框架经验小结</title>
+    <link>http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/</link>
+    <pubDate>Sun, 17 Apr 2016 16:57:59 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>在Android应用开发过程中一般会涉及到如下几个方面的问题：
+1.多张大图的加载OOM
+2.本地数据库存储
+3.事件/消息的传递
+4.在非Root设备上查看应用数据
+5.网络请求，Json/XML数据解析
+6.方法数超过65535限制
+7.混淆代码</p>]]></description>
+</item><item>
+    <title>JNI&amp;NDK编程小结及建议</title>
+    <link>http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/</link>
+    <pubDate>Sat, 16 Apr 2016 12:25:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/a9fc9e41f952" target="_blank" rel="noopener noreffer">JNI&amp;NDK编程小结及建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>由于网上关于JNI/NDK相关的知识点介绍的比较零散而且不具备参照性，所以写了这篇JNI/NDK笔记，便于作为随时查阅的工具类型的文章，本文主要的介绍了在平时项目中常用的命令、JNI数据类型、签名等，便于查阅相关资料。文末相关参考资料比较适合刚接触或者不熟悉Android NDK开发的朋友参阅。</p>]]></description>
+</item><item>
+    <title>EventBus3新特性及用法</title>
+    <link>http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/</link>
+    <pubDate>Fri, 18 Mar 2016 10:32:12 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/2737b4a22cac" target="_blank" rel="noopener noreffer">EventBus3新特性及用法</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<p></p>
+<h2 id="eventbus-3-简介">EventBus 3 简介</h2>
+<p>EventBus是一种为了优化Android组件之间事件传递的解耦工具，通过发布/订阅事件总线来实现事件在不同组件之间的事件传递。
+在EventBus 3之前，greenrobot团队因为考虑性能原因所以比较抵触使用注解框架。目前的EventBus3开始使用注解来申明订阅事件的处理方法。虽然目前Android 6 和ART都有了，但是对于Java反射造成的性能影响还是没能很好的解决。
+在EventBus3中，greenrobot团队通过利用在编译时检索所有注解代码，然后生成一个包含所有在运行时要花很大代价才能获取的数据的类，通过这种新的注解处理方式来提升性能，让EventBus3比其他的eventbus会更加快。在后文中会贴出和otto的性能比较。</p>]]></description>
+</item><item>
+    <title>Gradle实战及学习建议</title>
+    <link>http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/</link>
+    <pubDate>Thu, 17 Mar 2016 16:32:40 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/b7fc7a6abffb" target="_blank" rel="noopener noreffer">Gradle实战及学习建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>相信不少使用Android Studio开发Android的朋友都在为Gradle中的一些配置疑惑，今天来介绍一下我在学习Gradle的一些经验和总结，希望能对大家有所帮助。先大致的看一张Gradle学习的结构图，对正片文章有个大致的了解，其次逐一说明一些Android Gradle 插件中的一些变量的含义及用法实例。</p>]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,27 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Lua - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/lua/</link>
+        <description>Lua - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 11 Jan 2016 17:20:56 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/lua/" rel="self" type="application/rss+xml" /><item>
+    <title>在Android中嵌入Lua脚本-基于AndroidStudio开发环境</title>
+    <link>http://mrljdx.com/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link>
+    <pubDate>Mon, 11 Jan 2016 17:20:56 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid>
+    <description><![CDATA[<p>翻看自己在2011-11-11（光棍节）当天写的博客<a href="http://mrljdx.blog.51cto.com/2251374/711618" target="_blank" rel="noopener noreffer">《Android中嵌入lua脚本，初步进阶》</a> 发现博客中的内容部分已经无效了，随着Android的发展AndroidStudio开发工具已经成为主流。下面重新开始，简单的说一下在Android中如何嵌入Lua脚本语言。
+在开始介绍之前，说一下为什么今天又想到怎么在Android嵌入Lua脚本语言，因为这有可能成为一种Android应用技术解决方案。在游戏方面早在很早以前就有“愤怒的小鸟”把Lua作为关卡脚本语言运用其中。</p>
+<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>下载<a href="http://www.lua.org/ftp/" target="_blank" rel="noopener noreffer">lua5.3.2源码</a>和<a href="http://files.luaforge.net/releases/luajava/luajava/LuaJava1.1" target="_blank" rel="noopener noreffer">luajava 1.1源码</a>。</li>
+<li>使用Android NDK ，JNI编译下载的<code>Lua</code> 和<code>LuaJava</code>源码生成.so文件。</li>
+<li>按照以下步骤配置AndroidLua库文件：
+<ul>
+<li>luajava下的org文件夹拷贝到工程<code>src/main/java</code>目录下</li>
+<li>将<code>jniLibs/armeabi</code>下的<code>libluajava.so</code>重命名为<code>libluajava-1.1.so</code></li>
+</ul>
+</li>
+</ol>]]></description>
+</item></channel>
+</rss>

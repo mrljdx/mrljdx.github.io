@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>开源 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/%E5%BC%80%E6%BA%90/</link>
+        <description>开源 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Jun 2016 12:04:17 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/%E5%BC%80%E6%BA%90/" rel="self" type="application/rss+xml" /><item>
+    <title>关于开源的一些注意事项</title>
+    <link>http://mrljdx.com/%E5%85%B3%E4%BA%8E%E5%BC%80%E6%BA%90%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</link>
+    <pubDate>Mon, 13 Jun 2016 12:04:17 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E5%85%B3%E4%BA%8E%E5%BC%80%E6%BA%90%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/72fe46d4b5ae" target="_blank" rel="noopener noreffer">《关于开源的一些注意事项》</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h1 id="开源协议概要">开源协议概要</h1>
+<p>目前开源的协议可以参考GNU组织的开源许可协议：[具体参考链]。(<a href="http://www.gnu.org/licenses/license-list.html">http://www.gnu.org/licenses/license-list.html</a>)
+现今存在的开源协议很多，而经过Open Source Initiative组织通过批准的开源协议目前有58种：<a href="https://opensource.org/licenses/alphabetical" target="_blank" rel="noopener noreffer">具体参考链</a>。
+下面来看几个例子：
+<a href="https://github.com/facebook" target="_blank" rel="noopener noreffer">Facebook的Github</a>中的开源项目大部分都是使用BSD开源协议，BSD协议允许使用者修改和重新发布代码（以其他协议形式），允许闭源商业发布和销售，如果在再发布的产品中包含源码，则必须带有原来代码中的BSD协议，不可以使用Facebook的名字来做市场推广等。</p>]]></description>
+</item></channel>
+</rss>

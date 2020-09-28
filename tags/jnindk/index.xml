@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>JNI&amp;NDK - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/jnindk/</link>
+        <description>JNI&amp;NDK - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 16 Apr 2016 12:25:58 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/jnindk/" rel="self" type="application/rss+xml" /><item>
+    <title>JNI&amp;NDK编程小结及建议</title>
+    <link>http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/</link>
+    <pubDate>Sat, 16 Apr 2016 12:25:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/a9fc9e41f952" target="_blank" rel="noopener noreffer">JNI&amp;NDK编程小结及建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>由于网上关于JNI/NDK相关的知识点介绍的比较零散而且不具备参照性，所以写了这篇JNI/NDK笔记，便于作为随时查阅的工具类型的文章，本文主要的介绍了在平时项目中常用的命令、JNI数据类型、签名等，便于查阅相关资料。文末相关参考资料比较适合刚接触或者不熟悉Android NDK开发的朋友参阅。</p>]]></description>
+</item></channel>
+</rss>

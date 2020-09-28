@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>自定义View小结 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="自定义View小结" />
+<meta property="og:description" content="View基类呈现一个100x100像素的空白正方形，要改变控件的大小并呈现一个不同的界面则需要分别对onMesure和onDraw方法进行重写。
+** onMesure方法中，新的视图将会计算一系列给定的边界条件下占据的高度和宽度。
+** onDraw方法用于在画布上进行绘图。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-14T09:13:53+00:00" />
+<meta property="article:modified_time" content="2015-04-14T09:13:53+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="自定义View小结"/>
+<meta name="twitter:description" content="View基类呈现一个100x100像素的空白正方形，要改变控件的大小并呈现一个不同的界面则需要分别对onMesure和onDraw方法进行重写。
+** onMesure方法中，新的视图将会计算一系列给定的边界条件下占据的高度和宽度。
+** onDraw方法用于在画布上进行绘图。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/" /><link rel="prev" href="http://mrljdx.com/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/" /><link rel="next" href="http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E5%8A%A0%E8%BD%BD%E8%A7%86%E5%9B%BE/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "自定义View小结",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93\/"
+        },"genre": "posts","keywords": "自定义View","wordcount":  1381 ,
+        "url": "http:\/\/mrljdx.com\/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93\/","datePublished": "2015-04-14T09:13:53+00:00","dateModified": "2015-04-14T09:13:53+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">自定义View小结</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-14">2015-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1381 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="content" id="content"><p>View基类呈现一个100x100像素的空白正方形，要改变控件的大小并呈现一个不同的界面则需要分别对onMesure和onDraw方法进行重写。
+** onMesure<strong>方法中，新的视图将会计算一系列给定的边界条件下占据的高度和宽度。
+** onDraw</strong>方法用于在画布上进行绘图。</p>
+<h2 id="实例代码">实例代码</h2>
+<p>下面代码中定义了一个MyView继承自View:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="o">{</span>
+
+  <span class="c1">// 代码中创建View时调用的构造函数
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 根据xml中的定义的资源创建View是调用的构造函数，定义默认样式
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="nf">MyView</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">AttributeSet</span> <span class="n">ats</span><span class="o">,</span> <span class="kt">int</span> <span class="n">defaultStyle</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">ats</span><span class="o">,</span> <span class="n">defaultStyle</span> <span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">//同上，无定义样式
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="nf">MyView</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="c1">//  @Override
+</span><span class="c1">//  protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
+</span><span class="c1">//    int measuredHeight = measureHeight(hMeasureSpec);
+</span><span class="c1">//    int measuredWidth = measureWidth(wMeasureSpec);
+</span><span class="c1">//
+</span><span class="c1">//    // 必须调用setMeasuredDimension这个方法
+</span><span class="c1">//    // 否则当要显示视图时会报一个运行时的错误
+</span><span class="c1">//    setMeasuredDimension(measuredHeight, measuredWidth);
+</span><span class="c1">//  }
+</span><span class="c1">//	
+</span><span class="c1">//  private int measureHeight(int measureSpec) {
+</span><span class="c1">//    int specMode = MeasureSpec.getMode(measureSpec);
+</span><span class="c1">//    int specSize = MeasureSpec.getSize(measureSpec);
+</span><span class="c1">//
+</span><span class="c1">//     // [ ... 计算View的高度 ... ]
+</span><span class="c1">//
+</span><span class="c1">//     return specSize;
+</span><span class="c1">//  }
+</span><span class="c1">//
+</span><span class="c1">//  private int measureWidth(int measureSpec) {
+</span><span class="c1">//    int specMode = MeasureSpec.getMode(measureSpec);
+</span><span class="c1">//    int specSize = MeasureSpec.getSize(measureSpec);
+</span><span class="c1">//
+</span><span class="c1">//     // [ ... 计算View的宽度 ... ]
+</span><span class="c1">//
+</span><span class="c1">//     return specSize;
+</span><span class="c1">//  }
+</span><span class="c1">//
+</span><span class="c1">//  @Override
+</span><span class="c1">//  protected void onDraw(Canvas canvas) {
+</span><span class="c1">//    // [ ... 绘制的自己定义的视图 ... ]
+</span><span class="c1">//  }
+</span><span class="c1"></span>  
+  <span class="cm">/**
+</span><span class="cm">   * Listing 4-16: Drawing a custom View
+</span><span class="cm">   */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onDraw</span><span class="o">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 根据最后一次调用onMeasure方法获得的大小.
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">getMeasuredHeight</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">getMeasuredWidth</span><span class="o">();</span>
+
+    <span class="c1">// 获取视图中心点
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">px</span> <span class="o">=</span> <span class="n">width</span><span class="o">/</span><span class="n">2</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">py</span> <span class="o">=</span> <span class="n">height</span><span class="o">/</span><span class="n">2</span><span class="o">;</span>
+
+    <span class="c1">// 创建一个新的画刷
+</span><span class="c1"></span>    <span class="c1">// 注意: 考虑性能的话，应该在视图初始化调用的构造函数
+</span><span class="c1"></span>    <span class="c1">// 中初始化Paint
+</span><span class="c1"></span>    <span class="n">Paint</span> <span class="n">mTextPaint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Paint</span><span class="o">(</span><span class="n">Paint</span><span class="o">.</span><span class="na">ANTI_ALIAS_FLAG</span><span class="o">);</span>
+    <span class="n">mTextPaint</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">WHITE</span><span class="o">);</span>
+
+    <span class="c1">//定义要显示的文本
+</span><span class="c1"></span>    <span class="n">String</span> <span class="n">displayText</span> <span class="o">=</span> <span class="s">&#34;Hello World!&#34;</span><span class="o">;</span>
+
+    <span class="c1">// 计算文本的宽度
+</span><span class="c1"></span>    <span class="kt">float</span> <span class="n">textWidth</span> <span class="o">=</span> <span class="n">mTextPaint</span><span class="o">.</span><span class="na">measureText</span><span class="o">(</span><span class="n">displayText</span><span class="o">);</span>
+
+    <span class="c1">//在视图中心绘制文本
+</span><span class="c1"></span>    <span class="n">canvas</span><span class="o">.</span><span class="na">drawText</span><span class="o">(</span><span class="n">displayText</span><span class="o">,</span> <span class="n">px</span><span class="o">-</span><span class="n">textWidth</span><span class="o">/</span><span class="n">2</span><span class="o">,</span> <span class="n">py</span><span class="o">,</span> <span class="n">mTextPaint</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="cm">/**
+</span><span class="cm">   * Listing 4-17: 常见视图绘制的实现
+</span><span class="cm">   */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onMeasure</span><span class="o">(</span><span class="kt">int</span> <span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="kt">int</span> <span class="n">heightMeasureSpec</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">measuredHeight</span> <span class="o">=</span> <span class="n">measureHeight</span><span class="o">(</span><span class="n">heightMeasureSpec</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">measuredWidth</span> <span class="o">=</span> <span class="n">measureWidth</span><span class="o">(</span><span class="n">widthMeasureSpec</span><span class="o">);</span>
+
+    <span class="n">setMeasuredDimension</span><span class="o">(</span><span class="n">measuredHeight</span><span class="o">,</span> <span class="n">measuredWidth</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">measureHeight</span><span class="o">(</span><span class="kt">int</span> <span class="n">measureSpec</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">specMode</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getMode</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">specSize</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getSize</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>
+
+    <span class="c1">//  如果没有限定大小的话，默认为500
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">500</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">AT_MOST</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// Calculate the ideal size of your
+</span><span class="c1"></span>      <span class="c1">// control within this maximum size.
+</span><span class="c1"></span>      <span class="c1">// If your control fills the available
+</span><span class="c1"></span>      <span class="c1">// space return the outer bound.
+</span><span class="c1"></span>      <span class="n">result</span> <span class="o">=</span> <span class="n">specSize</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">EXACTLY</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// If your control can fit within these bounds return that value.
+</span><span class="c1"></span>      <span class="n">result</span> <span class="o">=</span> <span class="n">specSize</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">measureWidth</span><span class="o">(</span><span class="kt">int</span> <span class="n">measureSpec</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">specMode</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getMode</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">specSize</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getSize</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>
+
+    <span class="c1">//  Default size if no limits are specified.
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">500</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">AT_MOST</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// Calculate the ideal size of your control
+</span><span class="c1"></span>      <span class="c1">// within this maximum size.
+</span><span class="c1"></span>      <span class="c1">// If your control fills the available space
+</span><span class="c1"></span>      <span class="c1">// return the outer bound.
+</span><span class="c1"></span>      <span class="n">result</span> <span class="o">=</span> <span class="n">specSize</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">EXACTLY</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// If your control can fit within these bounds return that value.
+</span><span class="c1"></span>      <span class="n">result</span> <span class="o">=</span> <span class="n">specSize</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="cm">/**
+</span><span class="cm">   * Listing 4-18: 视图的输入事件
+</span><span class="cm">   */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onKeyDown</span><span class="o">(</span><span class="kt">int</span> <span class="n">keyCode</span><span class="o">,</span> <span class="n">KeyEvent</span> <span class="n">keyEvent</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 如果onKeyDown这个事件被处理了则返回true
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onKeyUp</span><span class="o">(</span><span class="kt">int</span> <span class="n">keyCode</span><span class="o">,</span> <span class="n">KeyEvent</span> <span class="n">keyEvent</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 如果onKeyUp事件被处理了则返回true
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onTrackballEvent</span><span class="o">(</span><span class="n">MotionEvent</span> <span class="n">event</span> <span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 获取当前事件表示的动作
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">actionPerformed</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="na">getAction</span><span class="o">();</span>
+    <span class="c1">//如果当前事件被处理则返回true
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onTouchEvent</span><span class="o">(</span><span class="n">MotionEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 获取当前事件表示的动作
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">actionPerformed</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="na">getAction</span><span class="o">();</span>
+    <span class="c1">// 返回true，如果当前事件被处理的话
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="小结">小结</h2>
+<p>从上面的实例可以看出，自定义View的基本步骤：</p>
+<ol>
+<li>自定义View类继承自View;</li>
+<li>重写<strong>onMesure</strong>方法，新的视图将会计算一系列给定的边界条件下占据的高度和宽度。(注：必须调用<code>setMeasuredDimension(measuredHeight, measuredWidth)</code>这个方法，否则当要显示视图时会报一个运行时的错误</li>
+<li>重写<strong>onDraw</strong>方法用于在画布上进行绘图，绘制你想展示的界面。</li>
+<li>常用的类：<strong>Paint</strong>（画笔） 和 <code>onDraw</code>方法中的参数<strong>Canvas canvas</strong> （画布）。</li>
+</ol></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89view/">自定义View</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/" class="prev" rel="prev" title="AndroidManifest配置文件简介"><i class="fas fa-angle-left fa-fw"></i>AndroidManifest配置文件简介</a>
+            <a href="/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E5%8A%A0%E8%BD%BD%E8%A7%86%E5%9B%BE/" class="next" rel="next" title="自定义网络加载视图">自定义网络加载视图<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

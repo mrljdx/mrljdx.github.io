@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Retrofit 2.0 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/retrofit-2.0/</link>
+        <description>Retrofit 2.0 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 07 Jan 2016 16:28:33 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/retrofit-2.0/" rel="self" type="application/rss+xml" /><item>
+    <title>Retrofit2.0 新特性简介</title>
+    <link>http://mrljdx.com/retrofit2-0-%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E4%BB%8B/</link>
+    <pubDate>Thu, 07 Jan 2016 16:28:33 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/retrofit2-0-%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E4%BB%8B/</guid>
+    <description><![CDATA[<blockquote>
+<p>Retrofit-2.0.0-beta3在2016-01-05号发布，由于是测试版所以想把Retrofit-1.x+Okhttp-2.x 升级到 Retrofit-2.x+OkHttp-3.x 的同学们请慎重，因为改动很大。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>Retrofit 作为简化 HTTP 请求的库，已经运行多年，很多公司也都有采用Retrofit+OkHttp来作为网络请求框架。最近反编译了几个应用以 <a href="http://www.liulishuo.com/" target="_blank" rel="noopener noreffer">英语流利说</a> 和 <a href="http://www.wandoujia.com/yilan?utm_expid=103241880-19.gRjQTfyBQdKyoLM1pJIkTA.0" target="_blank" rel="noopener noreffer">豌豆荚一览</a> （PS:免费广告~）为例，发现这两个应用也是使用的Retrofit+OkHttp的网络请求框架。</p>
+<p>在Android网络请求框架中，个人比较偏爱<a href="http://projects.spring.io/spring-android/" target="_blank" rel="noopener noreffer">Spring Android</a> 特别是结合<a href="https://github.com/excilys/androidannotations/wiki/Rest%20API" target="_blank" rel="noopener noreffer">AndroidAnnotations</a>一起使用，那感觉很棒。感兴趣的朋友可以去研究一下SpringAndroid。
+跑题了，下面来谈谈Retrofit2.0的新特性</p>]]></description>
+</item></channel>
+</rss>

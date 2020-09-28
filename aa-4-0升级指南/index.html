@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>AA-4.0升级指南 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="AA-4.0升级指南" />
+<meta property="og:description" content="
+笔者注：AA-4.0为AndroidAnnotations-4.0的简称
+
+AA4.0已经模块化了
+现在AA-4.0的库被分割为一些小的模块，这意味着你以前在AA-3.x版本之前库中使用的一些注解方法都被分拆为一些单独的模块，你需要在Gradle配置文件中添加新的依赖库，改变import的包名。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-04-28T13:50:35+00:00" />
+<meta property="article:modified_time" content="2016-04-28T13:50:35+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="AA-4.0升级指南"/>
+<meta name="twitter:description" content="
+笔者注：AA-4.0为AndroidAnnotations-4.0的简称
+
+AA4.0已经模块化了
+现在AA-4.0的库被分割为一些小的模块，这意味着你以前在AA-3.x版本之前库中使用的一些注解方法都被分拆为一些单独的模块，你需要在Gradle配置文件中添加新的依赖库，改变import的包名。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/" /><link rel="prev" href="http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/" /><link rel="next" href="http://mrljdx.com/%E6%8E%A8%E8%8D%90%E5%87%A0%E7%AF%87%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%96%87/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AA-4.0升级指南",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97\/"
+        },"genre": "posts","keywords": "AndroidAnnotations","wordcount":  2033 ,
+        "url": "http:\/\/mrljdx.com\/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97\/","datePublished": "2016-04-28T13:50:35+00:00","dateModified": "2016-04-28T13:50:35+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">AA-4.0升级指南</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-04-28">2016-04-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2033 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#aa40已经模块化了">AA4.0已经模块化了</a>
+      <ul>
+        <li><a href="#ormlitedao">@OrmLiteDao</a></li>
+        <li><a href="#otto">Otto</a></li>
+        <li><a href="#rest-client">Rest Client</a></li>
+        <li><a href="#roboguice">@RoboGuice</a></li>
+      </ul>
+    </li>
+    <li><a href="#在fragment中注解的view对象会被清理">在Fragment中注解的View对象会被清理</a></li>
+    <li><a href="#自aa-40不再支持231以下的android设备">自AA-4.0不再支持2.3.1以下的Android设备</a></li>
+    <li><a href="#编译运行最小支持-jdk7不再支持jdk-6">编译运行最小支持 JDK7不再支持JDK 6</a></li>
+    <li><a href="#receiveraction-修改">@ReceiverAction 修改</a></li>
+    <li><a href="#去掉了-ormlitedao-注解的model参数">去掉了 @OrmLiteDao 注解的model参数</a></li>
+    <li><a href="#去掉了-notitle-注解">去掉了 @NoTitle 注解</a></li>
+    <li><a href="#不再支持actionbarsherlock">不再支持ActionBarSherlock</a></li>
+    <li><a href="#extra-和afterextras-的变动">@Extra 和 @AfterExtras 的变动</a></li>
+    <li><a href="#在rest-方法中所有的参数都需要添加注解">在@Rest 方法中所有的参数都需要添加注解</a></li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>笔者注：AA-4.0为AndroidAnnotations-4.0的简称</p>
+</blockquote>
+<h2 id="aa40已经模块化了">AA4.0已经模块化了</h2>
+<p>现在AA-4.0的库被分割为一些小的模块，这意味着你以前在AA-3.x版本之前库中使用的一些注解方法都被分拆为一些单独的模块，你需要在Gradle配置文件中添加新的依赖库，改变import的包名。</p>
+<h3 id="ormlitedao">@OrmLiteDao</h3>
+<p>以<a href="https://github.com/excilys/androidannotations/wiki/Ormlite" target="_blank" rel="noopener noreffer">@OrmLiteDao</a>的注解使用为例，在引入AA-4.0后，如果你的项目中有用到<a href="https://github.com/excilys/androidannotations/wiki/Ormlite" target="_blank" rel="noopener noreffer">@OrmLiteDao</a>，那么你需要在app的<code>build.gradle</code>项目依赖中添加下文件：</p>
+<pre><code>compile &quot;org.androidannotations:ormlite-api:4.0.0&quot;
+apt  &quot;org.androidannotations:ormlite:4.0.0&quot;
+</code></pre>
+<p>修改import的包名：</p>
+<pre><code>org.androidannotations.ormlite.annotations.OrmLiteDao
+</code></pre>
+<h3 id="otto">Otto</h3>
+<p>将Otto库整合到AA-4.0中配置如下：</p>
+<ol>
+<li>添加<a href="https://github.com/excilys/androidannotations/wiki/GettingStarted" target="_blank" rel="noopener noreffer">AA-4.0</a>到工程；</li>
+<li>添加<code>Otto</code>库的插件：
+dependencies { 
+apt &ldquo;org.androidannotations:otto:$AAVersion&rdquo; 
+compile &ldquo;org.androidannotations:otto-api:$AAVersion&rdquo;
+}</li>
+<li>添加<a href="http://square.github.io/otto/" target="_blank" rel="noopener noreffer">Otto</a>库依赖
+dependencies { compile &lsquo;com.squareup:otto:1.3.8&rsquo;}</li>
+</ol>
+<h3 id="rest-client">Rest Client</h3>
+<p>如果项目中使用<a href="https://github.com/excilys/androidannotations/wiki/Rest-API#rest" target="_blank" rel="noopener noreffer">Rest Client</a> ，需要在<code>build.gradle</code>中添加配置依赖库：</p>
+<pre><code>     dependencies { 
+        apt &quot;org.androidannotations:rest-spring-api:$AAVersion&quot; 
+        compile &quot;org.androidannotations:rest-spring:$AAVersion&quot;
+    } 
+</code></pre>
+<p>更改导入的包名:</p>
+<pre><code>org.androidannotations.rest.spring.annotations.Rest //etc
+org.androidannotations.rest.spring.api.RestClientHeaders // etc
+</code></pre>
+<h3 id="roboguice">@RoboGuice</h3>
+<p>使用 <a href="https://github.com/excilys/androidannotations/wiki/RoboGuiceIntegration" target="_blank" rel="noopener noreffer">@RoboGuice
+</a>, 在项目的<em>build.gradle</em>中添加依赖：</p>
+<pre><code>  compile &quot;org.androidannotations:roboguice-api:4.0.0&quot;
+  apt &quot;org.androidannotations:roboguice:4.0.0&quot;
+</code></pre>
+<p>修改 imports :</p>
+<pre><code>org.androidannotations.roboguice.annotations.RoboGuice
+</code></pre>
+<h2 id="在fragment中注解的view对象会被清理">在Fragment中注解的View对象会被清理</h2>
+<p>在AA-4.0中对在Fragment中使用<code>@ViewById</code>和<code>@ViewsById</code>的View对象会在Fragment的声明周期onDestoryView()时设为<code>null</code>，如果程序执行了Fragment的声明周期事件onDestoryView()后，仍然访问该View，则会得到<em>NullPointerExceptions</em>异常，为了避免发生这种情况，可以使用新的注解<code>@IgnoreWhen</code>，如下：</p>
+<pre><code>  //当前状态为DESTORYED，则忽略此方法，不调用
+  @IgnoreWhen(IgnoreWhen.State.VIEW_DESTROYED)
+  void someMethodCalledAfterViewDestroyed() { 
+      injectedView.setText(&quot;Hello&quot;); 
+  }
+</code></pre>
+<h2 id="自aa-40不再支持231以下的android设备">自AA-4.0不再支持2.3.1以下的Android设备</h2>
+<p>现在市面上的Android设备已经都是4.0及以上了，2.3的设备都比较少，所以不支持2.3.1以下的安卓设备也没啥影响。</p>
+<h2 id="编译运行最小支持-jdk7不再支持jdk-6">编译运行最小支持 JDK7不再支持JDK 6</h2>
+<p>AA-4.0不再支持JDK 6的编译，不过你依然可以使用JDK 6的源码来编译。话说现在的环境都支持JDK8了，到时候在<em>build.gradle</em>的<code>android{} </code>DSL域中配置编译选项即可。</p>
+<pre><code>  //java版本
+  compileOptions {    
+      sourceCompatibility JavaVersion.VERSION_1_7    
+      targetCompatibility JavaVersion.VERSION_1_7
+  }
+</code></pre>
+<h2 id="receiveraction-修改">@ReceiverAction 修改</h2>
+<p>在AA-3.x版本及以前，如果使用<code>@ReceiverAction</code>没有指定Action的值，则会将方法名作为Action，从AA-4.0开始不再支持这种方式，必须在注解中指定Action的值。
+实例说明：</p>
+<pre><code>  @ReceiverAction
+  public void simpleAction() { // AA 3.x, action = &quot;simpleAction&quot;
+  }
+
+  @ReceiverAction(actions = &quot;simpleAction&quot;)
+  public void simpleAction() { // AA 4.0.0
+  }
+</code></pre>
+<h2 id="去掉了-ormlitedao-注解的model参数">去掉了 @OrmLiteDao 注解的model参数</h2>
+<p>虽然在AA-4.0中移除了model的参数配置选项，不过在编译期间，会自动根据<code>Dao</code>类判断model的值，减少了冗余。
+实例说明：</p>
+<pre><code>@OrmLiteDao(helper = DatabaseHelper.class, model = Car.class) // AA 3.x
+Dao&lt;Car, Long&gt; injectedDao;
+
+@OrmLiteDao(helper = DatabaseHelper.class) // AA 4.0.0
+Dao&lt;Car, Long&gt; injectedDao;
+</code></pre>
+<h2 id="去掉了-notitle-注解">去掉了 @NoTitle 注解</h2>
+<p>可能是为了代码规范，在AA-4.0中去掉了<code>@NoTitle</code>注解，可以通过<code>@WindowFeature</code>注解来实现同样的功能(不显示标题)</p>
+<pre><code>  @NoTitle // AA 3.x
+  @EActivity
+  public class MyActivity extends Activity {
+  }
+  
+  @WindowFeature(Window.FEATURE_NO_TITLE) // AA 4.0.0
+  @EActivitypublic class MyActivity extends Activity {
+  }
+</code></pre>
+<h2 id="不再支持actionbarsherlock">不再支持ActionBarSherlock</h2>
+<p>由于Android官方的AppCompat比ActionBarSherlock要好，而且ActionBarSherlock这个项目也不再维护，所以AA-4.0也不再提供对ActionBarSherlock的支持。在项目中可以使用 AppCompat Support Library来替代ActionBarSherlock。</p>
+<blockquote>
+<p>PS：现在应该没有人用ActionBarSherlock这么古老的库了吧~</p>
+</blockquote>
+<h2 id="extra-和afterextras-的变动">@Extra 和 @AfterExtras 的变动</h2>
+<p>在AA-4.0中，不会再在onNewIntent()方法中调用setIntent()方法。这个对于3.x的用户基本上没影响。</p>
+<h2 id="在rest-方法中所有的参数都需要添加注解">在@Rest 方法中所有的参数都需要添加注解</h2>
+<p>对于以前项目使用AA-3.x的，这个改动有点小大，得改不少关于Rest Client的代码，从AA-4.0开始你必须明确的告诉编译处理器每个Rest请求方法中的参数代表的意思。
+使用<code>@Body</code>注解指明请求的body类型：</p>
+<pre><code> @Rest(converters = GsonHttpMessageConverter.class)
+ public interface MyRestClient { 
+    @Put 
+    void putEvent(Event event); // AA 3.x request body is the event variable  
+  }
+
+  @Rest(converters = GsonHttpMessageConverter.class)
+  public interface MyRestClient { 
+    @Put 
+    void putEvent(@Body Event event); // AA 4.0.0
+  }
+</code></pre>
+<p>使用<code>@Path</code>指明url中的参数:</p>
+<pre><code>  @Rest(converters = GsonHttpMessageConverter.class)
+  public interface MyRestClient { 
+      @Get(&quot;/events/{id}&quot; 
+      Event getEvent(int id); // AA 3.x the id method param is an url variable
+  }
+
+  @Rest(converters = GsonHttpMessageConverter.class)
+  public interface MyRestClient { 
+      @Get(&quot;/events/{id}&quot; 
+      Event getEvent(@Path int id); // AA 4.0.0
+  }
+</code></pre>
+<p>总体来说，AA-4.0中关于@Rest这块的注解方法，有很多借鉴了Retrofit。这是一个不错的开端，后续版本可能回减少对于SpringAndroid的项目库的依赖。逐渐的形成一种插件化的网络请求注解库。</p>
+<h2 id="end">END</h2>
+<p>本文大部分内容参考<a href="https://github.com/excilys/androidannotations/wiki/4.0.0-migration-guide" target="_blank" rel="noopener noreffer">AA 4.0 migration guide</a> ，此次的AA-4.0版本是一次重大更新，很明显的改变就是将之前一个库包含所有的功能拆分成了模块化的组件，根据项目需求导入相应的组件库，减少了项目的库依赖，同时也减少了项目的包体积。
+其次，对于一些代码上的规范也做了不少调整，更加重要的是，对于Fragment生命周期的一些视图组建的内存管理做了进一步的调整。整体来说建议各位同学升级到AA-4.0版本，这个版本的改动有点大，升级需谨慎，别赶着发版本升个级。
+还是那句经典的话，“no zuo no die,don&rsquo;t try”。</p>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-04-28</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/aa-4-0%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/androidannotations/">androidannotations</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/" class="prev" rel="prev" title="Android应用开发框架经验小结"><i class="fas fa-angle-left fa-fw"></i>Android应用开发框架经验小结</a>
+            <a href="/%E6%8E%A8%E8%8D%90%E5%87%A0%E7%AF%87%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%96%87/" class="next" rel="next" title="推荐几篇技术好文">推荐几篇技术好文<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

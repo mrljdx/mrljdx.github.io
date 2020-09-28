@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Hexo - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/hexo/</link>
+        <description>Hexo - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 09 Feb 2015 15:10:28 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/hexo/" rel="self" type="application/rss+xml" /><item>
+    <title>Hexo博客的搭建及同步更新</title>
+    <link>http://mrljdx.com/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%90%8C%E6%AD%A5%E6%9B%B4%E6%96%B0/</link>
+    <pubDate>Mon, 09 Feb 2015 15:10:28 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%90%8C%E6%AD%A5%E6%9B%B4%E6%96%B0/</guid>
+    <description><![CDATA[<h2 id="摘要">摘要</h2>
+<p>最近开始使用Hexo来搭建个人博客，这篇文章主要记录在使用Hexo搭建个人博客的时候出现的一些问题。</p>]]></description>
+</item></channel>
+</rss>

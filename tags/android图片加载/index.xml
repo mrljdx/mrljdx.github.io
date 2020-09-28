@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android图片加载 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/android%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD/</link>
+        <description>Android图片加载 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 22 Dec 2015 13:15:04 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/android%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD/" rel="self" type="application/rss+xml" /><item>
+    <title>Picasso&amp;Glide&amp;Fresco比较</title>
+    <link>http://mrljdx.com/picasso-glide-fresco%E6%AF%94%E8%BE%83/</link>
+    <pubDate>Tue, 22 Dec 2015 13:15:04 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/picasso-glide-fresco%E6%AF%94%E8%BE%83/</guid>
+    <description><![CDATA[<blockquote>
+<p>前言:在Android开发中,图片加载OOM一直困扰着很多开发者,在各种不合理的设计之下也容易导致图片加载OOM的问题,目前开源的比较常用的图片加载库也很多,比如老牌的UIL,Volley,AQuery还有比较优秀的Picasso,Glide,Fresco等.
+本文仅简单地比较Fresco&amp;Glide&amp;Picasoo,如有错误还请斧正.</p>
+</blockquote>]]></description>
+</item></channel>
+</rss>

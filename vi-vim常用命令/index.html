@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Vi/Vim常用命令 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Vi/Vim常用命令" />
+<meta property="og:description" content="前言
+习惯了在Mac/Linux下工作的人，可能需要了解一些Vi/Vim编辑器相关的命令。Vim 是Vi Improved的缩写。在Vi原有的基础上进行了很大的扩展。下面分别介绍Vi常用的命令。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-02T19:02:45+00:00" />
+<meta property="article:modified_time" content="2015-04-02T19:02:45+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Vi/Vim常用命令"/>
+<meta name="twitter:description" content="前言
+习惯了在Mac/Linux下工作的人，可能需要了解一些Vi/Vim编辑器相关的命令。Vim 是Vi Improved的缩写。在Vi原有的基础上进行了很大的扩展。下面分别介绍Vi常用的命令。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" /><link rel="prev" href="http://mrljdx.com/android%E5%BC%80%E5%8F%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E8%BD%AC%E8%BD%BD/" /><link rel="next" href="http://mrljdx.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vi/Vim常用命令",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/"
+        },"genre": "posts","keywords": "vim","wordcount":  2458 ,
+        "url": "http:\/\/mrljdx.com\/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/","datePublished": "2015-04-02T19:02:45+00:00","dateModified": "2015-04-02T19:02:45+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Vi/Vim常用命令</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-02">2015-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2458 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#移动光标">移动光标</a></li>
+    <li><a href="#进入和退出vi命令">进入和退出Vi命令</a></li>
+    <li><a href="#自动补齐关键字">自动补齐关键字</a></li>
+    <li><a href="#插入">插入</a></li>
+    <li><a href="#行合并">行合并</a></li>
+    <li><a href="#vi中查找及替换命令">Vi中查找及替换命令</a></li>
+    <li><a href="#查找一些选项">查找一些选项</a></li>
+    <li><a href="#在vi中删除">在Vi中删除</a></li>
+    <li><a href="#更改字符">更改字符</a></li>
+    <li><a href="#键盘宏操作">键盘宏操作</a></li>
+    <li><a href="#撤销操作">撤销操作</a></li>
+    <li><a href="#在vi中的块操作">在Vi中的块操作</a></li>
+    <li><a href="#剪切复制粘贴">剪切/复制/粘贴</a></li>
+    <li><a href="#vi的选项设置">Vi的选项设置</a></li>
+    <li><a href="#代码格式化">代码格式化</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p>习惯了在Mac/Linux下工作的人，可能需要了解一些Vi/Vim编辑器相关的命令。<strong>Vim</strong> 是Vi Improved的缩写。在Vi原有的基础上进行了很大的扩展。下面分别介绍Vi常用的命令。</p>
+<h2 id="移动光标">移动光标</h2>
+<p>|  操作符 | 功能|
+|&mdash;-
+| ^ | 移动到该行第一个非空格字符处|
+| w |向前移动一个word，将符号或标点当做单词处理|
+| W |向前移动一个word，不把符号或标点当做单词处理|
+| b |向后移动一个word，把符号或标点当做单词处理|
+| B |向后移动一个word，不把符号或者标点当做单词处理|
+| ( |光标移动至句首|
+| ) |光标移动至句末|
+| { |光标移动至段落开头|
+| } |光标移动至段落结尾|
+| H |光标移动至屏幕中间行|
+| M |光标移动至屏幕中间行|
+| L |光标移动至屏幕最后行|
+| 0（数字零） | 到行首|
+| $ | 到行末|
+| gg | 到页首|
+| G | 到页末 |
+| 行号+G|跳转到指定行|
+| n+（n为数字） | 光标下移n行 |
+| n- | 光标上移 n 行 |
+| control+g（注意：不是command）|查询当前行信息和当前文件信息|
+| fx | 向右跳转到<strong>光标同行</strong>字符x处（x可以是任意字符）|
+| Fx | 向左跳转到<strong>光标同行</strong> 字符x处（x可以是任意字符）|
+| tx | 和fx相同，区别是跳到字符x之前|
+| Tx | 和Fx相同，区别是调到字符x之后|
+| control+b | 向上滚动一屏 |
+| control+f | 向下滚动一屏 |
+| control+u | 向上滚动半屏 |
+| control+d | 向下滚动半屏 |
+| control+y | 向上滚动一行 |
+| control+e | 向下滚动一行 |</p>
+<h2 id="进入和退出vi命令">进入和退出Vi命令</h2>
+<p>| 操作符 | 功能 |
+|&mdash;
+| vi filename | 打开或新建文件，并将光标置于第一行首|
+| vi +n filename （eg: vi +3 ~/.bash_profile） | 打开文件，并将光标置于第n行首|
+| vi + filename | 打开文件，并将光标置于最后一行首  |
+| vi +/pattern filename | 打开文件，并将光标置于第一个与pattern匹配的串处|
+| vi -r filename | 在上次正用vi编辑时发生系统崩溃,恢复filename |
+| vi filename &hellip; filename | 打开多个文件，依次进行编辑 |
+| ZZ | 退出vi并保存 |
+| :q! | 退出vi，不保存 |
+| :wq | 退出vi并保存|</p>
+<h2 id="自动补齐关键字">自动补齐关键字</h2>
+<p>| 操作符 | 功能|
+|&mdash;-
+| control+n | 匹配下一个关键字 |
+| control+p | 匹配上一个关键字 |</p>
+<h2 id="插入">插入</h2>
+<p>|操作符|功能|
+|&mdash;-
+|o （小写字母o）|在光标<strong>下方</strong>新开一行并将光标置于新行行首，进入插入模式|
+|O （大写字母O）|在光标<strong>上方</strong>新开一行并将光标置于新行行首，进入插入模式|
+|a | 在光标之后进入插入模式|
+|A | 在光标之前进入插入模式|
+|R | 进入替换模式，直到按下Esc |</p>
+<h2 id="行合并">行合并</h2>
+<p>|操作符|功能|
+|&mdash;-
+| J | 将当前行的下面一行合并到当前行后面|</p>
+<h2 id="vi中查找及替换命令">Vi中查找及替换命令</h2>
+<p>|操作符|功能|
+|&mdash;
+|/pattern|从光标处向文件尾搜索pattern|
+|?pattern|从光标处想文件首搜索pattern|
+|n（配合/pattern 和 ?pattern使用）|在同一方向重复上一次搜索命令|
+|N（配合/pattern 和 ?pattern使用）|在反方向上重复上一次搜索命令|
+|:s/p1/p2/g|(注意：是行操作)<strong>当前行中</strong>所有p1均用p2替代，若要每个替换都向用户询问则应该用gc选项|
+|:n1,n2s/p1/p2/g|将n1至n2行中所有p1均用p2替代，若要每个替换都向用户询问则使用gc选项|
+|:g/p1/s//p2/g | 将文件中所有p1均用p2替换|</p>
+<blockquote>
+<p><strong>注意：</strong> .*[]^%~$在Vi中有特殊的含义，若需要查找则应该加上转义字符“\”</p>
+</blockquote>
+<h2 id="查找一些选项">查找一些选项</h2>
+<p>|操作符|功能|
+|&mdash;
+|:set hlsearch| 设置高亮查找|
+|:set nohlsearch| 关闭高亮查找|
+|:nohlsearch| 关闭当前已经设置的高亮|
+|:set incsearch| 设置增量查找 |
+|:set noincsearch | 关闭增量查找 |</p>
+<h2 id="在vi中删除">在Vi中删除</h2>
+<p>|操作符|功能|
+|&mdash;-
+| x | 删除当前光标下的字符 |
+| dw | 删除光标之后的单词剩余部分|
+| d$ | 删除光标之后的该行剩余部分 |
+| dd | 删除当前行 |
+| c | 功能和 d相同，区别在于完成删除操作后进入插入模式|
+| cc | 功能和 dd相同，然后进入插入模式|</p>
+<h2 id="更改字符">更改字符</h2>
+<p>|操作符|功能|
+|&mdash;-
+|rx | 将当前光标下的字符更改为x(x为任意字符)|
+|~ | 更改当前光标下的字符的大小写|</p>
+<h2 id="键盘宏操作">键盘宏操作</h2>
+<p>|操作符|功能|
+|&mdash;
+|qcharacter| 开始录制宏，character为a到Z的任意字符|
+|q | 终止录制宏 |
+|@character | 调用先前录制的宏 |</p>
+<h2 id="撤销操作">撤销操作</h2>
+<p>|操作符 | 功能|
+|&mdash;-
+| u | 撤销最后执行的命令|
+| U | 修正之前对该行的操作（注意是行操作）|
+| control + R | 重新执行被撤销的命令 |</p>
+<h2 id="在vi中的块操作">在Vi中的块操作</h2>
+<p>| 操作符 | 功能|
+|&mdash;-
+| yy | 复制当前整行（配合p使用，粘贴）|
+| nyy | 复制当前行开始的n行内容(n为整数)|
+| ?nyy | 将光标当前行及其以下n行的内容保存到寄存器?中，其中?为一个字母，n为一个数字|
+| ?nyw | 将光标当前行及其以下n个词的内容保存到寄存器?中，其中?为一个字母，n为一个数字|
+| ?nyl|将当前行及其下n个字符保存到寄存器?中，其中?为一个字母，n为一个数字|
+| ?p | 将寄存器?中的内容粘贴到光标位置之后。如果?是用yy复制的完整行，则粘贴在光标所在行下面。这里?可以是一个字母，也可以是一个数字。|
+| ?P （大写P） | 将寄存器a中得内容粘贴到光标位置之前。如果?是用yy复制的完整行，则粘贴在光标所在行上面。这里?可以使一个字母，也可以是一个数字|
+|ay[motion]| 分类如下|
+| ay$ | 复制光标位置到行末并保存在寄存器a中|
+| ayft| 复制光标位置到当前行第一个字母t并保存在寄存器a中|</p>
+<blockquote>
+<p>以上指令皆可去掉a工作，则y,p对未命名寄存器工作（所有d,c,x,y的对象都被保存在这里）。</p>
+</blockquote>
+<h2 id="剪切复制粘贴">剪切/复制/粘贴</h2>
+<p>所有删除的内容自动被保存，可以用p键粘贴</p>
+<h2 id="vi的选项设置">Vi的选项设置</h2>
+<p>| 操作符 | 功能|
+|&mdash;
+| all | 列出所有选项设置情况|
+| term | 设置终端类型|
+| ignorance| 在搜索中忽略大小写|
+| list | 显示制表(control+I)和行尾标志（$）|
+| number | 显示行号|
+| report | 显示由面向行的命令修改过的数据|
+| terse | 显示简单的警告信息|
+| warn | 在转到别的文件时若没有保存当前文件则显示No write信息|
+| nomagic | 允许在搜索模式中，使用前面不带转义字符&quot;&quot;的特殊字符搜索|
+| nowrapscan| 禁止vi在搜索到达文件两端是，又从另一端开始|
+| mesg | 允许vi显示其他用户用write写到自己终端上得信息|</p>
+<h2 id="代码格式化">代码格式化</h2>
+<p>| 操作符 | 功能 |
+|&mdash;-
+| gg | 对代码自动进行格式化|
+| G | 对代码进行格式化|</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-02</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/vim/">vim</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android%E5%BC%80%E5%8F%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E8%BD%AC%E8%BD%BD/" class="prev" rel="prev" title="Android开发最佳实践(转载)"><i class="fas fa-angle-left fa-fw"></i>Android开发最佳实践(转载)</a>
+            <a href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/" class="next" rel="next" title="设计模式读书笔记（开篇）">设计模式读书笔记（开篇）<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Receiving intents - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Receiving intents" />
+<meta property="og:description" content="
+原文地址：
+https://github.com/excilys/androidannotations/wiki/Receiving-intents
+
+接收意图
+@Receiver注释通知你的代码的意图,而不必手工申报和注册一个BroadcastReceiver。例如：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+@EActivity
+public class MyActivity extends Activity {
+
+  @Receiver(actions = &#34;org.androidannotations.ACTION_1&#34;)
+  protected void onAction1() {
+    // Will be called when an org.androidannotations.ACTION_1 intent is sent.
+  }
+
+}
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/receiving-intents/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-06T22:24:35+00:00" />
+<meta property="article:modified_time" content="2020-09-24T17:22:20+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Receiving intents"/>
+<meta name="twitter:description" content="
+原文地址：
+https://github.com/excilys/androidannotations/wiki/Receiving-intents
+
+接收意图
+@Receiver注释通知你的代码的意图,而不必手工申报和注册一个BroadcastReceiver。例如：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+@EActivity
+public class MyActivity extends Activity {
+
+  @Receiver(actions = &#34;org.androidannotations.ACTION_1&#34;)
+  protected void onAction1() {
+    // Will be called when an org.androidannotations.ACTION_1 intent is sent.
+  }
+
+}
+
+
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/receiving-intents/" /><link rel="prev" href="http://mrljdx.com/ereceiver%E5%8A%A0%E5%BC%BA%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8/" /><link rel="next" href="http://mrljdx.com/android%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Receiving intents",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/receiving-intents\/"
+        },"genre": "posts","keywords": "androidannotations","wordcount":  951 ,
+        "url": "http:\/\/mrljdx.com\/receiving-intents\/","datePublished": "2015-04-06T22:24:35+00:00","dateModified": "2020-09-24T17:22:20+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Receiving intents</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-06">2015-04-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 951 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#接收意图">接收意图</a></li>
+    <li><a href="#参数说明">参数说明</a></li>
+    <li><a href="#data-schemes">Data Schemes</a></li>
+    <li><a href="#local-broadcasting本地广播">Local broadcasting（本地广播）</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Receiving-intents">https://github.com/excilys/androidannotations/wiki/Receiving-intents</a></p>
+</blockquote>
+<h2 id="接收意图">接收意图</h2>
+<p><code>@Receiver</code>注释通知你的代码的意图,而不必手工申报和注册一个BroadcastReceiver。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_1&#34;</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAction1</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// Will be called when an org.androidannotations.ACTION_1 intent is sent.
+</span><span class="c1"></span>  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>@Receiver</code> 注释支持 <a href="https://github.com/excilys/androidannotations/wiki/Enhance-activities" target="_blank" rel="noopener noreffer">activities</a>, <a href="https://github.com/excilys/androidannotations/wiki/Enhance-Fragments" target="_blank" rel="noopener noreffer">fragments</a> 和 <a href="https://github.com/excilys/androidannotations/wiki/Enhance-services" target="_blank" rel="noopener noreffer">services</a> (以及<a href="https://github.com/excilys/androidannotations/wiki/Enhance-IntentServices" target="_blank" rel="noopener noreffer">intent services</a>)。</p>
+<h2 id="参数说明">参数说明</h2>
+<p>你可能只有一个<code>android.content.intent</code>或没有参数。
+使用<code>@Receiver</code> 注解的方法可能有以下参数：</p>
+<ul>
+<li>一个在方法<code>void onReceive(Context context, Intent intent)</code> 中给定的上下文参数<code>android.content.Context</code>。</li>
+<li>在方法<code>void onReceive(Context context, Intent intent)</code> 中给定的意图<code>android.content.Intent</code>。</li>
+<li>任何放入Intent中被本地<code>android.os.Parcelable</code> 或<code>java.io.Serializable</code> 序列化的被<code>@Receiver.Extra</code>注释的参数，key就是用<code>@Receiver.Extra</code> 声明的值。</li>
+</ul>
+<h2 id="data-schemes">Data Schemes</h2>
+<p><code>dataScheme</code>参数可以设置一个或多个dataSchemes,这些值会交给由Receiver处理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">content</span><span class="o">.</span><span class="na">Intent</span><span class="o">.</span><span class="na">VIEW</span><span class="o">,</span> <span class="n">dataSchemes</span> <span class="o">=</span> <span class="s">&#34;http&#34;</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onHttp</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// Will be called when an App wants to open a http website but not for https.
+</span><span class="c1"></span>  <span class="o">}</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">content</span><span class="o">.</span><span class="na">Intent</span><span class="o">.</span><span class="na">VIEW</span><span class="o">,</span> <span class="n">dataSchemes</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;http&#34;</span><span class="o">,</span> <span class="s">&#34;https&#34;</span><span class="o">})</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onHttps</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// Will be called when an App wants to open a http or https website.
+</span><span class="c1"></span>  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>##Registration(注册)
+注释以编程方式在父类（Activity, Fragment or Service）的生命周期内注册和注销BroadcastReceiver。
+<code>registerAt</code>可选参数指定注册/注销时发生。默认值是<strong>OnCreateOnDestroy</strong>。
+下表列出了<code>registerAt</code>值,当注册/ deregisration发生和显示时可以使用的值。</p>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Register</th>
+<th style="text-align:center">Unregister</th>
+<th style="text-align:center">Activity</th>
+<th style="text-align:center">Fragment</th>
+<th style="text-align:center">Service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OnCreateOnDestroy</strong></td>
+<td style="text-align:center">onCreate</td>
+<td style="text-align:center">onDestroy</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+</tr>
+<tr>
+<td><strong>OnStartOnStop</strong></td>
+<td style="text-align:center">onStart</td>
+<td style="text-align:center">onStop</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td><strong>OnResumeOnPause</strong></td>
+<td style="text-align:center">OnAttachOnDetach</td>
+<td style="text-align:center">onAttach</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">X</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>这里有一段示例代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EFragment</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_1&#34;</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAction1RegisteredOnCreateOnDestroy</span><span class="o">()</span> <span class="o">{</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_2&#34;</span><span class="o">,</span> <span class="n">registerAt</span> <span class="o">=</span> <span class="n">Receiver</span><span class="o">.</span><span class="na">RegisterAt</span><span class="o">.</span><span class="na">OnAttachOnDetach</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAction2RegisteredOnAttachOnDetach</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_3&#34;</span><span class="o">,</span> <span class="n">registerAt</span> <span class="o">=</span> <span class="n">Receiver</span><span class="o">.</span><span class="na">RegisterAt</span><span class="o">.</span><span class="na">OnStartOnStop</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">action3RegisteredOnStartOnStop</span><span class="o">()</span> <span class="o">{</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_4&#34;</span><span class="o">,</span> <span class="n">registerAt</span> <span class="o">=</span> <span class="n">Receiver</span><span class="o">.</span><span class="na">RegisterAt</span><span class="o">.</span><span class="na">OnResumeOnPause</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">action4RegisteredOnResumeOnPause</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="local-broadcasting本地广播">Local broadcasting（本地广播）</h2>
+<p>可选参数的<code>local</code> 注册BroadcastReceiver本地使用<a href="http://developer.android.com/reference/android/support/v4/content/LocalBroadcastManager.html" target="_blank" rel="noopener noreffer">LocalBroadcastManager</a> 来代替父类上下文(activity,fragment或service)。
+其中 <code>local</code> 的默认值为false。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EService</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyService</span> <span class="kd">extends</span> <span class="n">Service</span> <span class="o">{</span>
+
+  <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_1&#34;</span><span class="o">,</span> <span class="n">local</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAction1OnCreate</span><span class="o">()</span> <span class="o">{</span>  
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">IBinder</span> <span class="nf">onBind</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-09-24&nbsp;<a class="git-hash" href="https://github.com/dillonzq/LoveIt/commit/720a01fac89c9b4fa4e02a4e78709be894b4382d" target="_blank" title="commit by Mrljdx(mrljdx@gmail.com) 720a01fac89c9b4fa4e02a4e78709be894b4382d: [update]update hugo blog context">
+                                    <i class="fas fa-hashtag fa-fw"></i>720a01f</a></span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/receiving-intents/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/androidannotations/">androidannotations</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ereceiver%E5%8A%A0%E5%BC%BA%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8/" class="prev" rel="prev" title="@EReceiver加强广播接收器"><i class="fas fa-angle-left fa-fw"></i>@EReceiver加强广播接收器</a>
+            <a href="/android%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="next" rel="next" title="Android常用设计模式">Android常用设计模式<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

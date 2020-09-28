@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Gralde - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/gralde/</link>
+        <description>Gralde - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 17 Mar 2016 16:32:40 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/gralde/" rel="self" type="application/rss+xml" /><item>
+    <title>Gradle实战及学习建议</title>
+    <link>http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/</link>
+    <pubDate>Thu, 17 Mar 2016 16:32:40 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/b7fc7a6abffb" target="_blank" rel="noopener noreffer">Gradle实战及学习建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>相信不少使用Android Studio开发Android的朋友都在为Gradle中的一些配置疑惑，今天来介绍一下我在学习Gradle的一些经验和总结，希望能对大家有所帮助。先大致的看一张Gradle学习的结构图，对正片文章有个大致的了解，其次逐一说明一些Android Gradle 插件中的一些变量的含义及用法实例。</p>]]></description>
+</item></channel>
+</rss>

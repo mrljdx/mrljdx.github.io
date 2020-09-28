@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>EventBus3 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/eventbus3/</link>
+        <description>EventBus3 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 18 Mar 2016 10:32:12 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/eventbus3/" rel="self" type="application/rss+xml" /><item>
+    <title>EventBus3新特性及用法</title>
+    <link>http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/</link>
+    <pubDate>Fri, 18 Mar 2016 10:32:12 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/</guid>
+    <description><![CDATA[<blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/2737b4a22cac" target="_blank" rel="noopener noreffer">EventBus3新特性及用法</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<p></p>
+<h2 id="eventbus-3-简介">EventBus 3 简介</h2>
+<p>EventBus是一种为了优化Android组件之间事件传递的解耦工具，通过发布/订阅事件总线来实现事件在不同组件之间的事件传递。
+在EventBus 3之前，greenrobot团队因为考虑性能原因所以比较抵触使用注解框架。目前的EventBus3开始使用注解来申明订阅事件的处理方法。虽然目前Android 6 和ART都有了，但是对于Java反射造成的性能影响还是没能很好的解决。
+在EventBus3中，greenrobot团队通过利用在编译时检索所有注解代码，然后生成一个包含所有在运行时要花很大代价才能获取的数据的类，通过这种新的注解处理方式来提升性能，让EventBus3比其他的eventbus会更加快。在后文中会贴出和otto的性能比较。</p>]]></description>
+</item></channel>
+</rss>

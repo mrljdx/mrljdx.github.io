@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>git命令 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/git%E5%91%BD%E4%BB%A4/</link>
+        <description>git命令 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 12 Feb 2015 14:50:23 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/git%E5%91%BD%E4%BB%A4/" rel="self" type="application/rss+xml" /><item>
+    <title>Git常用命令详解(转载)</title>
+    <link>http://mrljdx.com/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD/</link>
+    <pubDate>Thu, 12 Feb 2015 14:50:23 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD/</guid>
+    <description><![CDATA[原文：Git远程操作详解 作者：阮一峰 Git是目前最流行的版本管理系统，学会Git几乎成了开发者的必备技能。 Git有很多优势，其中之一就是远程]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>AndroidManifest配置文件简介 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="AndroidManifest配置文件简介" />
+<meta property="og:description" content="在Android开发接触的最多的可能就是AndroidManifest.xml这个配置文件了，这里配置文件中包括了应用程序中的大部分信息，系统在运行代码时，需要知道这些基本信息。比如开发中的Activity、Service、Broadcast都需要在这里定义。如果用到了一些系统自带的服务比如拨号、应用安装、GPS定位等服务也需要在这里声明。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-13T11:18:34+00:00" />
+<meta property="article:modified_time" content="2015-04-13T11:18:34+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="AndroidManifest配置文件简介"/>
+<meta name="twitter:description" content="在Android开发接触的最多的可能就是AndroidManifest.xml这个配置文件了，这里配置文件中包括了应用程序中的大部分信息，系统在运行代码时，需要知道这些基本信息。比如开发中的Activity、Service、Broadcast都需要在这里定义。如果用到了一些系统自带的服务比如拨号、应用安装、GPS定位等服务也需要在这里声明。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/" /><link rel="prev" href="http://mrljdx.com/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" /><link rel="next" href="http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AndroidManifest配置文件简介",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B\/"
+        },"genre": "posts","keywords": "Android","wordcount":  1357 ,
+        "url": "http:\/\/mrljdx.com\/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B\/","datePublished": "2015-04-13T11:18:34+00:00","dateModified": "2015-04-13T11:18:34+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">AndroidManifest配置文件简介</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-13">2015-04-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1357 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="content" id="content"><p>在Android开发接触的最多的可能就是AndroidManifest.xml这个配置文件了，这里配置文件中包括了应用程序中的大部分信息，系统在运行代码时，需要知道这些基本信息。比如开发中的Activity、Service、Broadcast都需要在这里定义。如果用到了一些系统自带的服务比如拨号、应用安装、GPS定位等服务也需要在这里声明。</p>
+<p>下面看一段注释过的<code>AndroidManifest.xml</code>文件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span class="c">&lt;!--xmlns:android指定命名空间；应用包；版本号；版本名称--&gt;</span>
+<span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+    <span class="na">package=</span><span class="s">&#34;com.mrljdx.test&#34;</span>
+    <span class="na">android:versionCode=</span><span class="s">&#34;1&#34;</span>
+    <span class="na">android:versionName=</span><span class="s">&#34;1.0&#34;</span> <span class="nt">&gt;</span>
+    <span class="c">&lt;!--用户权限--&gt;</span>
+	<span class="nt">&lt;uses-permission</span> <span class="nt">/&gt;</span>
+	<span class="c">&lt;!--自定义权限许可--&gt;</span>
+    <span class="nt">&lt;permission</span> <span class="nt">&gt;&lt;/permission&gt;</span>
+    <span class="nt">&lt;permission-tree</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;permission-group</span> <span class="nt">&gt;&lt;/permission-group&gt;</span>
+    <span class="nt">&lt;instrumentation</span> <span class="nt">&gt;&lt;/instrumentation&gt;</span>
+    <span class="c">&lt;!--声明应用程序要求最低的Api级别--&gt;</span>
+    <span class="nt">&lt;uses-sdk</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-configuration</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-feature</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;supports-screens</span> <span class="nt">/&gt;</span>
+    <span class="c">&lt;!--定义应用名称，图标等--&gt;</span>
+    <span class="nt">&lt;application</span> <span class="nt">&gt;</span>
+
+		<span class="c">&lt;!--注册Activity信息 activity--&gt;</span>
+        <span class="nt">&lt;activity</span> <span class="nt">&gt;</span>
+            <span class="c">&lt;!--意图过滤器（活动、服务和广播）--&gt;</span>
+            <span class="nt">&lt;intent-filter</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;action</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;category</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;data/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+            <span class="nt">&lt;meta-data</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/activity&gt;</span>
+        <span class="nt">&lt;activity-alias/&gt;</span>
+        <span class="c">&lt;!--注册服务信息 service--&gt;</span>
+        <span class="nt">&lt;service</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;intent-filter</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;action/&gt;</span>
+                <span class="nt">&lt;category/&gt;</span>
+                <span class="nt">&lt;data/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+            <span class="nt">&lt;meta-data/&gt;</span>
+        <span class="nt">&lt;/service&gt;</span>
+        <span class="c">&lt;!--注册广播接收者broadcast receiver--&gt;</span>
+        <span class="nt">&lt;receiver</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;intent-filter</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;action</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;category</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;data/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+            <span class="nt">&lt;meta-data/&gt;</span>
+        <span class="nt">&lt;/receiver&gt;</span>
+        <span class="c">&lt;!--注册内容提供者content_provider--&gt;</span>
+        <span class="nt">&lt;provider</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;grant-uri-permission</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;meta-data/&gt;</span>
+            <span class="nt">&lt;path-permission/&gt;</span>
+        <span class="nt">&lt;/provider&gt;</span>
+        <span class="c">&lt;!--列举application所需链接库，比如测试时，引入android.test.runner库--&gt;</span>
+        <span class="nt">&lt;uses-library/&gt;</span>
+        
+    <span class="nt">&lt;/application&gt;</span>
+<span class="nt">&lt;/manifest&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Android程序执行流程：</p>
+<ol>
+<li>点击应用图标时，系统将这个事件包装成一个Intent，该Intent包含两个参数，代码：</li>
+</ol>
+<blockquote>
+<p>｛action:&ldquo;android.intent.action.Main&rdquo;,category:&ldquo;android.intent.category.LAUNCHER&rdquo;｝</p>
+</blockquote>
+<p>这个意图被传递给应用之后，会在AndroidManifest.xml配置清单中查找，找到与意图过滤器所在的Activity元素，再根据name属性，来找到对应的Activity类。
+2. 接着Android系统创建该Activity类的实例对象，对象创建完成之后，执行onCreate方法，此onCreate方法是重写其父Activity的onCreate方法。此方法用来初始化Activity的实例对象。代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"> <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+    <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="n">3</span><span class="o">.</span><span class="err">``</span><span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span><span class="err">``</span> <span class="n">的作用是调用父类Activity的onCreate方法来实现对界面的画图绘制工作</span><span class="err">。</span><span class="n">在实现自己定义的Activity子类的onCreate时</span><span class="err">，</span><span class="n">一定要记得调用这个方法</span><span class="err">，</span><span class="n">以确保能正确绘制界面</span><span class="err">。</span>
+<span class="n">4</span><span class="o">.</span> <span class="err">``</span><span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">)</span><span class="err">``</span> <span class="n">的作用就是加载一个界面</span><span class="err">。</span><span class="n">该方法中传入一个参数</span><span class="err">``</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="err">``，</span><span class="n">其含义是R</span><span class="o">.</span><span class="na">java类中静态内部类</span><span class="err">``</span><span class="n">layout</span><span class="err">``</span><span class="n">常量</span><span class="err">``</span><span class="n">main</span><span class="err">``</span><span class="n">的值</span><span class="err">，</span><span class="n">而该值指向</span><span class="err">``</span><span class="n">res</span><span class="err">``</span> <span class="n">目录下的</span><span class="err">``</span><span class="n">layout</span><span class="err">``</span> <span class="n">子目录下</span><span class="err">``</span><span class="n">main</span><span class="o">.</span><span class="na">xml</span><span class="err">``</span> <span class="n">文件的标识符</span><span class="err">。</span><span class="n">因此代表着显示</span><span class="err">``</span><span class="n">main</span><span class="o">.</span><span class="na">xml</span><span class="err">``</span> <span class="n">定义的界面</span><span class="err">。</span>
+
+<span class="n">以上就是一个应用程序启动的整个流程</span><span class="err">。</span><span class="n">了解AndroidManifest的内容以及启动的过程可以更加清楚Android应用开发的一些问题</span><span class="err">。</span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-13</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android/">Android</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="Android性能优化笔记"><i class="fas fa-angle-left fa-fw"></i>Android性能优化笔记</a>
+            <a href="/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/" class="next" rel="next" title="自定义View小结">自定义View小结<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

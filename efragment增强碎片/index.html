@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>@EFragment增强碎片 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="@EFragment增强碎片" />
+<meta property="og:description" content="
+原文地址：
+https://github.com/excilys/androidannotations/wiki/Enhance-Fragments
+
+支持FragmentActivity
+在AndroidAnnotations 2.6之前,没有支持片段注入。然而,我们确保至少继承FragmentActivity的活动不会打破AndroidAnnotations的规则：
+
+
+1
+2
+3
+4
+
+
+@EActivity(R.id.main)
+public class DetailsActivity extends FragmentActivity {
+
+}
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-06T22:19:36+00:00" />
+<meta property="article:modified_time" content="2015-04-06T22:19:36+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="@EFragment增强碎片"/>
+<meta name="twitter:description" content="
+原文地址：
+https://github.com/excilys/androidannotations/wiki/Enhance-Fragments
+
+支持FragmentActivity
+在AndroidAnnotations 2.6之前,没有支持片段注入。然而,我们确保至少继承FragmentActivity的活动不会打破AndroidAnnotations的规则：
+
+
+1
+2
+3
+4
+
+
+@EActivity(R.id.main)
+public class DetailsActivity extends FragmentActivity {
+
+}
+
+
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87/" /><link rel="prev" href="http://mrljdx.com/afterxxx%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F/" /><link rel="next" href="http://mrljdx.com/extra/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "@EFragment增强碎片",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87\/"
+        },"genre": "posts","keywords": "androidannotations","wordcount":  1251 ,
+        "url": "http:\/\/mrljdx.com\/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87\/","datePublished": "2015-04-06T22:19:36+00:00","dateModified": "2015-04-06T22:19:36+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">@EFragment增强碎片</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-06">2015-04-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1251 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#支持fragmentactivity">支持FragmentActivity</a></li>
+    <li><a href="#碎片布局">碎片布局</a></li>
+    <li><a href="#强制注入布局">强制注入布局</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>原文地址：
+<a href="https://github.com/excilys/androidannotations/wiki/Enhance-Fragments">https://github.com/excilys/androidannotations/wiki/Enhance-Fragments</a></p>
+</blockquote>
+<h2 id="支持fragmentactivity">支持FragmentActivity</h2>
+<p>在AndroidAnnotations 2.6之前,没有支持片段注入。然而,我们确保至少继承FragmentActivity的活动不会打破AndroidAnnotations的规则：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">main</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DetailsActivity</span> <span class="kd">extends</span> <span class="n">FragmentActivity</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>##支持Fragment
+AndroidAnnotations同时支持<code>android.app.fragment</code>和<code>android.support.v4.app.fragment</code>,并会自动使用正确基于片段的类型的api。
+##增强碎片
+开始在一个片段使用AndroidAnnotations特性,可以使用<code>@EFragment</code>注释该Fragment类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EFragment</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>AndroidAnnotations将生成一个Fragment的增强子类：<code>MyFragment_</code>。当你需要创建新的片段时，应该在xml布局中使用生成的子类(<code>MyFragment_</code>)。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+    <span class="na">android:layout_width=</span><span class="s">&#34;fill_parent&#34;</span>
+    <span class="na">android:layout_height=</span><span class="s">&#34;fill_parent&#34;</span>
+    <span class="na">android:orientation=</span><span class="s">&#34;horizontal&#34;</span> <span class="nt">&gt;</span>
+
+    <span class="nt">&lt;fragment</span>
+        <span class="na">android:id=</span><span class="s">&#34;@+id/myFragment&#34;</span>
+        <span class="na">android:name=</span><span class="s">&#34;com.company.MyFragment_&#34;</span>
+        <span class="na">android:layout_width=</span><span class="s">&#34;fill_parent&#34;</span>
+        <span class="na">android:layout_height=</span><span class="s">&#34;fill_parent&#34;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/LinearLayout&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>代码中生成实例对象，也需要使用其子类实例化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">MyFragment</span> <span class="n">fragment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyFragment_</span><span class="o">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>你可以在<code>@EFragment</code> 注解的类中，使用各种注释方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EFragment</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="n">SomeBean</span> <span class="n">someBean</span><span class="o">;</span>
+
+    <span class="nd">@ViewById</span>
+    <span class="n">TextView</span> <span class="n">myTextView</span><span class="o">;</span>
+
+    <span class="nd">@App</span>
+    <span class="n">MyApplication</span> <span class="n">customApplication</span><span class="o">;</span>
+
+    <span class="nd">@SystemService</span>
+    <span class="n">ActivityManager</span> <span class="n">activityManager</span><span class="o">;</span>
+
+    <span class="nd">@OrmLiteDao</span><span class="o">(</span><span class="n">helper</span> <span class="o">=</span> <span class="n">DatabaseHelper</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="n">UserDao</span> <span class="n">userDao</span><span class="o">;</span>
+
+    <span class="nd">@Click</span>
+    <span class="kt">void</span> <span class="nf">myButton</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="nd">@UiThread</span>
+    <span class="kt">void</span> <span class="nf">uiThread</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
+    <span class="nd">@AfterInject</span>
+    <span class="kt">void</span> <span class="nf">calledAfterInjection</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="nd">@AfterViews</span>
+    <span class="kt">void</span> <span class="nf">calledAfterViewInjection</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Receiver</span><span class="o">(</span><span class="n">actions</span> <span class="o">=</span> <span class="s">&#34;org.androidannotations.ACTION_1&#34;</span><span class="o">)</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAction1</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>视图注入和事件监听器绑定只能基于视图包含里面的片段。但是请注意,它不是目前的@EBean注入内部碎片:他们能访问活动的视图。</p>
+</blockquote>
+<h2 id="碎片布局">碎片布局</h2>
+<p>将一个视图与一个片断联系到一起的标准方法是覆写<code>onCreateView()</code> 方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EFragment</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">container</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">my_fragment_layout</span><span class="o">,</span> <span class="n">container</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">view</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>你可以通过设置@EFragment注释参数的值让AndroidAnnotations为您处理视图问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EFragment</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">my_fragment_layout</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在使用<code>@EFragment</code>时你需要覆写<code>onCreateView()</code> ，因为您需要访问<code>savedInstanceState</code>,你仍然可以让AndroidAnnotations处理创建通过返回null布局:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EFragment</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">my_fragment_layout</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">container</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="强制注入布局">强制注入布局</h2>
+<p>你可能会在一些使用@EActivity 、@EFragment、@EView、@EViewGroup、@EBean的注解类中通过使用@FragmentById 或 @FragmentByTag注入Fragment。如果你不指定任何注释的值,使用字段名作为值。</p>
+<blockquote>
+<p>我们建议使用@FragmentById来注入Fragment而不是使用@FragmentByTag，因为没有编译时执行验证后者。</p>
+</blockquote>
+<p>请注意,@FragmentById @FragmentByTag只能注入片段,不创建它们,所以他们必须已经存在于活动中(通过定义在布局或以编程方式在onCreate()创建）。</p>
+<blockquote>
+<p>你可以注入碎片，即使这些碎片类没有使用@EFragment注释。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@EActivity</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">fragments</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFragmentActivity</span> <span class="kd">extends</span> <span class="n">FragmentActivity</span> <span class="o">{</span>
+  <span class="nd">@FragmentById</span>
+  <span class="n">MyFragment</span> <span class="n">myFragment</span><span class="o">;</span>
+
+  <span class="nd">@FragmentById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">myFragment</span><span class="o">)</span>
+  <span class="n">MyFragment</span> <span class="n">myFragment2</span><span class="o">;</span>
+
+  <span class="nd">@FragmentByTag</span>
+  <span class="n">MyFragment</span> <span class="n">myFragmentTag</span><span class="o">;</span>
+
+  <span class="nd">@FragmentByTag</span><span class="o">(</span><span class="s">&#34;myFragmentTag&#34;</span><span class="o">)</span>
+  <span class="n">MyFragment</span> <span class="n">myFragmentTag2</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/efragment%E5%A2%9E%E5%BC%BA%E7%A2%8E%E7%89%87/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/androidannotations/">androidannotations</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/afterxxx%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F/" class="prev" rel="prev" title="@AfterXXX调用顺序"><i class="fas fa-angle-left fa-fw"></i>@AfterXXX调用顺序</a>
+            <a href="/extra/" class="next" rel="next" title="Extra">Extra<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

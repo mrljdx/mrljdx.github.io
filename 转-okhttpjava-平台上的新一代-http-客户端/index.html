@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>[转]OkHttp：Java 平台上的新一代 HTTP 客户端 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="[转]OkHttp：Java 平台上的新一代 HTTP 客户端" />
+<meta property="og:description" content="
+本文转自: IBM DevelopersWorks 《OkHttp：Java 平台上的新一代 HTTP 客户端》
+原文作者: 成富,软件工程师
+ 注: 本文写的时候OkHttp3还未发布(发布时间2016年01月03日),而OkHttp3的改动很大,注意本文针对kHttp2.x相关版本,不适用于OkHttp3.x相关版本
+具体改动请参考: https://github.com/square/okhttp/blob/master/CHANGELOG.md
+目前OkHttp2.x版本最新为2.7.1(于2016年01月01日)
+本文作者写作版本基于OkHttp2.5.0版本.
+
+
+在 Java 平台上，我们一般使用 Apache HttpClient 作为通常的 HTTP 客户端。Square 公司开源的 OkHttp 是一个更先进的专注于连接效率的 HTTP 客户端。OkHttp 提供了对 HTTP/2 和 SPDY 的支持，并提供了连接池，GZIP 压缩和 HTTP 响应缓存功能。OkHttp 的 API 接口也更加的简单实用。可以将 OkHttp 作为 Apache HttpClient 的升级与替换，本文将对其进行详细的介绍。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/%E8%BD%AC-okhttpjava-%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%96%B0%E4%B8%80%E4%BB%A3-http-%E5%AE%A2%E6%88%B7%E7%AB%AF/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-01-04T13:04:17+00:00" />
+<meta property="article:modified_time" content="2016-01-04T13:04:17+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="[转]OkHttp：Java 平台上的新一代 HTTP 客户端"/>
+<meta name="twitter:description" content="
+本文转自: IBM DevelopersWorks 《OkHttp：Java 平台上的新一代 HTTP 客户端》
+原文作者: 成富,软件工程师
+ 注: 本文写的时候OkHttp3还未发布(发布时间2016年01月03日),而OkHttp3的改动很大,注意本文针对kHttp2.x相关版本,不适用于OkHttp3.x相关版本
+具体改动请参考: https://github.com/square/okhttp/blob/master/CHANGELOG.md
+目前OkHttp2.x版本最新为2.7.1(于2016年01月01日)
+本文作者写作版本基于OkHttp2.5.0版本.
+
+
+在 Java 平台上，我们一般使用 Apache HttpClient 作为通常的 HTTP 客户端。Square 公司开源的 OkHttp 是一个更先进的专注于连接效率的 HTTP 客户端。OkHttp 提供了对 HTTP/2 和 SPDY 的支持，并提供了连接池，GZIP 压缩和 HTTP 响应缓存功能。OkHttp 的 API 接口也更加的简单实用。可以将 OkHttp 作为 Apache HttpClient 的升级与替换，本文将对其进行详细的介绍。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/%E8%BD%AC-okhttpjava-%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%96%B0%E4%B8%80%E4%BB%A3-http-%E5%AE%A2%E6%88%B7%E7%AB%AF/" /><link rel="prev" href="http://mrljdx.com/%E5%88%A9%E7%94%A8%E5%8F%8D%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0android/" /><link rel="next" href="http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEreact-native%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[转]OkHttp：Java 平台上的新一代 HTTP 客户端",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/%E8%BD%AC-okhttpjava-%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%96%B0%E4%B8%80%E4%BB%A3-http-%E5%AE%A2%E6%88%B7%E7%AB%AF\/"
+        },"genre": "posts","keywords": "OkHttp","wordcount":  5509 ,
+        "url": "http:\/\/mrljdx.com\/%E8%BD%AC-okhttpjava-%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%96%B0%E4%B8%80%E4%BB%A3-http-%E5%AE%A2%E6%88%B7%E7%AB%AF\/","datePublished": "2016-01-04T13:04:17+00:00","dateModified": "2016-01-04T13:04:17+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">[转]OkHttp：Java 平台上的新一代 HTTP 客户端</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-01-04">2016-01-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5509 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#okhttp-简介">OkHttp 简介</a></li>
+    <li><a href="#http-连接">HTTP 连接</a></li>
+    <li><a href="#请求响应与调用">请求，响应与调用</a></li>
+    <li><a href="#http-头处理">HTTP 头处理</a></li>
+    <li><a href="#post-请求">POST 请求</a></li>
+    <li><a href="#响应缓存">响应缓存</a></li>
+    <li><a href="#用户认证">用户认证</a></li>
+    <li><a href="#异步调用">异步调用</a></li>
+    <li><a href="#取消调用">取消调用</a></li>
+    <li><a href="#拦截器">拦截器</a></li>
+    <li><a href="#小结">小结</a></li>
+    <li><a href="#下载">下载</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>本文转自: IBM DevelopersWorks <a href="https://www.ibm.com/developerworks/cn/java/j-lo-okhttp/" target="_blank" rel="noopener noreffer">《OkHttp：Java 平台上的新一代 HTTP 客户端》</a>
+原文作者: <a href="https://www.ibm.com/developerworks/cn/java/j-lo-okhttp/" target="_blank" rel="noopener noreffer">成富</a>,软件工程师
+<font color="#FF0000"> <strong>注:</strong> 本文写的时候OkHttp3还未发布(发布时间2016年01月03日),而OkHttp3的改动很大,注意本文针对kHttp2.x相关版本,不适用于OkHttp3.x相关版本
+具体改动请参考: <a href="https://github.com/square/okhttp/blob/master/CHANGELOG.md">https://github.com/square/okhttp/blob/master/CHANGELOG.md</a>
+目前OkHttp2.x版本最新为2.7.1(于2016年01月01日)
+本文作者写作版本基于OkHttp2.5.0版本.
+</font></p>
+</blockquote>
+<p>在 Java 平台上，我们一般使用 Apache HttpClient 作为通常的 HTTP 客户端。Square 公司开源的 OkHttp 是一个更先进的专注于连接效率的 HTTP 客户端。OkHttp 提供了对 HTTP/2 和 SPDY 的支持，并提供了连接池，GZIP 压缩和 HTTP 响应缓存功能。OkHttp 的 API 接口也更加的简单实用。可以将 OkHttp 作为 Apache HttpClient 的升级与替换，本文将对其进行详细的介绍。</p>
+<p>在 Java 程序中经常需要用到 HTTP 客户端来发送 HTTP 请求并对所得到的响应进行处理。比如屏幕抓取（screen scraping）程序通过 HTTP 客户端来访问网站并解析所得到的 HTTP 文档。在 Java 服务端程序中也可能需要使用 HTTP 客户端来与第三方 REST 服务进行集成。随着微服务（microservices）的流行，HTTP 成为不同服务之间的标准集成方式。HTTP 客户端的重要性也日益显著。在 Java 平台上，Java 标准库提供了 HttpURLConnection 类来支持 HTTP 通讯。不过 HttpURLConnection 本身的 API 不够友好，所提供的功能也有限。大部分 Java 程序都选择使用 Apache 的开源项目 HttpClient 作为 HTTP 客户端。Apache HttpClient 库的功能强大，使用率也很高，基本上是 Java 平台中事实上的标准 HTTP 客户端。本文介绍的是由 Square 公司开发的 OkHttp，是一个专注于性能和易用性的 HTTP 客户端。</p>
+<h2 id="okhttp-简介">OkHttp 简介</h2>
+<p>OkHttp 库的设计和实现的首要目标是高效。这也是选择 OkHttp 的重要理由之一。OkHttp 提供了对最新的 HTTP 协议版本 HTTP/2 和 SPDY 的支持，这使得对同一个主机发出的所有请求都可以共享相同的套接字连接。如果 HTTP/2 和 SPDY 不可用，OkHttp 会使用连接池来复用连接以提高效率。OkHttp 提供了对 GZIP 的默认支持来降低传输内容的大小。OkHttp 也提供了对 HTTP 响应的缓存机制，可以避免不必要的网络请求。当网络出现问题时，OkHttp 会自动重试一个主机的多个 IP 地址。
+在 Java 程序中使用 OkHttp 非常简单，只需要在 Maven 的 POM 文件中添加<code>代码清单 1 </code> 中的依赖即可。目前 OkHttp 的最新版本是 <a href="http://square.github.io/okhttp/" target="_blank" rel="noopener noreffer">3.0.0-RC1</a>。</p>
+<p><strong>清单 1. OkHttp 的 Maven 依赖声明</strong></p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.squareup.okhttp&lt;/groupId&gt;
+    &lt;artifactId&gt;okhttp&lt;/artifactId&gt;
+    &lt;version&gt;2.5.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<hr>
+<h2 id="http-连接">HTTP 连接</h2>
+<p>虽然在使用 OkHttp 发送 HTTP 请求时只需要提供 URL 即可，OkHttp 在实现中需要综合考虑 3 种不同的要素来确定与 HTTP 服务器之间实际建立的 HTTP 连接。这样做的目的是为了达到最佳的性能。
+首先第一个考虑的要素是 URL 本身。URL 给出了要访问的资源的路径。比如 URL <a href="http://www.baidu.com">http://www.baidu.com</a> 所对应的是百度首页的 HTTP 文档。在 URL 中比较重要的部分是访问时使用的模式，即 HTTP 还是 HTTPS。这会确定 OkHttp 所建立的是明文的 HTTP 连接，还是加密的 HTTPS 连接。
+第二个要素是 HTTP 服务器的地址，如 baidu.com。每个地址都有对应的配置，包括端口号，HTTPS 连接设置和网络传输协议。同一个地址上的 URL 可以共享同一个底层 TCP 套接字连接。通过共享连接可以有显著的性能提升。OkHttp 提供了一个连接池来复用连接。
+第三个要素是连接 HTTP 服务器时使用的路由。路由包括具体连接的 IP 地址（通过 DNS 查询来发现）和所使用的代理服务器。对于 HTTPS 连接还包括通讯协商时使用的 TLS 版本。对于同一个地址，可能有多个不同的路由。OkHttp 在遇到访问错误时会自动尝试备选路由。
+当通过 OkHttp 来请求某个 URL 时，OkHttp 首先从 URL 中得到地址信息，再从连接池中根据地址来获取连接。如果在连接池中没有找到连接，则选择一个路由来尝试连接。尝试连接需要通过 DNS 查询来得到服务器的 IP 地址，也会用到代理服务器和 TLS 版本等信息。当实际的连接建立之后，OkHttp 发送 HTTP 请求并获取响应。当连接出现问题时，OkHttp 会自动选择另外的路由进行尝试。这使得 OkHttp 可以自动处理可能出现的网络问题。当成功获取到 HTTP 请求的响应之后，当前的连接会被放回到连接池中，提供给后续的请求来复用。连接池会定期把闲置的连接关闭以释放资源。</p>
+<hr>
+<h2 id="请求响应与调用">请求，响应与调用</h2>
+<p>HTTP 客户端所要执行的任务很简单，接受 HTTP 请求并返回响应。每个 HTTP 请求包括 URL，HTTP 方法（如 GET 或 POST），HTTP 头和请求的主体内容等。HTTP 请求的响应则包含状态代码（如 200 或 500），HTTP 头和响应的主体内容等。虽然请求和响应的交互模式很简单，但在实现中仍然有很多细节要考虑。OkHttp 会对收到的请求进行一定的处理，比如增加额外的 HTTP 头。同样的，OkHttp 也可能在返回响应之前对响应做一些处理。例如，OkHttp 可以启用 GZIP 支持。在发送实际的请求时，OkHttp 会加上 HTTP 头 Accept-Encoding。在接收到服务器的响应之后，OkHttp 会先做解压缩处理，再把结果返回。如果 HTTP 响应的状态代码是重定向相关的，OkHttp 会自动重定向到指定的 URL 来进一步处理。OkHttp 也会处理用户认证相关的响应。
+OkHttp 使用调用（Call）来对发送 HTTP 请求和获取响应的过程进行抽象。代码清单 2 中给出了使用 OkHttp 发送 HTTP 请求的基本示例。首先创建一个 OkHttpClient 类的对象，该对象是使用 OkHttp 的入口。接着要创建的是表示 HTTP 请求的 Request 对象。通过 Request.Builder 这个构建帮助类可以快速的创建出 Request 对象。这里指定了 Request 的 url 为 <a href="http://www.baidu.com">http://www.baidu.com</a>  。接着通过 OkHttpClient 的 newCall 方法来从 Request 对象中创建一个 Call 对象，再调用 execute 方法来执行该调用，所得到的结果是表示 HTTP 响应的 Response 对象。通过 Response 对象中的不同方法可以访问响应的不同内容。如 headers 方法来获取 HTTP 头，body 方法来获取到表示响应主体内容的 ResponseBody 对象。</p>
+<p><strong>清单 2. OkHttp 最基本的 HTTP 请求</strong></p>
+<pre><code>public class SyncGet {
+    public static void main(String[] args) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(&quot;http://www.baidu.com&quot;)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) {
+            throw new IOException(&quot;服务器端错误: &quot; + response);
+        }
+
+        Headers responseHeaders = response.headers();
+        for (int i = 0; i &lt; responseHeaders.size(); i++) {
+            System.out.println(responseHeaders.name(i) + &quot;: &quot; + responseHeaders.value(i));
+        }
+
+        System.out.println(response.body().string());
+    }
+}
+</code></pre>
+<hr>
+<h2 id="http-头处理">HTTP 头处理</h2>
+<p>HTTP 头是 HTTP 请求和响应中的重要组成部分。在创建 HTTP 请求时需要设置一些 HTTP 头。在得到 HTTP 的响应之后，也会需要对其中包含的 HTTP 头进行解析。从代码的角度来说，HTTP 头的数据结构是 Map&lt;String, List<String>&gt;类型。也就是说，对于每个 HTTP 头，可能有多个值。但是大部分 HTTP 头都只有一个值，只有少部分 HTTP 头允许多个值。OkHttp 采用了简单的方式来区分这两种类型，使得对 HTTP 头的使用更加简单。
+在设置 HTTP 头时，使用 header(name, value) 方法来设置 HTTP 头的唯一值。对同一个 HTTP 头，多次调用该方法会覆盖之前设置的值。使用 addHeader(name, value) 方法来为 HTTP 头添加新的值。在读取 HTTP 头时，使用 header(name) 方法来读取 HTTP 头的最近出现的值。如果该 HTTP 头只有单个值，则返回该值；如果有多个值，则返回最后一个值。使用 headers(name) 方法来读取 HTTP 头的所有值。
+代码清单 3 中使用 header 方法设置了 User-Agent 头的值，并添加了一个 Accept 头的值。在进行解析时，通过 header 方法来获取 Server 头的单个值，通过 headers 方法来获取 Set-Cookie 头的所有值。</p>
+<p><strong>清单 3. HTTP 头设置和读取的示例</strong></p>
+<pre><code>public class Headers {
+   public static void main(String[] args) throws IOException {
+    OkHttpClient client = new OkHttpClient();
+
+    Request request = new Request.Builder()
+            .url(&quot;http://www.baidu.com&quot;)
+            .header(&quot;User-Agent&quot;, &quot;My super agent&quot;)
+            .addHeader(&quot;Accept&quot;, &quot;text/html&quot;)
+            .build();
+
+    Response response = client.newCall(request).execute();
+    if (!response.isSuccessful()) {
+        throw new IOException(&quot;服务器端错误: &quot; + response);
+    }
+
+    System.out.println(response.header(&quot;Server&quot;));
+    System.out.println(response.headers(&quot;Set-Cookie&quot;));
+   }
+}
+</code></pre>
+<hr>
+<h2 id="post-请求">POST 请求</h2>
+<p>HTTP POST 和 PUT 请求可以包含要提交的内容。只需要在创建 Request 对象时，通过 post 和 put 方法来指定要提交的内容即可。代码清单 4 中通过 RequestBody 的 create 方法来创建媒体类型为 text/plain 的内容并提交。</p>
+<p>** 清单 4. HTTP POST 请求的基本示例 **</p>
+<pre><code>public class PostString {
+   public static void main(String[] args) throws IOException {
+    OkHttpClient client = new OkHttpClient();
+    MediaType MEDIA_TYPE_TEXT = MediaType.parse(&quot;text/plain&quot;);
+    String postBody = &quot;Hello World&quot;;
+
+    Request request = new Request.Builder()
+            .url(&quot;http://www.baidu.com&quot;)
+            .post(RequestBody.create(MEDIA_TYPE_TEXT, postBody))
+            .build();
+
+    Response response = client.newCall(request).execute();
+    if (!response.isSuccessful()) {
+        throw new IOException(&quot;服务器端错误: &quot; + response);
+    }
+
+    System.out.println(response.body().string());
+   }
+}
+</code></pre>
+<p>以 String 类型提交内容只适用于内容比较小的情况。当请求内容较大时，应该使用流来提交。代码清单 5 中给了使用流方式来提交内容的示例。这里创建了 RequestBody 的一个匿名子类。该子类的 contentType 方法需要返回内容的媒体类型，而 writeTo 方法的参数是一个 BufferedSink 对象。我们需要做的就是把请求的内容写入到 BufferedSink 对象即可。</p>
+<p><strong>清单 5. 使用流方法提交 HTTP POST 请求的示例</strong></p>
+<pre><code>public class PostStream {
+   public static void main(String[] args) throws IOException {
+    OkHttpClient client = new OkHttpClient();
+    final MediaType MEDIA_TYPE_TEXT = MediaType.parse(&quot;text/plain&quot;);
+    final String postBody = &quot;Hello World&quot;;
+
+    RequestBody requestBody = new RequestBody() {
+        @Override
+        public MediaType contentType() {
+            return MEDIA_TYPE_TEXT;
+        }
+
+        @Override
+        public void writeTo(BufferedSink sink) throws IOException {
+            sink.writeUtf8(postBody);
+        }
+
+ @Override
+        public long contentLength() throws IOException {
+            return postBody.length();
+        }
+    };
+
+    Request request = new Request.Builder()
+            .url(&quot;http://www.baidu.com&quot;)
+            .post(requestBody)
+            .build();
+
+    Response response = client.newCall(request).execute();
+    if (!response.isSuccessful()) {
+        throw new IOException(&quot;服务器端错误: &quot; + response);
+    }
+
+    System.out.println(response.body().string());
+   }
+}
+</code></pre>
+<p>如果所要提交的内容来自本地文件，则不需要额外的流操作，只需要通过 RequestBody 的 create 方法，并把 File 类型的对象作为参数传入即可。
+如果需要模拟 HTML 中的表单提交，可以通过 FormEncodingBuilder 来创建请求内容，见代码清单 6。</p>
+<p>** 清单 6. 表单提交示例**</p>
+<pre><code>RequestBody formBody = new FormEncodingBuilder()
+        .add(&quot;query&quot;, &quot;Hello&quot;)
+        .build();
+</code></pre>
+<p>如果需要模拟 HTML 中的文件上传功能，可以通过 MultipartBuilder 来创建 multipart 请求内容。代码清单 7 中的 multipart 请求添加了一个表单属性 title 和一个文件 file。</p>
+<p><strong>清单 7. 提交 multipart 请求的示例</strong></p>
+<pre><code>MediaType MEDIA_TYPE_TEXT = MediaType.parse(&quot;text/plain&quot;);
+RequestBody requestBody = new MultipartBuilder()
+    .type(MultipartBuilder.FORM)
+    .addPart(
+            Headers.of(&quot;Content-Disposition&quot;, &quot;form-data; name=\&quot;title\&quot;&quot;),
+            RequestBody.create(null, &quot;测试文档&quot;))
+    .addPart(
+            Headers.of(&quot;Content-Disposition&quot;, &quot;form-data; name=\&quot;file\&quot;&quot;),
+            RequestBody.create(MEDIA_TYPE_TEXT, new File(&quot;input.txt&quot;)))
+    .build();
+</code></pre>
+<hr>
+<h2 id="响应缓存">响应缓存</h2>
+<p>OkHttp 可以对 HTTP 响应的内容在磁盘上进行缓存。在进行 HTTP 请求时，如果该请求的响应已经被缓存而且没有过期，OkHttp 会直接使用缓存中的响应内容，而不需要真正的发出 HTTP 请求到远程服务器。在创建缓存时需要指定一个磁盘目录和缓存的大小。在代码清单 8 中，创建出 Cache 对象之后，通过 OkHttpClient 的 setCache 进行设置。通过 Response 对象的 cacheResponse 和 networkResponse 方法可以得到缓存的响应和从实际的 HTTP 请求得到的响应。如果该请求的响应来自实际的网络请求，则 cacheResponse 方法的返回值为 null；如果响应来自缓存，则 networkResponse 的返回值为 null。OkHttp 在进行缓存时会遵循 HTTP 协议的要求，因此可以通过标准的 HTTP 头 Cache-Control 来控制响应的缓存时间。</p>
+<p>** 清单 8. 设置响应缓存的示例**</p>
+<pre><code>public class CacheResponse {
+   public static void main(String[] args) throws IOException {
+    int cacheSize = 100 * 1024 * 1024;
+    File cacheDirectory = Files.createTempDirectory(&quot;cache&quot;).toFile();
+    Cache cache = new Cache(cacheDirectory, cacheSize);
+    OkHttpClient client = new OkHttpClient();
+    client.setCache(cache);
+
+    Request request = new Request.Builder()
+            .url(&quot;http://www.baidu.com&quot;)
+            .build();
+
+    Response response = client.newCall(request).execute();
+    if (!response.isSuccessful()) {
+        throw new IOException(&quot;服务器端错误: &quot; + response);
+    }
+
+    System.out.println(response.cacheResponse());
+    System.out.println(response.networkResponse());
+   }
+}
+</code></pre>
+<hr>
+<h2 id="用户认证">用户认证</h2>
+<p>OkHttp 提供了对用户认证的支持。当 HTTP 响应的状态代码是 401 时，OkHttp 会从设置的 Authenticator 对象中获取到新的 Request 对象并再次尝试发出请求。Authenticator 接口中的 authenticate 方法用来提供进行认证的 Request 对象，authenticateProxy 方法用来提供对代理服务器进行认证的 Request 对象。代码清单 9 中新的 Request 对象中添加了 HTTP 基本认证的 Authorization 头。</p>
+<p>** 清单 9. 用户认证的示例**</p>
+<pre><code>OkHttpClient client = new OkHttpClient();
+client.setAuthenticator(new Authenticator() {
+public Request authenticate(Proxy proxy, Response response) throws IOException {
+    String credential = Credentials.basic(&quot;user&quot;, &quot;password&quot;);
+    return response.request().newBuilder()
+            .header(&quot;Authorization&quot;, credential)
+            .build();
+}
+
+public Request authenticateProxy(Proxy proxy, Response response) 
+throws IOException {
+    return null;
+}
+});
+</code></pre>
+<hr>
+<h2 id="异步调用">异步调用</h2>
+<p>OkHttp 除了支持常用的同步 HTTP 请求之外，还支持异步 HTTP 请求调用。在使用同步调用时，当前线程会被阻塞，直到 HTTP 请求完成。当同时发出多个 HTTP 请求时，同步调用的性能会比较差。这个时候通过异步调用可以提高整体的性能。
+代码清单 10 给出了异步调用的示例。在通过 newCall 方法创建一个新的 Call 对象之后，不是通过 execute 方法来同步执行，而是通过 enqueue 方法来添加到执行队列中。在调用 enqueue 方法时需要提供一个 Callback 接口的实现。在 Callback 接口实现中，通过 onResponse 和 onFailure 方法来处理响应和进行错误处理。</p>
+<p><strong>清单 10. 异步调用的示例</strong></p>
+<pre><code>public class AsyncGet {
+   public static void main(String[] args) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(&quot;http://www.baidu.com&quot;)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            public void onFailure(Request request, IOException e) {
+                e.printStackTrace();
+            }
+
+            public void onResponse(Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    throw new IOException(&quot;服务器端错误: &quot; + response);
+                }
+
+                System.out.println(response.body().string());
+            }
+        });
+
+   }
+}
+</code></pre>
+<hr>
+<h2 id="取消调用">取消调用</h2>
+<p>当一个 HTTP 调用执行之后，可以通过 Call 接口的 cancel 方法来取消该请求。当一个调用被取消之后，等待该请求的响应的代码会收到 IOException。同步和异步调用都可以被取消。如果需要同时取消多个请求，可以在创建请求时通过 RequestBuilder 的 tag 方法来为请求添加一个标签。在需要时可以通过 OkHttpClient 的 cancel 方法来取消拥有一个标签的所有请求。代码清单 11 中的所有请求都设置了标签 website，可以通过 cancel 方法来全部取消。</p>
+<p>** 清单 11. 取消 HTTP 请求的示例**</p>
+<pre><code>public class CancelRequest {
+    private OkHttpClient client = new OkHttpClient();
+    private String tag = &quot;website&quot;;
+
+    public void sendAndCancel() {
+        sendRequests(Lists.newArrayList(
+                &quot;http://www.baidu.com&quot;,
+                &quot;http://www.163.com&quot;,
+                &quot;http://www.sina.com.cn&quot;));
+        client.cancel(this.tag);
+    }
+
+    public void sendRequests(List&lt;String&gt; urls) {
+        urls.forEach(url -&gt; {
+            client.newCall(new Request.Builder()
+                        .url(url)
+                        .tag(this.tag)
+                        .build())
+                    .enqueue(new SimpleCallback());
+        });
+    }
+
+    private static class SimpleCallback implements Callback {
+
+        public void onFailure(Request request, IOException e) {
+            e.printStackTrace();
+        }
+
+        public void onResponse(Response response) throws IOException {
+            System.out.println(response.body().string());
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        new CancelRequest().sendAndCancel();
+    }
+}
+</code></pre>
+<hr>
+<h2 id="拦截器">拦截器</h2>
+<p>拦截器是 OkHttp 提供的对 HTTP 请求和响应进行统一处理的强大机制。拦截器在实现和使用上类似于 Servlet 规范中的过滤器。多个拦截器可以链接起来，形成一个链条。拦截器会按照在链条上的顺序依次执行。 拦截器在执行时，可以先对请求的 Request 对象进行修改；再得到响应的 Response 对象之后，可以进行修改之后再返回。
+代码清单 12 中的拦截器 LoggingInterceptor 用来记录 HTTP 请求和响应的相关信息。Interceptor 接口只包含一个方法 intercept，其参数是 Chain 对象。Chain 对象表示的是当前的拦截器链条。通过 Chain 的 request 方法可以获取到当前的 Request 对象。在使用完 Request 对象之后，通过 Chain 对象的 proceed 方法来继续拦截器链条的执行。当执行完成之后，可以对得到的 Response 对象进行额外的处理。</p>
+<p>** 清单 12. 记录请求和响应信息的拦截器**</p>
+<pre><code>public class LoggingInterceptor implements Interceptor {
+    public Response intercept(Chain chain) throws IOException {
+
+        Request request = chain.request();
+
+        long t1 = System.nanoTime();
+        System.out.println(String.format(&quot;发送请求: [%s] %s%n%s&quot;,
+                request.url(), chain.connection(), request.headers()));
+
+        Response response = chain.proceed(request);
+
+        long t2 = System.nanoTime();
+        System.out.println(String.format(&quot;接收响应: [%s] %.1fms%n%s&quot;,
+                response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+
+        return response;
+    }
+}
+</code></pre>
+<p>OkHttp 中的拦截器分成应用和网络拦截器两种。应用拦截器对于每个 HTTP 响应都只会调用一次，可以通过不调用 Chain.proceed 方法来终止请求，也可以通过多次调用 Chain.proceed 方法来进行重试。网络拦截器对于调用执行中的自动重定向和重试所产生的响应也会被调用，而如果响应来自缓存，则不会被调用。应用和网络拦截器的添加方式见代码清单 13。</p>
+<p>** 清单 13. 添加应用和网络拦截器**</p>
+<pre><code>client.interceptors().add(new LoggingInterceptor()); //添加应用拦截器
+
+client.networkInterceptors().add(new LoggingInterceptor()); //添加网络拦截器
+</code></pre>
+<hr>
+<h2 id="小结">小结</h2>
+<p>OkHttp 作为一个简洁高效的 HTTP 客户端，可以在 Java 和 Android 程序中使用。相对于 Apache HttpClient 来说，OkHttp 的性能更好，其 API 设计也更加简单实用。本文对 OkHttp 进行了详细的介绍，包括同步和异步调用、HTTP GET 和 POST 请求处理、用户认证、响应缓存和拦截器等。对于新开发的 Java 应用，推荐使用 OkHttp 作为 HTTP 客户端。</p>
+<hr>
+<h2 id="下载">下载</h2>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th style="text-align:center">文字</th>
+<th style="text-align:center">大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>示例代码</td>
+<td style="text-align:center"><a href="http://www.ibm.com/developerworks/apps/download/index.jsp?contentid=1023472&amp;filename=source_code.zip&amp;method=http&amp;locale=zh_CN" target="_blank" rel="noopener noreffer">source_code.zip</a></td>
+<td style="text-align:center">25k</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<p><strong>学习</strong></p>
+<ul>
+<li>参考 OkHttp 的<a href="http://square.github.io/okhttp/" target="_blank" rel="noopener noreffer">官方网站</a>，了解 OkHttp 的更多内容。</li>
+<li>了解更多 <a href="http://baike.baidu.com/view/9472.htm" target="_blank" rel="noopener noreffer">HTTP 协议</a>的内容。</li>
+<li>了解更多 <a href="http://baike.baidu.com/view/11521153.htm" target="_blank" rel="noopener noreffer">HTTP/2 协议</a>的内容。</li>
+<li>了解更多 <a href="http://baike.baidu.com/view/2984528.htm" target="_blank" rel="noopener noreffer">SPDY 协议</a>的内容。</li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/" target="_blank" rel="noopener noreffer">developerWorks Java 技术专区</a>：这里有数百篇关于 Java 编程各个方面的文章。</li>
+</ul>
+<p>** 讨论 **</p>
+<ul>
+<li>加入 <a href="http://www.ibm.com/developerworks/cn/community/" target="_blank" rel="noopener noreffer">developerWorks 中文社区</a>，查看开发人员推动的博客、论坛、组和维基，并与其他 developerWorks 用户交流。</li>
+</ul>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-01-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%BD%AC-okhttpjava-%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%96%B0%E4%B8%80%E4%BB%A3-http-%E5%AE%A2%E6%88%B7%E7%AB%AF/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/okhttp/">OkHttp</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%88%A9%E7%94%A8%E5%8F%8D%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0android/" class="prev" rel="prev" title="利用反编译学习Android"><i class="fas fa-angle-left fa-fw"></i>利用反编译学习Android</a>
+            <a href="/mac%E4%B8%8B%E9%85%8D%E7%BD%AEreact-native%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" class="next" rel="next" title="Mac下配置React Native的一些问题">Mac下配置React Native的一些问题<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

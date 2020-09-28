@@ -1,0 +1,118 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>设计模式 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+        <description>设计模式 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 28 May 2016 16:29:38 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+    <title>推荐几篇技术好文</title>
+    <link>http://mrljdx.com/%E6%8E%A8%E8%8D%90%E5%87%A0%E7%AF%87%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%96%87/</link>
+    <pubDate>Sat, 28 May 2016 16:29:38 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E6%8E%A8%E8%8D%90%E5%87%A0%E7%AF%87%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%96%87/</guid>
+    <description><![CDATA[<p>最近瞎忙，做的事不少但是也没怎么总结。闲暇之余先推荐几篇不错的Android文章供各位参考。</p>
+<h2 id="设计模式基础-solid">设计模式基础-SOLID</h2>
+<ul>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-1/" target="_blank" rel="noopener noreffer">S 代表着单一职责原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-2/" target="_blank" rel="noopener noreffer">O 代表着开闭原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-3/" target="_blank" rel="noopener noreffer">L 代表着里氏替换原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-4/" target="_blank" rel="noopener noreffer">I 是接口隔离原则</a></li>
+<li><a href="https://realm.io/cn/news/donn-felker-solid-part-5/" target="_blank" rel="noopener noreffer">D 代表依赖倒置原则</a></li>
+</ul>
+<p>关于设计模式的文章很多，不过这几篇文章内容干货十足，从设计代码的角度告诉你该如何理解设计模式的基本原则SOLID的精髓。</p>]]></description>
+</item><item>
+    <title>Android常用设计模式</title>
+    <link>http://mrljdx.com/android%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <pubDate>Mon, 13 Apr 2015 11:16:13 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+    <description><![CDATA[<p>Android中其实到处都是设计模式或者设计模式的联合运用的地方，以下设计模式是Android设计中常见的：</p>
+<ul>
+<li>Observer模式</li>
+<li>Abstract Factory模式</li>
+<li>Adapter模式</li>
+<li>Template Method模式</li>
+<li>Composite模式</li>
+<li>Strategy模式</li>
+<li>State模式</li>
+<li>Proxy模式</li>
+<li>Bridge 模式</li>
+<li>Iterator模式</li>
+<li>Mediator模式</li>
+<li>Facade模式</li>
+</ul>]]></description>
+</item><item>
+    <title>工厂方法模式</title>
+    <link>http://mrljdx.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</link>
+    <pubDate>Sat, 04 Apr 2015 15:48:42 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</guid>
+    <description><![CDATA[<h2 id="什么是工厂方法模式">什么是工厂方法模式</h2>
+<p>首先来看一下Android手机和Iphone手机使用工厂方法是怎么生产的，你就懂了。
+</p>]]></description>
+</item><item>
+    <title>单例模式(Singleton Pattern)</title>
+    <link>http://mrljdx.com/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern/</link>
+    <pubDate>Sat, 04 Apr 2015 14:27:49 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern/</guid>
+    <description><![CDATA[<h2 id="什么是单例模式">什么是单例模式</h2>
+<p>首先来看一段单例模式的通用代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span><span class="o">{</span>
+    <span class="c1">//自行实例化
+</span><span class="c1"></span>	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Singleton</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+	<span class="cm">/**
+</span><span class="cm">	*1,构造函数为私有，不能通过new获得对象实例，限制实例产生
+</span><span class="cm">	*2,自行实例化
+</span><span class="cm">	*/</span>
+	<span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){</span>
+	<span class="o">};</span>
+	<span class="c1">//只能通过调用Singleton来获取其实例
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
+		<span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="c1">//单例模式中的其他方法尽量是static，
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">otherFuc</span><span class="o">(){</span>
+	<span class="o">}</span>
+<span class="o">}</span> 
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>设计模式读书笔记（开篇）</title>
+    <link>http://mrljdx.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/</link>
+    <pubDate>Fri, 03 Apr 2015 13:40:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/</guid>
+    <description><![CDATA[<p>好的设计可以去繁就简，在软件设计中能够熟练的运用设计模式可以在不同的需求变化中“以不变应万变”。简单易懂的设计才是好的设计，下面简单的总结一下设计模式中的6个基本原则&ndash;SOLID</p>
+<ul>
+<li>SRP （单一职责）</li>
+<li>OCP（开闭原则）</li>
+<li>LSP（里氏替换原则）</li>
+<li>LoD（迪米特法则）</li>
+<li>ISP（接口隔离原则）</li>
+<li>DIP（依赖倒置原则）</li>
+</ul>]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Android性能优化笔记 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Android性能优化笔记" />
+<meta property="og:description" content="性能优化概要：
+
+不要在主线程中做耗时操作，比如网络请求，文件读写等。
+使用ViewStub来推迟初始化，在运行时展开资源。
+使用RelativeLayout代替嵌套LinearLayout，尽可能扁平化布局。减少创建对象的数量，也会让事件的处理速度更快。（了解View事件的传递机制）
+主线程中尽可能少做事，把耗时操作交给子线程。
+Sqlite数据库，通过事务来操作。（当数据库在持久存储中使用事务耗时更短）
+对字符串操作用StringBuffer性能比较好
+避免建立对象，避免使用枚举，避免使用浮点数
+一般类中最好不用setter和getter
+将成员变量缓存到本地，因为访问成员变量比访问本地变量要慢的多。
+使用final关键字定义类中的常量或方法，在编译时能帮助编译器优化代码。
+使用实体类比接口好，因为调用一个接口的引用比调用一个实体类要多花一倍的时间。（偶尔不利于设计，看情况）
+在处理字符串的时候，使用String.indexOf()，String.lastIndexOf()等特殊实现的方法。这些方法都是C/C&#43;&#43;实现的，比起Java循环要快10~100倍。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-13T11:17:25+00:00" />
+<meta property="article:modified_time" content="2015-04-13T11:17:25+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Android性能优化笔记"/>
+<meta name="twitter:description" content="性能优化概要：
+
+不要在主线程中做耗时操作，比如网络请求，文件读写等。
+使用ViewStub来推迟初始化，在运行时展开资源。
+使用RelativeLayout代替嵌套LinearLayout，尽可能扁平化布局。减少创建对象的数量，也会让事件的处理速度更快。（了解View事件的传递机制）
+主线程中尽可能少做事，把耗时操作交给子线程。
+Sqlite数据库，通过事务来操作。（当数据库在持久存储中使用事务耗时更短）
+对字符串操作用StringBuffer性能比较好
+避免建立对象，避免使用枚举，避免使用浮点数
+一般类中最好不用setter和getter
+将成员变量缓存到本地，因为访问成员变量比访问本地变量要慢的多。
+使用final关键字定义类中的常量或方法，在编译时能帮助编译器优化代码。
+使用实体类比接口好，因为调用一个接口的引用比调用一个实体类要多花一倍的时间。（偶尔不利于设计，看情况）
+在处理字符串的时候，使用String.indexOf()，String.lastIndexOf()等特殊实现的方法。这些方法都是C/C&#43;&#43;实现的，比起Java循环要快10~100倍。
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="http://mrljdx.com/android%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" /><link rel="next" href="http://mrljdx.com/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Android性能优化笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0\/"
+        },"genre": "posts","keywords": "性能优化","wordcount":  2945 ,
+        "url": "http:\/\/mrljdx.com\/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0\/","datePublished": "2015-04-13T11:17:25+00:00","dateModified": "2015-04-13T11:17:25+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Android性能优化笔记</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-13">2015-04-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2945 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#性能优化概要">性能优化概要：</a></li>
+    <li><a href="#使用场景举例">使用场景举例</a></li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="性能优化概要">性能优化概要：</h2>
+<ul>
+<li>不要在主线程中做耗时操作，比如网络请求，文件读写等。</li>
+<li>使用ViewStub来推迟初始化，在运行时展开资源。</li>
+<li>使用RelativeLayout代替嵌套LinearLayout，尽可能扁平化布局。减少创建对象的数量，也会让事件的处理速度更快。（了解View事件的传递机制）</li>
+<li>主线程中尽可能少做事，把耗时操作交给子线程。</li>
+<li>Sqlite数据库，通过事务来操作。（当数据库在持久存储中使用事务耗时更短）</li>
+<li>对字符串操作用StringBuffer性能比较好</li>
+<li>避免建立对象，避免使用枚举，避免使用浮点数</li>
+<li>一般类中最好不用setter和getter</li>
+<li>将成员变量缓存到本地，因为访问成员变量比访问本地变量要慢的多。</li>
+<li>使用final关键字定义类中的常量或方法，在编译时能帮助编译器优化代码。</li>
+<li>使用实体类比接口好，因为调用一个接口的引用比调用一个实体类要多花一倍的时间。（偶尔不利于设计，看情况）</li>
+<li>在处理字符串的时候，使用String.indexOf()，String.lastIndexOf()等特殊实现的方法。这些方法都是C/C++实现的，比起Java循环要快10~100倍。</li>
+</ul>
+<h2 id="使用场景举例">使用场景举例</h2>
+<blockquote>
+<p>（一） 在一个Activity中，会根据传入的结果，或者网络请求的结果不同，来显示两种不同的界面，应该如何实现来提升性能？</p>
+</blockquote>
+<p>一般情况下，我们会在这个Activity的布局xml中设置两个视图，分别显示或隐藏来展示效果，但是在onCreate方法中setContentView()展开布局时，有些View是没有必要初始化的，这时在实例化布局视图对象时，会多实例化不必要的视图对象。
+这时，如果使用ViewStub来定义视图，实现延迟加载，可以提升应用的性能。如果视图需要展开，可以使用ViewStub 的inflate()方法在代码中展开视图。当然还有其他展开视图的方式比如setVisibility()。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;ViewStub</span>
+   <span class="na">android:id=</span><span class="s">&#34;@+id/myid&#34;</span>
+   <span class="na">android:layout=</span><span class="s">&#34;@layout/mylayout&#34;</span>
+   <span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>调用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">myid</span><span class="o">);</span>
+<span class="n">view</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">VISIBLE</span><span class="o">);</span><span class="c1">//ViewStub被展开的布局mylayout所替换
+</span><span class="c1"></span><span class="n">view</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">myid</span><span class="o">);</span><span class="c1">//获取展开后的布局 
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果代码中通用性很重要，无论在布局中有无使用ViewStub，都能正常工作，那么以上这种方法是首选。不过调用两次findViewById()会影响性能。为了部分解决这个问题，既然调用setVisibility(View.VISIBLE)会把ViewStub从父容器中删除，可以在第二次调用findViewById()之前检查视图是否有父视图。对仍然使用ViewStub来说，第二次调用findeViewById()还是没有优化，它只保证没用ViewStub时，只调用一次findeViewById()。修改后代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">myid</span><span class="o">);</span>
+<span class="n">view</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">VISIBLE</span><span class="o">);</span>
+<span class="k">if</span><span class="o">(</span><span class="n">view</span><span class="o">.</span><span class="na">getParent</span><span class="o">()==</span><span class="kc">null</span><span class="o">){</span>
+	<span class="c1">//用了ViewStub，需要展开后的新视图替换
+</span><span class="c1"></span>	<span class="n">view</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">myid</span><span class="o">);</span>
+<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+	<span class="c1">//没用，则不处理任何事情
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>不过个人建议，还是别怕麻烦，该怎么显示调用就怎么用:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;ViewStub</span>
+	<span class="na">android:id=</span><span class="s">&#34;@+id/mystubid&#34;</span>
+	<span class="na">android:inflateId=</span><span class="s">&#34;@+id/myid&#34;</span>
+	<span class="na">android:layout=</span><span class="s">&#34;@layout/mylayout&#34;</span>
+<span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>代码中展开布局：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ViewStub</span> <span class="n">stub</span> <span class="o">=</span> <span class="o">(</span><span class="n">ViewStub</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">mystubid</span><span class="o">);</span>
+<span class="n">View</span> <span class="n">inflateVIew</span> <span class="o">=</span> <span class="n">stub</span><span class="o">.</span><span class="na">inflate</span><span class="o">();</span> <span class="c1">//inflateView定义在mylayout.xml的布局中
+</span></code></pre></td></tr></table>
+</div>
+</div><p>另外一种在代码中使用setVisibility()展开布局，这种方式由于没有指明ViewStub类，所以更通用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">mystubid</span><span class="o">);</span>
+<span class="n">view</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">VISIBLE</span><span class="o">);</span><span class="c1">//展开的布局取代ViewStub
+</span><span class="c1"></span><span class="n">view</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">myid</span><span class="o">);</span><span class="c1">//得到展开的布局视图
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>（二）使用<code>&lt;merge/&gt;</code>标签来合并布局</p>
+</blockquote>
+<p>一般布局的顶层元素是一个FrameLayout。因为Activity内容视图的父视图是一个FrameLayout。如果自定义视图的父视图为FrameLayout，则可以使用<code>&lt;merge/&gt;</code> 标签来合并两个视图，可以少创建一个FrameLayout视图对象。</p>
+<blockquote>
+<p>（三）SQLite数据库性能优化</p>
+</blockquote>
+<p>虽然大多数应用不会是SQLite的重度使用者，与数据库打交道少。比如如下SQL语句：</p>
+<blockquote>
+<p>CREATE TABLE user (name TEXT,password TEXT)
+INSERT INTO user VALUES (&lsquo;mrljdx&rsquo;,&lsquo;hellosql&rsquo;)</p>
+</blockquote>
+<p>创建一个user表，有name和password两列，然后插入用户数据。当执行SQLite时，如下，SQLite内部是编译执行的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">SQLiteDAtabase</span> <span class="n">db</span> <span class="o">=</span> <span class="n">SQLiteDataBase</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span><span class="c1">//数据库在内存中
+</span><span class="c1"></span><span class="n">db</span><span class="o">.</span><span class="na">execSQL</span><span class="o">(</span><span class="s">&#34;CREATE TABLE user(name TEXT,password TEXT)&#34;</span><span class="o">);</span>
+<span class="n">db</span><span class="o">.</span><span class="na">execSQL</span><span class="o">(</span><span class="s">&#34;INSERT INTO user VALUES (&#39;mrljdx&#39;,&#39;hellosql&#39;)&#34;</span><span class="o">);</span>
+<span class="n">db</span><span class="o">.</span><span class="na">close</span><span class="o">();</span><span class="c1">//操作完成后，关闭数据库
+</span></code></pre></td></tr></table>
+</div>
+</div><p>简历数据库的最优方案如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">createUserTable</span><span class="o">(){</span>
+	<span class="n">SQLiteStatement</span> <span class="n">stmt</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">complieStatement</span><span class="o">(</span><span class="s">&#34;INSERT INTO user VALUES(?,?)&#34;</span><span class="o">);</span>
+	<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="n">0</span> <span class="o">;</span>
+	<span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">:</span><span class="n">sUserNames</span><span class="o">){</span>
+		<span class="n">String</span> <span class="n">pwd</span> <span class="o">=</span> <span class="n">sPwds</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
+		<span class="n">stmt</span><span class="o">.</span><span class="na">clearBindings</span><span class="o">();</span>
+		<span class="n">stmt</span><span class="o">.</span><span class="na">bindString</span><span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">name</span><span class="o">);</span><span class="c1">//替换第一个?号
+</span><span class="c1"></span>		<span class="n">stmt</span><span class="o">.</span><span class="na">bindString</span><span class="o">(</span><span class="n">2</span><span class="o">,</span><span class="n">pwd</span><span class="o">);</span><span class="c1">//替换第二个?号
+</span><span class="c1"></span>		<span class="n">stmt</span><span class="o">.</span><span class="na">executeInsert</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>由于只进行了一次语句编译，并且绑定值是比编译更轻量级的操作，所以，这个方法比那种在循环内不断执行SQL语句编译的方式要好很多。而且使代码更具可读性。
+在Android中也定义了一些可以提高性能的类。比如使用DatabaseUtils.InsertHelper在数据库中插入多行，这样也只需编译一次INSERT语句。和上述的方法类似。</p>
+<blockquote>
+<p>（四） SQLite事务的原子提交特性及性能</p>
+</blockquote>
+<p>事务就是将一组动作当作一个整体，比如在插入操作中，有一条记录插入失败，则意味着数据库的所有插入的行为都失败。要么没有插入任何一条数据，不会只建立部分表。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">createUserTable</span><span class="o">(){</span>
+	<span class="k">try</span><span class="o">{</span>
+		<span class="n">db</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span> <span class="c1">//开始事务
+</span><span class="c1"></span>		<span class="n">SQLiteStatement</span> <span class="n">stmt</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">complieStatement</span><span class="o">(</span><span class="s">&#34;INSERT INTO user VALUES(?,?)&#34;</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="n">0</span> <span class="o">;</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">:</span><span class="n">sUserNames</span><span class="o">){</span>
+			<span class="n">String</span> <span class="n">pwd</span> <span class="o">=</span> <span class="n">sPwds</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
+			<span class="n">stmt</span><span class="o">.</span><span class="na">clearBindings</span><span class="o">();</span>
+			<span class="n">stmt</span><span class="o">.</span><span class="na">bindString</span><span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">name</span><span class="o">);</span><span class="c1">//替换第一个?号
+</span><span class="c1"></span>			<span class="n">stmt</span><span class="o">.</span><span class="na">bindString</span><span class="o">(</span><span class="n">2</span><span class="o">,</span><span class="n">pwd</span><span class="o">);</span><span class="c1">//替换第二个?号
+</span><span class="c1"></span>			<span class="n">stmt</span><span class="o">.</span><span class="na">executeInsert</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="n">db</span><span class="o">.</span><span class="na">setTransactionSuccessful</span><span class="o">();</span><span class="c1">//删除这一调用则不会提交任何改动
+</span><span class="c1"></span>	<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+		<span class="c1">//处理异常
+</span><span class="c1"></span>	<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+		<span class="n">db</span><span class="o">.</span><span class="na">endTransaction</span><span class="o">();</span><span class="c1">//结束事务
+</span><span class="c1"></span>	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在插入800条用户数据时，使用事务插入数据，比上面不使用要快将近(100毫秒)。
+以上数据库是在内存中，而不是保存在持久存储（SD卡或ROM）上。在数据库工作时，大量的时间花费在访问持久存储的读/写上。如果不使用事务，则会使数据库上的耗时明显增加。</p>
+<blockquote>
+<p>（五）限制数据库的访问方式来加快查询速度</p>
+</blockquote>
+<p>数据库查询中，会返回一个Cursor（游标）对象，然后用它来遍历结果。以下比较两种遍历数据库的方法：
+方法一：创建Cursor获取数据库中的两列数据：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">iterateBothColums</span><span class="o">(){</span>
+	<span class="n">Cursor</span> <span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">moveToFirst</span><span class="o">){</span>
+		<span class="k">do</span><span class="o">{</span>
+		<span class="o">}</span><span class="k">while</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">moveToNext</span><span class="o">());</span>
+	<span class="o">}</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">close</span><span class="o">;</span><span class="c1">//结束时一定要关闭Cursor否则会出现异常
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>方法二：创建的Cursor只获取第一列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">iterateFirstColum</span><span class="o">(){</span>
+	<span class="n">Cursor</span> <span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">&#34;name&#34;</span><span class="o">},</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="n">nul</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span><span class="c1">//与一的唯一区别
+</span><span class="c1"></span>	<span class="k">if</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">moveToFirst</span><span class="o">){</span>
+		<span class="k">do</span><span class="o">{</span>
+		<span class="o">}</span><span class="k">while</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">moveToNext</span><span class="o">());</span>
+	<span class="o">}</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">close</span><span class="o">;</span><span class="c1">//结束时一定要关闭Cursor否则会出现异常
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>由于没有从第二列读取数据，第二种方法比第一种方法要快不少。迭代所有行时，将所有行作为一个事务处理会更快。由此可以发现，值读取需要的数据才是王道。调用查询时，选择正确的参数，可以使性能有客观的提升。只需要指定数量的行，指定调用查询的次数，则可以进一步减少数据库的访问时间。</p>
+<h2 id="end">END</h2>
+<p>由于个人水平有限，文中不免有错误之处，还请指正。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-13</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Android常用设计模式"><i class="fas fa-angle-left fa-fw"></i>Android常用设计模式</a>
+            <a href="/androidmanifest%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B/" class="next" rel="next" title="AndroidManifest配置文件简介">AndroidManifest配置文件简介<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

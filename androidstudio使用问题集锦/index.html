@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>AndroidStudio使用问题集锦 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="AndroidStudio使用问题集锦" />
+<meta property="og:description" content="配置AndroidStudio让编译更快
+在个人.gradle文件夹下添加 gradle.properties 文件：
+文件内容如下:
+org.gradle.daemon=true
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-12-18T14:28:50+00:00" />
+<meta property="article:modified_time" content="2015-12-18T14:28:50+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="AndroidStudio使用问题集锦"/>
+<meta name="twitter:description" content="配置AndroidStudio让编译更快
+在个人.gradle文件夹下添加 gradle.properties 文件：
+文件内容如下:
+org.gradle.daemon=true
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/" /><link rel="prev" href="http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E5%8A%A0%E8%BD%BD%E8%A7%86%E5%9B%BE/" /><link rel="next" href="http://mrljdx.com/%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86%E6%96%B9%E6%A1%88%E4%B9%8B%E5%BE%AE%E4%BF%A1vs%E7%BE%8E%E5%9B%A2/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AndroidStudio使用问题集锦",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6\/"
+        },"genre": "posts","keywords": "android studio","wordcount":  1329 ,
+        "url": "http:\/\/mrljdx.com\/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6\/","datePublished": "2015-12-18T14:28:50+00:00","dateModified": "2015-12-18T14:28:50+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">AndroidStudio使用问题集锦</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-12-18">2015-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1329 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置androidstudio让编译更快">配置AndroidStudio让编译更快</a>
+      <ul>
+        <li><a href="#在个人gradle文件夹下添加-gradleproperties-文件">在个人.gradle文件夹下添加 gradle.properties 文件：</a></li>
+        <li><a href="#修改android项目更目录中的gradleproperties文件">修改Android项目更目录中的gradle.properties文件：</a></li>
+      </ul>
+    </li>
+    <li><a href="#解决方法数超过65535问题">解决方法数超过65535问题</a>
+      <ul>
+        <li><a href="#错误描述">错误描述</a></li>
+        <li><a href="#解决办法">解决办法</a></li>
+      </ul>
+    </li>
+    <li><a href="#三方包的导入及buildgradle配置">三方包的导入及build.gradle配置</a></li>
+    <li><a href="#android常用命令">Android常用命令</a>
+      <ul>
+        <li><a href="#adb相关命令">ADB相关命令</a></li>
+        <li><a href="#秘钥相关命令">秘钥相关命令</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="配置androidstudio让编译更快">配置AndroidStudio让编译更快</h2>
+<h3 id="在个人gradle文件夹下添加-gradleproperties-文件">在个人.gradle文件夹下添加 gradle.properties 文件：</h3>
+<p>文件内容如下:</p>
+<pre><code>org.gradle.daemon=true
+</code></pre>
+<h3 id="修改android项目更目录中的gradleproperties文件">修改Android项目更目录中的gradle.properties文件：</h3>
+<p>文件内容如下:</p>
+<pre><code># Project-wide Gradle settings.
+
+# IDE (e.g. Android Studio) users:
+# Settings specified in this file will override any Gradle settings
+# configured through the IDE.
+
+# For more details on how to configure your build environment visit
+# http://www.gradle.org/docs/current/userguide/build_environment.html
+
+# The Gradle daemon aims to improve the startup and execution time of Gradle.
+# When set to true the Gradle daemon is to run the build.
+# TODO: disable daemon on CI, since builds should be clean and reliable on servers
+org.gradle.daemon=true
+
+# Specifies the JVM arguments used for the daemon process.
+# The setting is particularly useful for tweaking memory settings.
+# Default value: -Xmx10248m -XX:MaxPermSize=256m
+org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+
+# When configured, Gradle will run in incubating parallel mode.
+# This option should only be used with decoupled projects. More details, visit
+# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+org.gradle.parallel=true
+
+# Enables new incubating mode that makes Gradle selective when configuring projects.
+# Only relevant projects are configured which results in faster builds for large multi-projects.
+# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:configuration_on_demand
+org.gradle.configureondemand=true
+</code></pre>
+<h2 id="解决方法数超过65535问题">解决方法数超过65535问题</h2>
+<h3 id="错误描述">错误描述</h3>
+<p>一般情况下一款简单的Android应用的方法数不会超过65535，但是随着大量优秀的开源项目导入到项目中，方法数一般会超过这个数，这时如果你再编译应用，则会报错。</p>
+<pre><code>NoClassDefFoundError  //某个方法找不到
+//错误情况大致如下
+Could not find class ‘xxxx’ , referenced from method ‘xxxxx’ 
+</code></pre>
+<h3 id="解决办法">解决办法</h3>
+<p><a href="http://stackoverflow.com/questions/27698287/noclassdeffounderror-with-android-studio-on-android-4?lq=1" target="_blank" rel="noopener noreffer"><font color="#aaaa">stackoverflow地址</font></a> <a href="http://developer.android.com/tools/building/multidex.html" target="_blank" rel="noopener noreffer"><font color="##eeee">Google官方解答</font></a></p>
+<p>** (1)在app/build.gradle中添加: **</p>
+<pre><code>dependencies {
+    //multidex support
+    compile 'com.android.support:multidex:1.0.0'
+}
+</code></pre>
+<p>** (2)让自定义的类继承自 MultiDexApplication，并修改onCreate()方法如下： **</p>
+<pre><code>@Override
+public void onCreate() {
+    //MultiDex 支持 65535 方法数量限制，注意，此方法要在super.onCreate()之前调用
+    MultiDex.install(getApplicationContext());
+    super.onCreate(); 
+}
+</code></pre>
+<h2 id="三方包的导入及buildgradle配置">三方包的导入及build.gradle配置</h2>
+<pre><code>android{
+
+    //添加.so库依赖
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+// 为了让编译器能在libs 目录下找到引用的 .aar 文件
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
+
+
+dependencies {
+    //引用远程仓库包
+    compile 'com.squareup.picasso:picasso:2.5.2' 
+    //引用app/libs 目录下包
+    compile files('libs/gson-2.2.4.jar')  
+    //引用项目库文件 文件结构  /app /stickyListView ，注意配置 setting.gradle 文件 : include ':app',':stickyListView'
+    compile project(':stickyListView') 
+    //引入aar库文件
+    compile(name:'aar_library_name', ext:'aar') //改.aar文件位于app/libs目录下，并且已经配置repositories
+}
+</code></pre>
+<h2 id="android常用命令">Android常用命令</h2>
+<h3 id="adb相关命令">ADB相关命令</h3>
+<p>** (1)获取连接到的手机序列号 **</p>
+<pre><code>adb get-serialno
+</code></pre>
+<p>** (2)查看当前连接的设备**</p>
+<pre><code>adb devices
+</code></pre>
+<p>** (3)重启adb server**</p>
+<pre><code>adb kill-server
+adb start-server
+</code></pre>
+<h3 id="秘钥相关命令">秘钥相关命令</h3>
+<p>** (1)查看keystore的信息 **</p>
+<pre><code>keytool -list -v -keystore xp.jks
+或者：
+keytool -list -keystore (keystore文件) -alias (key的别名) -v
+</code></pre>
+<p>** (2)查看keystore的公钥证书信息 **</p>
+<pre><code>keytool -list -keystore (keystore文件) -alias (key的别名) -rfc
+
+（注：获取Base64格式的公钥证书，RFC 1421）
+</code></pre>
+<p>** (3)查看apk的签名信息 **</p>
+<pre><code>jarsigner -verify -verbose -certs &lt;your_apk_path.apk&gt;
+</code></pre>
+<p>** (4)生成keystore **
+创建keystore，需要用到keytool.exe (位于jdk_xx\jre\bin目录下)，具体做法如下：</p>
+<pre><code>keytool -genkey -alias mykey -keyalg RSA -validity 40000 -keystore demo.keystore
+
+#说明：
+#    -genkey 产生密钥
+#    -alias mykey 别名 mykey
+#    -keyalg RSA 使用RSA算法对签名加密
+#    -validity 40000 有效期限4000天
+#    -keystore demo.keystore
+</code></pre>
+<p>** (5)对apk签名 **</p>
+<p>使用产生的keystore对apk签名，使用到的是jarsigner.exe ，该工具位于jdk_xx\bin目录下，命令如下：</p>
+<pre><code>jarsigner -verbose -keystore demo.keystore -signedjar test_signed.apk test.apk mykey
+
+#    test_signed.apk是签名之后的文件
+#    test.apk是需要签名的文件
+</code></pre>
+<p>另外需要注意的是，如果你的jdk版本在1.7以上，你在对apk签名时，需要加上这个参数：</p>
+<pre><code>-digestalg SHA1 -sigalg MD5withRSA
+</code></pre>
+<p>否则同样会出现：Failure [INSTALL_PARSE_FAILED_NO_CERTIFICATES]的错误。</p>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-12-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-studio/">android studio</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E5%8A%A0%E8%BD%BD%E8%A7%86%E5%9B%BE/" class="prev" rel="prev" title="自定义网络加载视图"><i class="fas fa-angle-left fa-fw"></i>自定义网络加载视图</a>
+            <a href="/%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86%E6%96%B9%E6%A1%88%E4%B9%8B%E5%BE%AE%E4%BF%A1vs%E7%BE%8E%E5%9B%A2/" class="next" rel="next" title="资源混淆方案之微信vs美团">资源混淆方案之微信vs美团<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

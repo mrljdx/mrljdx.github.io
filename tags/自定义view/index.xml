@@ -1,0 +1,42 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>自定义View - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/%E8%87%AA%E5%AE%9A%E4%B9%89view/</link>
+        <description>自定义View - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 16 Apr 2015 21:00:19 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/%E8%87%AA%E5%AE%9A%E4%B9%89view/" rel="self" type="application/rss+xml" /><item>
+    <title>自定义网络加载视图</title>
+    <link>http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E5%8A%A0%E8%BD%BD%E8%A7%86%E5%9B%BE/</link>
+    <pubDate>Thu, 16 Apr 2015 21:00:19 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E5%8A%A0%E8%BD%BD%E8%A7%86%E5%9B%BE/</guid>
+    <description><![CDATA[<h2 id="networkimageview简介">NetworkImageView简介：</h2>
+<p>在布局中使用自定义视图：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;com.mrljdx.loadimage.NetWorkImageView</span>
+        <span class="na">android:id=</span><span class="s">&#34;@+id/myNetImgView&#34;</span>
+        <span class="na">android:layout_width=</span><span class="s">&#34;200dp&#34;</span>
+        <span class="na">android:layout_height=</span><span class="s">&#34;200dp&#34;</span>
+        <span class="na">android:layout_gravity=</span><span class="s">&#34;center_horizontal&#34;</span> <span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>自定义View小结</title>
+    <link>http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/</link>
+    <pubDate>Tue, 14 Apr 2015 09:13:53 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E8%87%AA%E5%AE%9A%E4%B9%89view%E5%B0%8F%E7%BB%93/</guid>
+    <description><![CDATA[<p>View基类呈现一个100x100像素的空白正方形，要改变控件的大小并呈现一个不同的界面则需要分别对onMesure和onDraw方法进行重写。
+** onMesure<strong>方法中，新的视图将会计算一系列给定的边界条件下占据的高度和宽度。
+** onDraw</strong>方法用于在画布上进行绘图。</p>]]></description>
+</item></channel>
+</rss>

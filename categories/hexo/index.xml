@@ -1,0 +1,45 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Hexo - 分类 - 追云似梦</title>
+        <link>http://mrljdx.com/categories/hexo/</link>
+        <description>Hexo - 分类 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 15 Feb 2015 13:52:54 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/categories/hexo/" rel="self" type="application/rss+xml" /><item>
+    <title>Hexo同时提交博客到github和gitcafe</title>
+    <link>http://mrljdx.com/hexo%E5%90%8C%E6%97%B6%E6%8F%90%E4%BA%A4%E5%8D%9A%E5%AE%A2%E5%88%B0github%E5%92%8Cgitcafe/</link>
+    <pubDate>Sun, 15 Feb 2015 13:52:54 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/hexo%E5%90%8C%E6%97%B6%E6%8F%90%E4%BA%A4%E5%8D%9A%E5%AE%A2%E5%88%B0github%E5%92%8Cgitcafe/</guid>
+    <description><![CDATA[<p>本文记录自己在搭建好Hexo博客后deploy到github和gitcafe中的问题。</p>
+<ul>
+<li>介绍Hexo<a href="http://hexo.io/docs/deployment.html" target="_blank" rel="noopener noreffer">官方文档</a>里是如何进行配置。</li>
+<li>展示这个博客的配置项。</li>
+</ul>]]></description>
+</item><item>
+    <title>Markdown</title>
+    <link>http://mrljdx.com/markdown/</link>
+    <pubDate>Tue, 10 Feb 2015 14:23:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/markdown/</guid>
+    <description><![CDATA[<h1 id="欢迎使用-cmd---在线-markdown-编辑阅读器">欢迎使用 Cmd - 在线 Markdown 编辑阅读器</h1>
+<hr>
+<p>我们理解您需要更便捷更高效的工具记录思想，整理笔记、知识，并将其中承载的价值传播给他人，<strong>Cmd Markdown</strong> 是我们给出的答案 —— 我们为记录思想和分享知识提供更专业的工具。</p>
+<p>您可以使用 Cmd Markdown：</p>
+<blockquote>
+<ul>
+<li>整理知识，学习笔记</li>
+<li>发布日记，杂文，所见所想</li>
+<li>撰写发布技术文稿（代码支持）</li>
+<li>撰写发布学术论文（LaTeX 公式支持）</li>
+</ul>
+</blockquote>]]></description>
+</item><item>
+    <title>Hexo博客的搭建及同步更新</title>
+    <link>http://mrljdx.com/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%90%8C%E6%AD%A5%E6%9B%B4%E6%96%B0/</link>
+    <pubDate>Mon, 09 Feb 2015 15:10:28 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%90%8C%E6%AD%A5%E6%9B%B4%E6%96%B0/</guid>
+    <description><![CDATA[<h2 id="摘要">摘要</h2>
+<p>最近开始使用Hexo来搭建个人博客，这篇文章主要记录在使用Hexo搭建个人博客的时候出现的一些问题。</p>]]></description>
+</item></channel>
+</rss>

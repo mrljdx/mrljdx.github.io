@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Apk - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/apk/</link>
+        <description>Apk - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 22 Feb 2016 10:10:42 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/apk/" rel="self" type="application/rss+xml" /><item>
+    <title>Android开发减少Apk大小及统计方法数实践</title>
+    <link>http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/</link>
+    <pubDate>Mon, 22 Feb 2016 10:10:42 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>一款好的App首先需要保证功能稳定性（在用户手上不Crash），同时也要考虑节省用户的流量，电量等。不过现在的App市场同类型的App已经很多了，那么如何保证你的产品能在做推广时用户愿意下载呢？就是通过精简APK大小来减少用户的下载成本。</p>
+<p>下面就Androdi开发中一些控制APK大小的经验来简单说明一下。</p>]]></description>
+</item></channel>
+</rss>

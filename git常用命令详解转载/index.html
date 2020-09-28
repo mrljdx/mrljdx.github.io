@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Git常用命令详解(转载) - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Git常用命令详解(转载)" />
+<meta property="og:description" content="原文：Git远程操作详解 作者：阮一峰 Git是目前最流行的版本管理系统，学会Git几乎成了开发者的必备技能。 Git有很多优势，其中之一就是远程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-02-12T14:50:23+00:00" />
+<meta property="article:modified_time" content="2015-02-12T14:50:23+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Git常用命令详解(转载)"/>
+<meta name="twitter:description" content="原文：Git远程操作详解 作者：阮一峰 Git是目前最流行的版本管理系统，学会Git几乎成了开发者的必备技能。 Git有很多优势，其中之一就是远程"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD/" /><link rel="prev" href="http://mrljdx.com/android-studio%E7%AE%80%E4%BB%8B/" /><link rel="next" href="http://mrljdx.com/%E9%85%8D%E7%BD%AEaa%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8Bgradle%E6%96%87%E4%BB%B6%E7%BF%BB%E8%AF%91/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Git常用命令详解(转载)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD\/"
+        },"genre": "posts","keywords": "git命令","wordcount":  3220 ,
+        "url": "http:\/\/mrljdx.com\/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD\/","datePublished": "2015-02-12T14:50:23+00:00","dateModified": "2015-02-12T14:50:23+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Git常用命令详解(转载)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/git/"><i class="far fa-folder fa-fw"></i>Git</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-02-12">2015-02-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3220 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一git-clone">一、<strong>git clone</strong></a></li>
+    <li><a href="#二git-remote">二、<strong>git remote</strong></a></li>
+    <li><a href="#三git-fetch">三、<strong>git fetch</strong></a></li>
+    <li><a href="#四git-pull">四、<strong>git pull</strong></a></li>
+    <li><a href="#五git-push">五、<strong>git push</strong></a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>原文：<a href="http://www.ruanyifeng.com/blog/2014/06/git_remote.html" target="_blank" rel="noopener noreffer">Git远程操作详解</a>
+作者：<a href="http://www.ruanyifeng.com/home.html" target="_blank" rel="noopener noreffer">阮一峰</a></p>
+</blockquote>
+<p><a href="http://zh.wikipedia.org/wiki/Git" target="_blank" rel="noopener noreffer">Git</a>是目前最流行的<a href="http://www.ruanyifeng.com/blog/2008/12/a_visual_guide_to_version_control.html" target="_blank" rel="noopener noreffer">版本管理系统</a>，学会Git几乎成了开发者的必备技能。
+Git有很多优势，其中之一就是远程操作非常简便。本文详细介绍5个Git命令，它们的概念和用法，理解了这些内容，你就会完全掌握Git远程操作。</p>
+<ul>
+<li><font size=3><strong>git clone</strong></font></li>
+<li><font size=3><strong>git remote</strong></font></li>
+<li><font size=3><strong>git fetch</strong></font></li>
+<li><font size=3><strong>git pull</strong></font></li>
+<li><font size=3><strong>git push</strong></font></li>
+</ul>
+<!--more -->
+<p>本文针对初级用户，从最简单的讲起，但是需要读者对Git的基本用法有所了解。同时，本文覆盖了上面5个命令的几乎所有的常用用法，所以对于熟练用户也有参考价值。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.beekka.com/blog/2014/bg2014061202.jpg"
+        data-srcset="http://image.beekka.com/blog/2014/bg2014061202.jpg, http://image.beekka.com/blog/2014/bg2014061202.jpg 1.5x, http://image.beekka.com/blog/2014/bg2014061202.jpg 2x"
+        data-sizes="auto"
+        alt="http://image.beekka.com/blog/2014/bg2014061202.jpg"
+        title="Git原理图" /></p>
+<h2 id="一git-clone">一、<strong>git clone</strong></h2>
+<p>远程操作的第一步，通常是从远程主机克隆一个版本库，这时就要用到git clone命令。</p>
+<blockquote>
+<p>$ git clone &lt;版本库的网址&gt;</p>
+</blockquote>
+<p>比如，克隆jQuery的版本库。</p>
+<blockquote>
+<p>$ git clone <a href="https://github.com/jquery/jquery.git">https://github.com/jquery/jquery.git</a></p>
+</blockquote>
+<p>该命令会在本地主机生成一个目录，与远程主机的版本库同名。如果要指定不同的目录名，可以将目录名作为git clone命令的第二个参数。</p>
+<blockquote>
+<p>$ git clone &lt;版本库的网址&gt; &lt;本地目录名&gt;</p>
+</blockquote>
+<p>git clone支持多种协议，除了<strong>HTTP(s)<strong>以外，还支持</strong>SSH</strong>、<strong>Git</strong>、<strong>本地文件协议</strong>等，下面是一些例子。</p>
+<blockquote>
+<p>$ git  clone  http[s]://example.com/path/to/repo.git/</p>
+</blockquote>
+<blockquote>
+<p>$ git clone ssh://example.com/path/to/repo.git/</p>
+</blockquote>
+<blockquote>
+<p>$ git clone git://example.com/path/to/repo.git/</p>
+</blockquote>
+<blockquote>
+<p>$ git clone /opt/git/project.git</p>
+</blockquote>
+<blockquote>
+<p>$ git clone file:///opt/git/project.git</p>
+</blockquote>
+<blockquote>
+<p>$ git clone ftp[s]://example.com/path/to/repo.git/</p>
+</blockquote>
+<blockquote>
+<p>$ git clone rsync://example.com/path/to/repo.git/</p>
+</blockquote>
+<p>SSH协议还有另一种写法。</p>
+<blockquote>
+<p>$ git clone [user@]example.com:path/to/repo.git/</p>
+</blockquote>
+<p>通常来说，Git协议下载速度最快，SSH协议用于需要用户认证的场合。各种协议优劣的详细讨论请参考<a href="http://git-scm.com/book/en/Git-on-the-Server-The-Protocols" target="_blank" rel="noopener noreffer">官方文档</a>。</p>
+<h2 id="二git-remote">二、<strong>git remote</strong></h2>
+<p>为了便于管理，Git要求每个远程主机都必须指定一个主机名。
+git remote命令就用于管理主机名。<strong>不带选项</strong>的时候，git remote命令<strong>列出所有远程主机</strong>。</p>
+<blockquote>
+<p>$ git remote    #转注：不带参数，则输出 origin
+origin</p>
+</blockquote>
+<p>使用-v选项，可以参看远程主机的网址。</p>
+<blockquote>
+<p>$ git remote -v
+origin  <a href="mailto:git@github.com">git@github.com</a>:jquery/jquery.git (fetch)
+origin  <a href="mailto:git@github.com">git@github.com</a>:jquery/jquery.git (push)</p>
+</blockquote>
+<p>上面命令表示，当前只有一台远程主机，叫做<strong>origin</strong>，以及它的<strong>网址</strong>。
+克隆版本库的时候，所使用的远程主机<strong>自动被Git命名为origin</strong>。如果想用其他的主机名，需要用git clone命令的**-o**选项指定。</p>
+<blockquote>
+<p>$ git clone -o jQuery <a href="https://github.com/jquery/jquery.git">https://github.com/jquery/jquery.git</a>
+$ git remote
+jQuery</p>
+</blockquote>
+<p>上面命令表示，克隆的时候，指定远程主机叫做jQuery。
+<strong>git remote show</strong>命令加上主机名，可以查看该主机的详细信息。</p>
+<blockquote>
+<p>$ git remote show &lt;主机名&gt;</p>
+</blockquote>
+<p><strong>git remote add</strong>命令用于添加远程主机。</p>
+<blockquote>
+<p>$ git remote add &lt;主机名&gt; &lt;网址&gt;</p>
+</blockquote>
+<p><strong>git remote rm</strong>命令用于删除远程主机。</p>
+<blockquote>
+<p>$ git remote rm &lt;主机名&gt;</p>
+</blockquote>
+<p><strong>git remote rename</strong>命令用于远程主机的改名。</p>
+<blockquote>
+<p>$ git remote rename &lt;原主机名&gt; &lt;新主机名&gt;</p>
+</blockquote>
+<h2 id="三git-fetch">三、<strong>git fetch</strong></h2>
+<p>一旦远程主机的版本库有了更新（Git术语叫做commit），需要将这些更新取回本地，这时就要用到<strong>git fetch</strong>命令。</p>
+<blockquote>
+<p>$ git fetch &lt;远程主机名&gt;</p>
+</blockquote>
+<p>上面命令将某个远程主机的更新，全部取回本地。
+默认情况下，<strong>git fetch</strong>取回所有分支（branch）的更新。如果只想取回<em>特定分支</em>的更新，可以指定<em>分支名</em>。</p>
+<blockquote>
+<p>$ git fetch &lt;远程主机名&gt; &lt;分支名&gt;</p>
+</blockquote>
+<p>比如，取回origin主机的master分支。</p>
+<blockquote>
+<p>$ git fetch origin master</p>
+</blockquote>
+<p>所取回的更新，在本地主机上要用&quot;远程主机名/分支名&quot;的形式读取。比如origin主机的master，就要用origin/master读取。
+<strong>git branch</strong>命令的**-r**选项，可以用来*查看远程分支*，**-a**选项查看所有分支。</p>
+<blockquote>
+<p>$ git branch -r
+origin/master</p>
+</blockquote>
+<blockquote>
+<p>$ git branch -a</p>
+</blockquote>
+<ul>
+<li>master
+ remotes/origin/master</li>
+</ul>
+<p>上面命令表示，本地主机的当前分支是<strong>master</strong>，远程分支是<strong>origin/master</strong>。
+取回远程主机的更新以后，可以在它的基础上，使用<strong>git checkout</strong>命令创建一个新的分支。</p>
+<blockquote>
+<p>$ git checkout -b newBrach origin/master</p>
+</blockquote>
+<p>上面命令表示，在<strong>origin/master</strong>的基础上，创建一个新分支。
+此外，也可以使用<strong>git merge</strong>命令或者<strong>git rebase</strong>命令，<em>在本地分支上合并远程分支</em>。</p>
+<blockquote>
+<p>$ git merge origin/master  # 或者</p>
+</blockquote>
+<blockquote>
+<p>$ git rebase origin/master</p>
+</blockquote>
+<p>上面命令表示在当前分支上，合并<strong>origin/master</strong>。</p>
+<h2 id="四git-pull">四、<strong>git pull</strong></h2>
+<p><strong>git pull</strong>命令的作用是，取回远程主机某个分支的更新，再与本地的指定分支合并。它的完整格式稍稍有点复杂。</p>
+<blockquote>
+<p>$ git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p>
+</blockquote>
+<p>比如，取回<em>origin</em>主机的<strong>next</strong>分支，与本地的<strong>master</strong>分支合并，需要写成下面这样。</p>
+<blockquote>
+<p>$ git pull origin next:master</p>
+</blockquote>
+<p>如果远程分支是与当前分支合并，则冒号后面的部分可以省略。</p>
+<blockquote>
+<p>$ git pull origin next</p>
+</blockquote>
+<p>上面命令表示，取回<strong>origin/next</strong>分支，再与当前分支合并。实质上，这等同于先做<strong>git fetch</strong>，再做<strong>git merge</strong>。如下所示：</p>
+<blockquote>
+<p>$ git fetch origin</p>
+</blockquote>
+<blockquote>
+<p>$ git merge origin/next</p>
+</blockquote>
+<p>在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。
+比如，在<strong>git clone</strong>的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动&quot;追踪&quot;<strong>origin/master</strong>分支。</p>
+<p>Git也允许手动建立追踪关系。</p>
+<blockquote>
+<p>git branch - -set-upstream master origin/next</p>
+</blockquote>
+<p>上面命令指定<strong>master</strong>分支追踪<strong>origin/next</strong>分支。
+如果当前分支与远程分支存在<em>追踪关系</em>，<strong>git pull</strong>就可以省略远程分支名。</p>
+<blockquote>
+<p>$ git pull</p>
+</blockquote>
+<p>上面命令表示，当前分支自动与唯一一个追踪分支进行合并。
+如果合并需要采用<em>rebase模式</em>，可以使用**- -rebase**选项。如下：</p>
+<blockquote>
+<p>$ git pull - -rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p>
+</blockquote>
+<h2 id="五git-push">五、<strong>git push</strong></h2>
+<p><strong>git push</strong>命令用于将本地分支的更新，推送到远程主机。它的格式与<strong>git pull</strong>命令相仿。</p>
+<blockquote>
+<p>$ git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</p>
+</blockquote>
+<p><font face="verdana" size=“2” color=“black”><strong>注意</strong></font>，分支推送顺序的写法是&lt;来源地&gt;:&lt;目的地&gt;，所以git pull是&lt;远程分支&gt;:&lt;本地分支&gt;，而git push是&lt;本地分支&gt;:&lt;远程分支&gt;。
+如果省略远程分支名，则表示将本地分支推送与之存在&quot;追踪关系&quot;的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。</p>
+<blockquote>
+<p>$ git push origin master</p>
+</blockquote>
+<p>上面命令表示，将本地的<strong>master</strong>分支推送到<em>origin</em>主机的<strong>master</strong>分支。如果后者不存在，则会被新建。
+如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支。</p>
+<blockquote>
+<p>$ git push origin :master# 等同于</p>
+</blockquote>
+<blockquote>
+<p>$ git push origin - -delete master</p>
+</blockquote>
+<p>上面命令表示删除origin主机的master分支。
+如果当前分支与远程分支之间存在追踪关系，则本地分支和远程分支都可以省略。</p>
+<blockquote>
+<p>$ git push origin</p>
+</blockquote>
+<p>上面命令表示，将当前分支推送到origin主机的对应分支。
+如果当前分支只有一个追踪分支，那么主机名都可以省略。</p>
+<blockquote>
+<p>$ git push</p>
+</blockquote>
+<p>如果当前分支与多个主机存在追踪关系，则可以使用-u选项指定一个默认主机，这样后面就可以不加任何参数使用<strong>git push</strong>。</p>
+<blockquote>
+<p>$ git push -u origin master</p>
+</blockquote>
+<p>上面命令将本地的<strong>master</strong>分支推送到<em>origin</em>主机，同时指定origin为默认主机，后面就可以不加任何参数使用<strong>git push</strong>了。
+不带任何参数的<strong>git push</strong>，默认只推送当前分支，这叫做simple方式。此外，还有一种matching方式，会推送所有有对应的远程分支的本地分支。Git 2.0版本之前，默认采用matching方法，现在改为默认采用simple方式。如果要修改这个设置，可以采用git config命令。</p>
+<blockquote>
+<p>$ git config - -global push.default matching# 或者</p>
+</blockquote>
+<blockquote>
+<p>$ git config - -global push.default simple</p>
+</blockquote>
+<p>还有一种情况，就是不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机，这时需要使用- -all选项。</p>
+<blockquote>
+<p>$ git push - -all origin</p>
+</blockquote>
+<p>上面命令表示，将所有本地分支都推送到<em>origin</em>主机。
+如果远程主机的版本比本地版本更新，推送时Git会报错，要求先在本地做<strong>git pull</strong>合并差异，然后再推送到远程主机。这时，如果你一定要推送，可以使用**- -force**选项。</p>
+<blockquote>
+<p>$ git push - -force origin</p>
+</blockquote>
+<p>上面命令使用**-—force**选项，结果导致远程主机上更新的版本被覆盖。<font color=“blue”>除非你很确定要这样做，否则应该尽量避免使用**- -force**选项。</font>
+最后，** git push **不会推送标签（tag），除非使用** - -tags** 选项。</p>
+<blockquote>
+<p>$ git push origin - -tags</p>
+</blockquote>
+<p><strong>END</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-02-12</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E8%BD%AC%E8%BD%BD/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/git%E5%91%BD%E4%BB%A4/">git命令</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android-studio%E7%AE%80%E4%BB%8B/" class="prev" rel="prev" title="AndroidStudio简介"><i class="fas fa-angle-left fa-fw"></i>AndroidStudio简介</a>
+            <a href="/%E9%85%8D%E7%BD%AEaa%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8Bgradle%E6%96%87%E4%BB%B6%E7%BF%BB%E8%AF%91/" class="next" rel="next" title="配置AA项目工程Gradle文件(翻译)">配置AA项目工程Gradle文件(翻译)<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

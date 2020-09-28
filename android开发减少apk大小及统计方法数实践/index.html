@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Android开发减少Apk大小及统计方法数实践 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Android开发减少Apk大小及统计方法数实践" />
+<meta property="og:description" content="前言
+一款好的App首先需要保证功能稳定性（在用户手上不Crash），同时也要考虑节省用户的流量，电量等。不过现在的App市场同类型的App已经很多了，那么如何保证你的产品能在做推广时用户愿意下载呢？就是通过精简APK大小来减少用户的下载成本。
+下面就Androdi开发中一些控制APK大小的经验来简单说明一下。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-02-22T10:10:42+00:00" />
+<meta property="article:modified_time" content="2016-02-22T10:10:42+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Android开发减少Apk大小及统计方法数实践"/>
+<meta name="twitter:description" content="前言
+一款好的App首先需要保证功能稳定性（在用户手上不Crash），同时也要考虑节省用户的流量，电量等。不过现在的App市场同类型的App已经很多了，那么如何保证你的产品能在做推广时用户愿意下载呢？就是通过精简APK大小来减少用户的下载成本。
+下面就Androdi开发中一些控制APK大小的经验来简单说明一下。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/" /><link rel="prev" href="http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/" /><link rel="next" href="http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEbattery-historian-2-0%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Android开发减少Apk大小及统计方法数实践",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5\/"
+        },"genre": "posts","keywords": "Apk","wordcount":  1543 ,
+        "url": "http:\/\/mrljdx.com\/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5\/","datePublished": "2016-02-22T10:10:42+00:00","dateModified": "2016-02-22T10:10:42+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Android开发减少Apk大小及统计方法数实践</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-02-22">2016-02-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1543 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#apk分析">APK分析</a></li>
+    <li><a href="#解决方案">解决方案</a>
+      <ul>
+        <li><a href="#使用dex-method-counts来统计项目方法数量">使用dex-method-counts来统计项目方法数量</a></li>
+        <li><a href="#使用gradle脚本来计算apk的大小">使用Gradle脚本来计算Apk的大小</a></li>
+      </ul>
+    </li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p>一款好的App首先需要保证功能稳定性（在用户手上不Crash），同时也要考虑节省用户的流量，电量等。不过现在的App市场同类型的App已经很多了，那么如何保证你的产品能在做推广时用户愿意下载呢？就是通过精简APK大小来减少用户的下载成本。</p>
+<p>下面就Androdi开发中一些控制APK大小的经验来简单说明一下。</p>
+<h2 id="apk分析">APK分析</h2>
+<p>在开发一款APP时我们都会引用一些Github上的开发库，一款App基础框架如下：</p>
+<ol>
+<li>Retrofit+OkHttp+OkIO作为网络请求框架；</li>
+<li>Glide/Fresco/Picasso/AIL/等作为图片加载库；</li>
+<li>EventBus/Otto 作为事件发布/订阅总线；</li>
+<li>ORMLite/GreenDao作为数据库框架的普遍较多；</li>
+<li>Gson/Jackson等JSON解析库；</li>
+<li>基于RxJava函数式编程思想构建的精简开发框架（代码不容易看懂）；</li>
+</ol>
+<p>以上是笔者总结的大部分比较常用的库，当然有时候还需要集成一些三方平台提供的SDK：</p>
+<ol>
+<li>Umeng/ShareSDK/LeanCloud等三方统计平台服务（三方登录/数据统计/软件更新等）;</li>
+<li>集成微信/支付宝支付SDK；</li>
+<li>高德/百度/腾讯地图SDK；</li>
+<li>讯飞/百度语音等语音识别/语音合成 SDK；</li>
+</ol>
+<p>以上基本上是开发中需要用到的库和文件，而Android作为开发者，在开发中最好尽量避免在Apk中一些不必要的库，因为过多的集成库会导致Apk的方法数超过65535的限制。这时候只能通过MultiDex方法来解决这个问题。
+不过使用MutliDex解决方案会导致一些问题：</p>
+<ol>
+<li>增加了在较旧和低版本的Android设备上应用加载的时间；</li>
+<li>在一些三星设备上，由于厂商设备出厂对应用的内存限制会导致一些问题。比如运行时崩溃。</li>
+</ol>
+<p>所以不在万不得已的情况下，不要轻易使用MultiDex方案。应该尽量避免方法数超过65535。</p>
+<h2 id="解决方案">解决方案</h2>
+<h3 id="使用dex-method-counts来统计项目方法数量">使用dex-method-counts来统计项目方法数量</h3>
+<p>[dex-method-counts]是一款基于Gradle构建的Java工程，它包含一些Android的构建工具，可以帮助我们统计Android工程中的每个三方库的方法数量并给出详细的数据分析。可以让我们快速定位Apk中方法数的问题。
+Github地址：https://github.com/mihaip/dex-method-counts
+这个项目是基于IDEA开发开发工具Gradle工程构建的，如果你的电脑中有IDEA软件，可以直接导入项目，传入APK的文件绝对路径作为参数，运行即可。</p>
+<p>如果没有IDEA，也可以直接通过Gradle来编译整个工程：</p>
+<p>on OSX</p>
+<blockquote>
+<p>$ ./gradlew assemble
+$ ./dex-method-counts path/to/App.apk</p>
+</blockquote>
+<p>on Windows</p>
+<blockquote>
+<p>$ gradlew assemble
+$ java -jar path\to\build\jar\dex-method-counts.jar path\to\App.apk</p>
+</blockquote>
+<p>本文在IDEA中编译并执行后得到如下结果（部分片段）：
+如图，可以看出整个Apk的方法数为59805，小于65535的数量限制，可以不必使用Multidex。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://7u2j5d.com1.z0.glb.clouddn.com/90FD8B25-8A54-4A15-8794-4BD40D6A1331.png"
+        data-srcset="http://7u2j5d.com1.z0.glb.clouddn.com/90FD8B25-8A54-4A15-8794-4BD40D6A1331.png, http://7u2j5d.com1.z0.glb.clouddn.com/90FD8B25-8A54-4A15-8794-4BD40D6A1331.png 1.5x, http://7u2j5d.com1.z0.glb.clouddn.com/90FD8B25-8A54-4A15-8794-4BD40D6A1331.png 2x"
+        data-sizes="auto"
+        alt="http://7u2j5d.com1.z0.glb.clouddn.com/90FD8B25-8A54-4A15-8794-4BD40D6A1331.png"
+        title="图IDEA1" />
+在图中可以看出，ShareSDK的方法总计1941个；以com.包名的模块占方法数32327个，其中友盟Update（怎么是alimama额）占用293个，amap(高德地图)占用6003个方法。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://7u2j5d.com1.z0.glb.clouddn.com/QQ20160222-0%402x.png"
+        data-srcset="http://7u2j5d.com1.z0.glb.clouddn.com/QQ20160222-0%402x.png, http://7u2j5d.com1.z0.glb.clouddn.com/QQ20160222-0%402x.png 1.5x, http://7u2j5d.com1.z0.glb.clouddn.com/QQ20160222-0%402x.png 2x"
+        data-sizes="auto"
+        alt="http://7u2j5d.com1.z0.glb.clouddn.com/QQ20160222-0%402x.png"
+        title="图IDEA2" /></p>
+<h3 id="使用gradle脚本来计算apk的大小">使用Gradle脚本来计算Apk的大小</h3>
+<p>在每次编译完Apk后，可以通过脚本自动计算Apk各个版本的大小情况，包括debug-unProguard版本和release-proguard版本。
+下面是一段简单的代码，打印app-debug版本和app-unaligned版本的大小：</p>
+<pre><code>task reportApkSize &lt;&lt; {
+    def sdkProject = project(':app')
+    def nonSdkProject = project(':app')
+    def footprint = getSizeDifferent(
+            new File(&quot;${sdkProject.buildDir}/outputs/apk/app-debug.apk&quot;),
+            new File(&quot;${nonSdkProject.buildDir}/outputs/apk/app-debug-unaligned.apk&quot;))
+    println footprint
+}
+
+def getSizeDifferent(File file1,File file2){
+    return &quot;Debug Size is : &quot;+file1.size()/1024/1024+&quot;M&quot;+&quot; Debug unaligned Size is : &quot;+file2.size()/1024/1024+&quot;M&quot;;
+}
+</code></pre>
+<p>通过简单的配置就可以打印Apk的其他版本大小，通过每次发布之前来比较，并结合dex-counts就可以随时的分析和了解自己Apk的大小情况，便于分析和解决问题。</p>
+<h2 id="end">END</h2>
+<p>由于作者能力有限，如文中有问题还请指正，开卷有益，欢迎多多交流。</p>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-02-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/apk/">Apk</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/" class="prev" rel="prev" title="Android中实用的Gradle配置"><i class="fas fa-angle-left fa-fw"></i>Android中实用的Gradle配置</a>
+            <a href="/mac%E4%B8%8B%E9%85%8D%E7%BD%AEbattery-historian-2-0%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" class="next" rel="next" title="Mac下配置Battery Historian 2.0测试环境">Mac下配置Battery Historian 2.0测试环境<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

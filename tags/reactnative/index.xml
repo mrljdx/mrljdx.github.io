@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>ReactNative - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/reactnative/</link>
+        <description>ReactNative - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 06 Jan 2016 12:01:06 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/reactnative/" rel="self" type="application/rss+xml" /><item>
+    <title>Mac下配置React Native的一些问题</title>
+    <link>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEreact-native%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Wed, 06 Jan 2016 12:01:06 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEreact-native%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[Facebook推出的React Native开发框架最初只支持Mac上的开发环境，现在也可以通过在Win上简单的配置支持React Nativ]]></description>
+</item></channel>
+</rss>

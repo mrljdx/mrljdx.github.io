@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>设计模式读书笔记（开篇） - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="设计模式读书笔记（开篇）" />
+<meta property="og:description" content="好的设计可以去繁就简，在软件设计中能够熟练的运用设计模式可以在不同的需求变化中“以不变应万变”。简单易懂的设计才是好的设计，下面简单的总结一下设计模式中的6个基本原则&ndash;SOLID
+
+SRP （单一职责）
+OCP（开闭原则）
+LSP（里氏替换原则）
+LoD（迪米特法则）
+ISP（接口隔离原则）
+DIP（依赖倒置原则）
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-03T13:40:58+00:00" />
+<meta property="article:modified_time" content="2015-04-03T13:40:58+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="设计模式读书笔记（开篇）"/>
+<meta name="twitter:description" content="好的设计可以去繁就简，在软件设计中能够熟练的运用设计模式可以在不同的需求变化中“以不变应万变”。简单易懂的设计才是好的设计，下面简单的总结一下设计模式中的6个基本原则&ndash;SOLID
+
+SRP （单一职责）
+OCP（开闭原则）
+LSP（里氏替换原则）
+LoD（迪米特法则）
+ISP（接口隔离原则）
+DIP（依赖倒置原则）
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/" /><link rel="prev" href="http://mrljdx.com/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" /><link rel="next" href="http://mrljdx.com/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "设计模式读书笔记（开篇）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87\/"
+        },"genre": "posts","keywords": "设计模式","wordcount":  4093 ,
+        "url": "http:\/\/mrljdx.com\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87\/","datePublished": "2015-04-03T13:40:58+00:00","dateModified": "2015-04-03T13:40:58+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">设计模式读书笔记（开篇）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="far fa-folder fa-fw"></i>设计模式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-03">2015-04-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4093 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#单一职责">单一职责</a></li>
+    <li><a href="#开闭原则">开闭原则</a></li>
+    <li><a href="#里氏替换原则">里氏替换原则</a></li>
+    <li><a href="#迪米特法则">迪米特法则</a></li>
+    <li><a href="#接口隔离原则">接口隔离原则</a></li>
+    <li><a href="#依赖倒置原则">依赖倒置原则</a></li>
+    <li><a href="#小结">小结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>好的设计可以去繁就简，在软件设计中能够熟练的运用设计模式可以在不同的需求变化中“以不变应万变”。简单易懂的设计才是好的设计，下面简单的总结一下设计模式中的6个基本原则&ndash;SOLID</p>
+<ul>
+<li>SRP （单一职责）</li>
+<li>OCP（开闭原则）</li>
+<li>LSP（里氏替换原则）</li>
+<li>LoD（迪米特法则）</li>
+<li>ISP（接口隔离原则）</li>
+<li>DIP（依赖倒置原则）</li>
+</ul>
+<h2 id="单一职责">单一职责</h2>
+<p>让接口设计最简（高内聚）做到只负责处理一类事件，类的设计尽量做到只因一个原因引起变化。
+<strong>好处：</strong></p>
+<ul>
+<li>降低类的复杂性，明确实现的职责定义。</li>
+<li>提高可读性，便于维护。</li>
+<li>降低需求变更对整个项目的影响。</li>
+</ul>
+<h2 id="开闭原则">开闭原则</h2>
+<p>开闭原则简而言之就是软件实体应该通过扩展来实现对需求变化的支持，而不是通过修改原有代码来实现变化。那么什么是软件实体呢？
+<strong>软件实体包括：</strong></p>
+<ul>
+<li>抽象和类</li>
+<li>方法</li>
+<li>项目或软件中按照一定规则划分的模块</li>
+</ul>
+<p>** 好处：**</p>
+<ul>
+<li>避免对原有代码的修改可以保证既有测试的正确性</li>
+<li>降低重构源码，对现有逻辑修改的风险</li>
+<li>提高代码的复用性，降低维护成本</li>
+<li>满足面向对象设计的需求</li>
+</ul>
+<p>** 使用准则 **</p>
+<ol>
+<li>通过接口或抽象类来约束一组可能变化的行为，并且能实现对扩展的开放，其中包含三层含义：
+<ul>
+<li>不允许扩展类中出现接口或抽象类中不存在的public方法；</li>
+<li>参数类型、引用对象尽量使用接口或抽象类，而不是实现类。（这一点和里氏替换原则中，规定子类的参数范围需要大于父类的参数范围是一致的。）</li>
+<li>抽象层尽量保持稳定，一旦确定就不允许修改。（除非需求变得不能通过扩展现有逻辑来完成）</li>
+<li><strong>注：要实现对扩展的开放，首要的前提条件就是抽象约束</strong></li>
+</ul>
+</li>
+<li>尽量使用元数据来控制行为，减少重复开发。</li>
+<li>制定一个章程来规范开发，对项目来说，约定优于配置。好的规范可以减少代码的开发成本和维护成本。</li>
+<li>封装变化，其中包含两层含义：
+<ul>
+<li>将相同的变化封装到一个接口或抽象类中</li>
+<li>将不用的变化封装到不同的接口和抽象类中，不应该有两个不同的变化出现在同一个接口或抽象类中。（这一点符合单一职责）</li>
+</ul>
+</li>
+</ol>
+<h2 id="里氏替换原则">里氏替换原则</h2>
+<p>通俗点将里氏替换原则类似于Java中的extends（子类继承父类） 
+** 里氏原则的定义：**</p>
+<ul>
+<li>
+<p>** 第一种定义：**如果每个类型为S的对象o1，都有类型为T的对象o2，使得以T定义的所有程序P在所有对象o1都换成o2时，程序P的行为没有发生变化，那么类型S就是T的子类型。</p>
+</li>
+<li>
+<p>** 第二种定义：**只要父类能够出现的地方，必定可以使用子类来代替父类，并且不对程序产生任何影响。反之，能够出现子类的地方，就不一定能出现父类。&lt;打个不恰当的比方 S 继承自 T ； T = new S()，但S ~!= new T(); (&quot;~!&ldquo;简称“不一定等于”，o(∩_∩)o )&gt;</p>
+</li>
+<li>
+<p>** 子类必须完全实现父类的方法。<em><strong>因为里氏替换原则规定只要</strong>父类能出现的地方就能出现子类</em>**。如果不完全实现父类的方法，那么通过子类实现父类的抽象方法后，父类调用定义的方法就会出现异常。</p>
+</li>
+<li>
+<p>** 复写(overload)或重写（override）父类方法时，子类方法的输入参数范围应该大于等于父类的参数范围，也就是说你在子类中写的这个方法是不会被调用的。**因为在实际的应用中，父类一般都是抽象类，而子类是实现类。如果子类的输入参数范围小于父类的参数范围，那么会导致子类复写方法被调用执行。这样的实现类会”歪曲“父类的意图，导致业务逻辑混乱。</p>
+</li>
+<li>
+<p>** 复写或重写父类方法时，子类方法的输出结果类型范围可以被缩小**，意思就是父类返回一个T类型的返回值，那么子类可以返回一个S类型的返回值。（S可以是继承自T类型的子类或者和T是同一类型的）</p>
+</li>
+</ul>
+<p>** 使用里氏原则设计的好处：**</p>
+<ul>
+<li>增强程序的健壮性，版本升级也可以保持很好的兼容性</li>
+<li>代码共享，减少创建类的工作量，每个子类都有父类的方法和属性。</li>
+<li>提高代码的重用性。</li>
+<li>子类可以有自己的特性，但是在必要的时候又能当作父类来实现一些父类的方法。</li>
+<li>提高代码的可扩展性</li>
+<li>提高产品或项目的开放性</li>
+</ul>
+<p>** 里氏替换的缺点：**</p>
+<ul>
+<li>在缺乏规范的情况下，比如子类在重写父类方法时的参数范围小于父类，则会造成在传递子类的参数时，子类方法被执行，而父类方法未被调用。（不符合里氏替换原则了）</li>
+<li>降低了代码的灵活性，子类继承父类，就会连父类的优点缺点一并继承了，虽然可以自定义一些子类自己的特色，让子类多了层父类的约束。</li>
+<li>增强了耦合性。在父类中的变量和方法被修改是，就必须考虑子类的修改。而在缺乏规范的情况下，会导致大片代码重构。（所以这里就<strong>必须遵循开闭原则</strong>一旦父类被定义，那么就应该避免修改，而是通过扩展父类来实现变化的需求）</li>
+</ul>
+<h2 id="迪米特法则">迪米特法则</h2>
+<p>迪米特法则又称为最少知识原则，有点类似于领导让程序员实现功能一样，领导不需要知道怎么敲代码实现，只需要告诉程序员要什么，然后交给程序员来做出来就行了。 （有点类似于java中的封装，隐藏实现细节，只开放调用接口即可。）
+** 核心观念：**</p>
+<blockquote>
+<p>类间解耦、弱耦合，只有弱耦合了以后类的复用率才可能提高。在使用迪米特法则时，需要反复权衡一下，既做到结构清晰，又做到高内聚低耦合。**注意：**迪米特法则要求类间解耦，但是有个限度，把握好一个度才是关键，不要盲目解耦。</p>
+</blockquote>
+<p>** 迪米特法则的目的：**</p>
+<ul>
+<li>一个类尽量实现高内聚，减少public方法。</li>
+<li>减少程序之间的耦合度。</li>
+</ul>
+<p>** 注意事项：**</p>
+<ul>
+<li>一个类公开的public属性或方法越多，修改时涉及的面也就越大，变更引起的风险扩散也就越大。因此，<strong>在考虑类之间设计时，应该多考虑是否可以减少public 属性和方法，是否可以修改为private，pacage-private（包类型，在类、方法、变量前不加访问权限，则默认为包类型），protected等访问权限，是否可以加上final关键字等。</strong></li>
+<li>衡量一个方法到底应该放在哪个类中：<strong>如果一个方法放在本类中，既不增加类间关系，也不对本类产生负面影响，就放在本类中。</strong></li>
+<li>谨慎使用Serializable，因为Serializable是一个类在实现序列化传递的时候一个标记，判断当前实现序列化的类是否已经改变，从而修改。那么如果有一天，客户端把private的变量扩大访问权限为public ，如果服务端没有修改，那么会报序列化失败。<strong>一个类或接口在客户端的变更，而服务端没能同步更新，则会造成这个错误。</strong></li>
+</ul>
+<h2 id="接口隔离原则">接口隔离原则</h2>
+<p>** 接口隔离原则的定义有两种：**</p>
+<ol>
+<li>接口尽量细化，别让一个接口太臃肿，接口中的方法尽量少。客户端中把不需要的接口干掉。</li>
+<li>类间的依赖关系，应该建立在最小接口上。这样的好处就在于，改变实现接口时，不会对现有逻辑造成干扰。</li>
+</ol>
+<p>** 接口隔离原则规范：**</p>
+<ul>
+<li>接口要小，首先不要违背单一原则，保证一个事物的原子性（打个不恰当的比喻：不能因为要细化，而把人的 头、身体、分开，要保证这个人的头和身体属于一个接口类，这个就是最小）</li>
+<li>接口要高内聚，什么是高内聚？高内聚就是提高类、接口、模块的内部处理能力（比如一个接口定义了个人，人有姓名、性别、身高等。这个时候，接口可以在内部处理人的相关属性，提供一个public方法来输出这个人的所有属性。）&lt;这一点符合<strong>迪米特法则</strong>&gt;</li>
+<li>为特殊的需求定义单独的接口，避免不同的层级的方法出现在同一个接口中。</li>
+</ul>
+<p>** 衡量接口隔离的原则：**
+接口隔离原则是对接口和类的定义。接口和类尽量使用原子接口和原子类来组装。在实践中，可以根据如下要求来衡量：</p>
+<ul>
+<li>一个接口只服务于一个模块或业务逻辑</li>
+<li>通过业务逻辑压缩接口中的public方法，实现接口的单一职责</li>
+<li>已经被污染的接口，尽量去修改。如果变更的风险较大，可以使用<strong>适配器模式</strong>进行转化处理。（适配器模式属于设计模式中的一种，后续博客会介绍）</li>
+<li>了解深层次的业务逻辑，根据不同的环境来拆分接口内容。</li>
+</ul>
+<blockquote>
+<p>比较极端的情况下，实现接口隔离原则，那就是一个接口一个方法，这个太浪费精力了。所以思考接口隔离原则需要考虑很多方面的因素，视情况而分。</p>
+</blockquote>
+<h2 id="依赖倒置原则">依赖倒置原则</h2>
+<p>** 依赖倒置的原始定义：**</p>
+<ul>
+<li>高层模块不应该依赖底层模块，两者都应该依赖其抽象。</li>
+<li>抽象不应该依赖细节。</li>
+<li>细节应该依赖抽象。</li>
+</ul>
+<p>** 依赖倒置在Java中的体现**</p>
+<ul>
+<li>模块间的依赖通过抽象发生，实现类之间不发生直接的依赖关系，其依赖关系是通过接口或抽象产生的。</li>
+<li>接口或抽象类不依赖于实现类。</li>
+<li>实现类依赖接口或抽象类。</li>
+</ul>
+<p>依赖倒置原则，说白了就是Java中面向接口编程的精髓。
+依赖倒置原则，可以减少类之间的耦合性，提高系统的稳定性，降低并行开发的风险，提高代码的可读性和可维护性。
+** 什么是依赖倒置？**
+依赖倒置就是通过抽象（接口或抽象类）使各个类或模块的实现彼此独立，不互相影响，实现模块间的松耦合。比如在Java中定义一个人的接口IPerson，而Man实现了IPerson接口，那么可以直接使用IPerson = new Man()；来实现一个男人的“依赖倒置”。在实现类中，只需要引用人这个抽象就可以在影响工程的情况下实现参数的变更。
+** 依赖倒置的原则**</p>
+<ul>
+<li>每个类尽量都有接口或抽象类，或者抽象类和接口都具备。这是依赖倒置的基本要求，接口和抽象类都是抽象的，只有抽象了，才可能依赖倒置。</li>
+<li>变量表面类型近可是接口或者是抽象类</li>
+<li>如果基类一个方法是一个抽象类，并且这个方法已经在基类中实现，子类在继承基类时，尽量不要复写（Override）父类的这个方法。因为类间的依赖的是抽象，复写了抽象方法，对依赖的稳定性会产生一定的影响。</li>
+<li>任何类都不应该从具体类派生，这样会造成维护的麻烦，当然这个也不是绝对的。</li>
+<li>结合里氏替换原则使用依赖倒置。回顾一下，里氏要求 子类的引入参数范围比父类的范围要大或者相等。出现父类的地方子类都可以出现，这个结合依赖倒置的原则，可以发现，出现接口或抽象类的地方，其实现或子类都能出现。从而可以得出一个通俗的规则：
+<ul>
+<li>** 接口负责定义public属性和方法，并声明与其他对象的依赖关系。**</li>
+<li>** 抽象类负责公共构造部分的实现。**</li>
+<li>** 实现类准确的实现业务逻辑，同时在适当的时候，将子类中公用的方法提升为父类中的公用方法，对父类进行细化。**</li>
+</ul>
+</li>
+</ul>
+<h2 id="小结">小结</h2>
+<p>在软件设计中，不可避免的要面对需求的变化。可以结合自身的需求来根据这六种简单的设计模式来设计出一个良好而稳定的架构，可以帮助我们少写很多冗余的代码。养成良好的编码习惯有助于技术的提升，当然作为程序员，务实是关键，多看大神写的代码，多实践。去其糟粕取其精华，才是王道。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E5%BC%80%E7%AF%87/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="prev" rel="prev" title="Vi/Vim常用命令"><i class="fas fa-angle-left fa-fw"></i>Vi/Vim常用命令</a>
+            <a href="/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern/" class="next" rel="next" title="单例模式(Singleton Pattern)">单例模式(Singleton Pattern)<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

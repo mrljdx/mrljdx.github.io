@@ -1,0 +1,34 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Java 8 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/java-8/</link>
+        <description>Java 8 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 11 Jan 2016 11:28:37 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/java-8/" rel="self" type="application/rss+xml" /><item>
+    <title>Android配置Gradle使用Java 8</title>
+    <link>http://mrljdx.com/android%E9%85%8D%E7%BD%AEgradle%E4%BD%BF%E7%94%A8java-8/</link>
+    <pubDate>Mon, 11 Jan 2016 11:28:37 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E9%85%8D%E7%BD%AEgradle%E4%BD%BF%E7%94%A8java-8/</guid>
+    <description><![CDATA[<p>目前Java 8的新特性<code>Lambda</code> 结合 <code>RxJava</code> 在一起使用可以简化大量的代码，下面简单介绍在AndroidStudio中配置Gradle使得支持Java 8。</p>
+<h2 id="添加插件retrolambda">添加插件retrolambda</h2>
+<pre><code>apply plugin: 'me.tatarka.retrolambda'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.4' //for java 8 lamda
+    }
+
+}
+
+dependencies {
+    //从 maven central 获取最新版本插件
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
+    //本地版本，retrolambda.jar 位于libs目录
+    // retrolambdaConfig files('libs/retrolambda.jar')
+}
+</code></pre>]]></description>
+</item></channel>
+</rss>

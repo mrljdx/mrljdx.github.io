@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Linux - 分类 - 追云似梦</title>
+        <link>http://mrljdx.com/categories/linux/</link>
+        <description>Linux - 分类 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 02 Apr 2015 19:02:45 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/categories/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Vi/Vim常用命令</title>
+    <link>http://mrljdx.com/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+    <pubDate>Thu, 02 Apr 2015 19:02:45 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/vi-vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<p>习惯了在Mac/Linux下工作的人，可能需要了解一些Vi/Vim编辑器相关的命令。<strong>Vim</strong> 是Vi Improved的缩写。在Vi原有的基础上进行了很大的扩展。下面分别介绍Vi常用的命令。</p>]]></description>
+</item></channel>
+</rss>

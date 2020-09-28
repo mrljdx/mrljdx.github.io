@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android反编译 - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/android%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
+        <description>Android反编译 - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 30 Dec 2015 16:42:14 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/android%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="self" type="application/rss+xml" /><item>
+    <title>Mac下配置Apktool反编译环境</title>
+    <link>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEapktool%E5%8F%8D%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/</link>
+    <pubDate>Wed, 30 Dec 2015 16:42:14 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/mac%E4%B8%8B%E9%85%8D%E7%BD%AEapktool%E5%8F%8D%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/</guid>
+    <description><![CDATA[<p>在Windows下配置Apktool环境相对于Mac要简单很多,这篇文章主要记录自己在Mac下配置Apktool的一些过程,仅供参考.</p>
+<h2 id="官方安装介绍">官方安装介绍</h2>
+<p>地址:http://ibotpeaches.github.io/Apktool/install/</p>
+<h3 id="检查java环境是否ready">检查Java环境是否Ready</h3>
+<blockquote>
+<p>java -version</p>
+</blockquote>]]></description>
+</item></channel>
+</rss>

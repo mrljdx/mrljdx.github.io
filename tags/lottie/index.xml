@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Lottie - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/lottie/</link>
+        <description>Lottie - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 06 Mar 2018 18:15:24 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/lottie/" rel="self" type="application/rss+xml" /><item>
+    <title>Lottie踩坑笔记</title>
+    <link>http://mrljdx.com/lottie%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Tue, 06 Mar 2018 18:15:24 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/lottie%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[参考链接 Lottie文件验证官方网站: https://www.lottiefiles.com Lottie官方文档: http://airbnb.io/lottie/ Lottie渐变色相关示例下载地址: https://www.lottiefiles.com/download/644]]></description>
+</item></channel>
+</rss>

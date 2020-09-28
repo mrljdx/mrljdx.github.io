@@ -1,0 +1,26 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>markdown - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/markdown/</link>
+        <description>markdown - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 10 Feb 2015 14:23:58 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/markdown/" rel="self" type="application/rss+xml" /><item>
+    <title>Markdown</title>
+    <link>http://mrljdx.com/markdown/</link>
+    <pubDate>Tue, 10 Feb 2015 14:23:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/markdown/</guid>
+    <description><![CDATA[<h1 id="欢迎使用-cmd---在线-markdown-编辑阅读器">欢迎使用 Cmd - 在线 Markdown 编辑阅读器</h1>
+<hr>
+<p>我们理解您需要更便捷更高效的工具记录思想，整理笔记、知识，并将其中承载的价值传播给他人，<strong>Cmd Markdown</strong> 是我们给出的答案 —— 我们为记录思想和分享知识提供更专业的工具。</p>
+<p>您可以使用 Cmd Markdown：</p>
+<blockquote>
+<ul>
+<li>整理知识，学习笔记</li>
+<li>发布日记，杂文，所见所想</li>
+<li>撰写发布技术文稿（代码支持）</li>
+<li>撰写发布学术论文（LaTeX 公式支持）</li>
+</ul>
+</blockquote>]]></description>
+</item></channel>
+</rss>

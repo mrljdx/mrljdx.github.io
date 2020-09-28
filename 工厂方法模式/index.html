@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>工厂方法模式 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="工厂方法模式" />
+<meta property="og:description" content="什么是工厂方法模式
+首先来看一下Android手机和Iphone手机使用工厂方法是怎么生产的，你就懂了。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-04T15:48:42+00:00" />
+<meta property="article:modified_time" content="2015-04-04T15:48:42+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="工厂方法模式"/>
+<meta name="twitter:description" content="什么是工厂方法模式
+首先来看一下Android手机和Iphone手机使用工厂方法是怎么生产的，你就懂了。
+"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" /><link rel="prev" href="http://mrljdx.com/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern/" /><link rel="next" href="http://mrljdx.com/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "工厂方法模式",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F\/"
+        },"genre": "posts","keywords": "设计模式","wordcount":  2793 ,
+        "url": "http:\/\/mrljdx.com\/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F\/","datePublished": "2015-04-04T15:48:42+00:00","dateModified": "2015-04-04T15:48:42+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">工厂方法模式</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="far fa-folder fa-fw"></i>设计模式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-04">2015-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2793 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是工厂方法模式">什么是工厂方法模式</a></li>
+    <li><a href="#工厂模式的好处">工厂模式的好处</a></li>
+    <li><a href="#使用场景">使用场景</a></li>
+    <li><a href="#工厂方法模式的扩展">工厂方法模式的扩展</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#简单工厂模式">简单工厂模式</a></li>
+          </ul>
+        </li>
+        <li><a href="#升级为多工厂类">升级为多工厂类</a></li>
+        <li><a href="#使用工厂方法来生产单例类">使用工厂方法来生产单例类</a></li>
+        <li><a href="#延迟初始化">延迟初始化</a></li>
+      </ul>
+    </li>
+    <li><a href="#小结">小结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是工厂方法模式">什么是工厂方法模式</h2>
+<p>首先来看一下Android手机和Iphone手机使用工厂方法是怎么生产的，你就懂了。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://img.blog.csdn.net/20150404105016883"
+        data-srcset="http://img.blog.csdn.net/20150404105016883, http://img.blog.csdn.net/20150404105016883 1.5x, http://img.blog.csdn.net/20150404105016883 2x"
+        data-sizes="auto"
+        alt="http://img.blog.csdn.net/20150404105016883"
+        title="工厂模式类图" /></p>
+<p>如图，首先定义了工厂的抽象类<code>Factory</code> 用于生产手机，其次，定义了一个手机抽象类<code>Mobile</code> 来定义手机的共有方法（打电话），然后定义了一个抽象方法，手机的特点。
+在定义了工厂和产品（手机）后，就可以根据需求来指定手机生产的厂家和手机的具体要求了。我们定义一个<code>富士康工厂</code>（FusicoFactory）继承抽象工厂（Factory），然后定义了两种手机Android和Iphone继承抽象手机类（Mobile）。这样就，就可以开始根据自己的需要来生产手机了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * 工厂方法使用
+</span><span class="cm"> * @author luson
+</span><span class="cm"> *
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+		<span class="c1">//定义工厂
+</span><span class="c1"></span>		<span class="n">Factory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FusicoFactory</span><span class="o">();</span>
+		<span class="c1">//定义产品
+</span><span class="c1"></span>		<span class="n">Mobile</span> <span class="n">android</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createMobile</span><span class="o">(</span><span class="n">AndroidMobile</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">//生产Android手机
+</span><span class="c1"></span>		<span class="n">Mobile</span> <span class="n">iphone</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createMobile</span><span class="o">(</span><span class="n">IphoneMobile</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">//生产Iphone手机
+</span><span class="c1"></span>		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;生产手机特性如下：&#34;</span><span class="o">);</span>
+		<span class="n">android</span><span class="o">.</span><span class="na">property</span><span class="o">();</span> <span class="c1">//android手机特性
+</span><span class="c1"></span>		<span class="n">iphone</span><span class="o">.</span><span class="na">property</span><span class="o">();</span><span class="c1">//iphone手机特性
+</span><span class="c1"></span>	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>输出结果：
+生产手机特性如下：
+Android系统
+IOS系统</p>
+</blockquote>
+<h2 id="工厂模式的好处">工厂模式的好处</h2>
+<ul>
+<li>良好的封装性，代码结构清晰。一个对象的创建是有条件约束的，如一个调用者需要一个具体的产品对象，只要知道这个产品的类名即可，不用知道创建对象的过程，降低模块耦合。（这点遵循迪米特法则）</li>
+<li>工厂模式的扩展性非常好，在增加产品类的情况下，只要适当的修改具体的工厂类或者扩展一个具体的工厂类，就可以适应需求的变化。比如突然想生产Nokia手机，那么扩展一个Nokia的手机产品，交给富士康生产即可。富士康工厂生产手机的方法不需要做任何改变。</li>
+<li>产品类的实现如何变化都不影响调用者正常调用，比如<code>Mobile android = factory.createMobile(XiaoMiMob.class);</code> 他不需要去知道生产什么样的手机，值需要告诉工厂，要生产手机，至于最后生产的手机是怎样的，则由传入的“手机模型”决定。这就是工厂方法的灵活性。</li>
+<li>工厂方法模式是典型的解耦框架。高层模块只需要知道产品的抽象类，其他的实现类都不需要关心，符合迪米特法则。也符合依赖倒置原则，只依赖产品的抽象，而不需要去依赖实现。同时这也符合里氏替换原则，在父类出现的地方，也可以用子类来替换，不信你试试。把 <code>Mobile android</code> 替换为 <code>AndroidMobile android</code> 也是没有问题的。</li>
+</ul>
+<h2 id="使用场景">使用场景</h2>
+<ol>
+<li>当需要灵活的、可扩展的框架时，可以考虑采用工厂方法模式。任何具体的事物都可以抽象为对象。</li>
+<li>可以将工厂方法模式用在异构项目中。比如一些外包项目中，和已有的系统对接等。</li>
+<li>在测试驱动开发框架下，在测试类A的时候，可以使用工厂方法模式，把和类A关联的类B虚拟出来，避免类A与类B耦合。比如前面提到的依赖倒置设计原则。使用JMock和EazyMock可以很方便的进行单元测试。</li>
+</ol>
+<h2 id="工厂方法模式的扩展">工厂方法模式的扩展</h2>
+<p>工厂方法模式可以和很多其他的模式结合使用，这样能设计出更好的架构。</p>
+<h4 id="简单工厂模式">简单工厂模式</h4>
+<p>有时候为了方便起见，可以将工厂中的方法设为static静态方法，这样在调用工厂的方法时，可以直接.使用，而不需要去创建一个工厂实例，然后再调用。这和平时在开发Android应用是，定义一些工具类一样。这样做是很方便，缺点就是对这个类扩展起来比较难，只能在内部修改。虽然不符合开闭原则，但是用起来顺手就好。毕竟简单才是真嘛！（PS：我写的工具类，从来也没想过让其他类来继承这个工具类并扩展，都是直接修改，主要是以添加/重载方法为主。）</p>
+<h3 id="升级为多工厂类">升级为多工厂类</h3>
+<p>本文中，在介绍生产手机时，只介绍了一家工厂FusicoFactory，但是手机的生产需求可能不同，这个时候可以多定义几个工厂来生产不同需求的手机。然后定义每个工厂类的不同职责，比如有的工厂生产智能手机，那么定义一个生产智能手机的方法，而有的工厂只生产功能机，那么可以定义一个功能机方法，分别来实现手机产品的生产。</p>
+<h3 id="使用工厂方法来生产单例类">使用工厂方法来生产单例类</h3>
+<p>比如前面所说的单例模式，在工厂方法模式中有能怎么实现呢？代码如下：
+首先定义一个单例类Singleton：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+	
+	<span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){</span>
+		
+	<span class="o">}</span>
+	
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">showSingleton</span><span class="o">(){</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;I am a Singleton&#34;</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其次，定义一个生产单例的工厂SingletonFactory</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SingletonFactory</span><span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+	<span class="kd">static</span> <span class="k">try</span><span class="o">{</span>
+		<span class="n">Class</span> <span class="n">cl</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">);</span>
+		<span class="c1">//获得无参构造
+</span><span class="c1"></span>		<span class="n">Constructor</span> <span class="n">constructor</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="na">getDeClaredConstructor</span><span class="o">();</span>
+		<span class="c1">//设置无参构造函数是可访问的
+</span><span class="c1"></span>		<span class="n">constructor</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="c1">//产生一个实例对象
+</span><span class="c1"></span>		<span class="n">instance</span> <span class="o">=</span> <span class="n">constructor</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+		    <span class="c1">//处理异常
+</span><span class="c1"></span>		<span class="err">｝</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
+		<span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>简单回顾一下单例模式的核心是，“在内存中只存在单例类的一个对象。”在这里通过Java反射机制来获取获得类，然后获取类的构造器，设置访问权限，生成一个对象，然后提供访问，保证了内存中对象的唯一。</p>
+<blockquote>
+<p>注：其他类也可以通过反射的方式来建立一个单例对象，这个通过工厂方法创建单例对象的框架，可以扩展，用于项目中产生一个单例构造器，所有需要产生单例的类都需要遵循（private 构造函数）的规则，然后通过扩展这个框架，只需要输入一个类型就可以获得这个类的单例对象。</p>
+</blockquote>
+<h3 id="延迟初始化">延迟初始化</h3>
+<p>延迟初始化，就是在一个对象被利用完之后，不立即释放，工厂类保留其初始状态，等待在此被调用。以前面生产手机的工厂方法为例，示例代码如下：
+定义手机抽象类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Mobile</span><span class="o">{</span>
+	<span class="c1">//手机公共的方法，打电话
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">call</span><span class="o">(</span><span class="n">String</span> <span class="n">phoneNum</span><span class="o">){</span>
+	<span class="o">}</span>
+	<span class="c1">//手机型号
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">property</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>定义Android手机类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Android</span> <span class="kd">extends</span> <span class="n">Mobile</span><span class="o">{</span>
+	<span class="c1">//实现手机型号
+</span><span class="c1"></span>	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">property</span><span class="o">(){</span>
+		<span class="c1">//Android系统
+</span><span class="c1"></span>	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>定义Iphone手机类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Iphone</span> <span class="kd">extends</span> <span class="n">Mobile</span><span class="o">{</span>
+	<span class="c1">//实现手机型号
+</span><span class="c1"></span>	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">property</span><span class="o">(){</span>
+		<span class="c1">//IOS系统
+</span><span class="c1"></span>	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>定义延迟加载的工厂类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * 延迟加载的手机工厂类
+</span><span class="cm"> * @author luson
+</span><span class="cm"> *
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MobileFactory</span> <span class="o">{</span>
+    <span class="c1">//定义缓存容器
+</span><span class="c1"></span>	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Mobile</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">();</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Mobile</span> <span class="nf">createMobile</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+		<span class="n">Mobile</span> <span class="n">phone</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="c1">//如果缓存中有，则直接拿缓存数据
+</span><span class="c1"></span>		<span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">type</span><span class="o">)){</span>
+			<span class="n">phone</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">type</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&#34;Android&#34;</span><span class="o">)){</span>
+				<span class="n">phone</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Android</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">type</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&#34;Iphone&#34;</span><span class="o">)){</span>
+				<span class="n">phone</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Iphone</span><span class="o">();</span>
+			<span class="o">}</span>
+			<span class="c1">//将数据放入缓存
+</span><span class="c1"></span>			<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">type</span><span class="o">,</span> <span class="n">phone</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">phone</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里代码比较简单，定义了一个Map容器，来容纳所有产生的对象，如果需要的对象存在，则直接取出，如果不存在，则新建一个再保存到Map中，方便下次调用。
+延迟加载框架在平时的开发中还是比较有用的，比如图片类的加载，在Android开发中，经常要请求网络图片，图片的本地缓存，内存缓存都可以通过扩展这套框架来实现。
+而且，延迟加载框架还可以通过判断Map的大小，来限制一些类的实例化数量，这样的处理很有意义，比如Android中Bitmap的使用，一定要谨慎，处理不好容易内存溢出。这就需要限制。</p>
+<h2 id="小结">小结</h2>
+<p>工厂方法模式在项目中使用的还是比较频繁的，随便找一套开源的代码就可以看到工厂方法模式的身影。软件设计的乐趣所在，就是懂得灵活运用各种设计模式，来让自己的软件架构更加灵活稳定，平时在开发时，可以多思考工厂方法模式和其他设计模式的组合使用（比如模版方法模式、单例模式、原型模式等）
+其实设计模式是一种授人以渔，真正想运用好，还是需要自己动手做项目，通过项目实践来体验设计模式之美。个人建议多看大神代码，有能力的话参与一些开源项目。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern/" class="prev" rel="prev" title="单例模式(Singleton Pattern)"><i class="fas fa-angle-left fa-fw"></i>单例模式(Singleton Pattern)</a>
+            <a href="/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/" class="next" rel="next" title="AS下搭建AGES开发框架">AS下搭建AGES开发框架<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,26 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Issues - 分类 - 追云似梦</title>
+        <link>http://mrljdx.com/categories/issues/</link>
+        <description>Issues - 分类 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 16 Jun 2016 11:28:49 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/categories/issues/" rel="self" type="application/rss+xml" /><item>
+    <title>连接同一wifi配置Charles代理的问题</title>
+    <link>http://mrljdx.com/%E8%BF%9E%E6%8E%A5%E5%90%8C%E4%B8%80wifi%E9%85%8D%E7%BD%AEcharles%E4%BB%A3%E7%90%86%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Thu, 16 Jun 2016 11:28:49 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E8%BF%9E%E6%8E%A5%E5%90%8C%E4%B8%80wifi%E9%85%8D%E7%BD%AEcharles%E4%BB%A3%E7%90%86%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[<p>关于Charles的使用网上有很多文章，这篇文章主要是由于博主最近在mac上使用Charles碰到了一个很蛋疼的问题，分享出来让一些遇到同样问题的人有个解决思路。</p>
+<h2 id="问题描述">问题描述</h2>
+<h3 id="环境描述">环境描述</h3>
+<ol>
+<li>Mac + 连接Wifi + 打开Charles 设置好端口号，勾选代理。</li>
+<li>App 连接同样的Wifi + 手动设置代理 + Mac的IP地址+设置好的端口号</li>
+</ol>
+<h3 id="出现的异常">出现的异常</h3>
+<ol>
+<li>手机代理已经设置好了，但是Charles没有弹出提示框，告诉用户有ip地址连接了代理。</li>
+<li>手机连接代理后，无法连接网络，抓包窗口没有发现相关的网络请求。</li>
+</ol>]]></description>
+</item></channel>
+</rss>

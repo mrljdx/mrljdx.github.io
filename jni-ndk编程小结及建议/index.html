@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>JNI&amp;NDK编程小结及建议 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="JNI&amp;NDK编程小结及建议" />
+<meta property="og:description" content="
+本文首发于简书：JNI&amp;NDK编程小结及建议，欢迎关注我的简书。
+
+前言
+由于网上关于JNI/NDK相关的知识点介绍的比较零散而且不具备参照性，所以写了这篇JNI/NDK笔记，便于作为随时查阅的工具类型的文章，本文主要的介绍了在平时项目中常用的命令、JNI数据类型、签名等，便于查阅相关资料。文末相关参考资料比较适合刚接触或者不熟悉Android NDK开发的朋友参阅。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-04-16T12:25:58+00:00" />
+<meta property="article:modified_time" content="2016-04-16T12:25:58+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="JNI&amp;NDK编程小结及建议"/>
+<meta name="twitter:description" content="
+本文首发于简书：JNI&amp;NDK编程小结及建议，欢迎关注我的简书。
+
+前言
+由于网上关于JNI/NDK相关的知识点介绍的比较零散而且不具备参照性，所以写了这篇JNI/NDK笔记，便于作为随时查阅的工具类型的文章，本文主要的介绍了在平时项目中常用的命令、JNI数据类型、签名等，便于查阅相关资料。文末相关参考资料比较适合刚接触或者不熟悉Android NDK开发的朋友参阅。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/" /><link rel="prev" href="http://mrljdx.com/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/" /><link rel="next" href="http://mrljdx.com/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "JNI\u0026NDK编程小结及建议",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE\/"
+        },"genre": "posts","keywords": "JNI\u0026NDK","wordcount":  3186 ,
+        "url": "http:\/\/mrljdx.com\/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE\/","datePublished": "2016-04-16T12:25:58+00:00","dateModified": "2016-04-16T12:25:58+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">JNI&amp;NDK编程小结及建议</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-04-16">2016-04-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3186 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#常用命令">常用命令</a>
+      <ul>
+        <li><a href="#javac-编译java源文件生成class文件">javac 编译java源文件生成.class文件</a></li>
+        <li><a href="#javah--jni自动生成头文件">javah -jni自动生成头文件</a></li>
+        <li><a href="#javap--s--p-查看函数签名">javap -s -p 查看函数签名</a></li>
+      </ul>
+    </li>
+    <li><a href="#jni数据类型和类型签名">JNI数据类型和类型签名</a>
+      <ul>
+        <li><a href="#数据类型">数据类型</a></li>
+        <li><a href="#jni类型签名">JNI类型签名</a></li>
+      </ul>
+    </li>
+    <li><a href="#jni相关命名解释">JNI相关命名解释</a></li>
+    <li><a href="#在cc中调用java方法">在C/C++中调用Java方法</a></li>
+    <li><a href="#在androidstudio中ndk编程配置注意事项">在AndroidStudio中NDK编程配置注意事项：</a></li>
+    <li><a href="#小结">小结</a></li>
+    <li><a href="#参考文章及书籍">参考文章及书籍</a></li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>本文首发于简书：<a href="http://www.jianshu.com/p/a9fc9e41f952" target="_blank" rel="noopener noreffer">JNI&amp;NDK编程小结及建议</a>，欢迎关注<a href="http://www.jianshu.com/users/ca00dd5e52a4/latest_articles" target="_blank" rel="noopener noreffer">我的简书</a>。</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>由于网上关于JNI/NDK相关的知识点介绍的比较零散而且不具备参照性，所以写了这篇JNI/NDK笔记，便于作为随时查阅的工具类型的文章，本文主要的介绍了在平时项目中常用的命令、JNI数据类型、签名等，便于查阅相关资料。文末相关参考资料比较适合刚接触或者不熟悉Android NDK开发的朋友参阅。</p>
+<h2 id="常用命令">常用命令</h2>
+<h3 id="javac-编译java源文件生成class文件">javac 编译java源文件生成.class文件</h3>
+<p>由于JNI对应的头文件由javah工具根据对应的.class文件生成，所以在进行JNI编程之前，写好Java代码后需要先编译，在使用javah生成对应的头文件</p>
+<h3 id="javah--jni自动生成头文件">javah -jni自动生成头文件</h3>
+<p>举例说明：</p>
+<ul>
+<li>
+<p>生成普通的JNI头文件</p>
+<pre><code>javah -classpath path -jni -d outputdirpath com.mrljdx.JavaNativeCode
+</code></pre>
+</li>
+<li>
+<p>在Java函数中包含Android相关的参数代码，则需要在classpath中添加android.jar包的绝对路径地址</p>
+<pre><code>javah -classpath path:$ANDROID_HOME/path/android.jar -jni -d outputdirpath com.mrljdx.JavaNativeCodeWithAndroid
+</code></pre>
+</li>
+</ul>
+<h3 id="javap--s--p-查看函数签名">javap -s -p 查看函数签名</h3>
+<p>-s: 显示签名（只显示public类型的签名） -p:显示所有函数、成员变量的签名</p>
+<p>举例说明：</p>
+<pre><code>javap -classpath pacakage_path_dir -s -p com.mrljdx.JavaCode
+</code></pre>
+<h2 id="jni数据类型和类型签名">JNI数据类型和类型签名</h2>
+<h3 id="数据类型">数据类型</h3>
+<p>JNI的数据类型包括：<strong>基本类型</strong>和<strong>引用类型</strong>。这一点和Java的语言特性一致，基本类型包括jboolean、jchar、jint、jlong、jbyte、jshort、jfloat、jdouble、void，与Java类型的对应关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>JNI类型</th>
+<th>Java类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jboolean</td>
+<td>boolean</td>
+<td>无符号8位整型</td>
+</tr>
+<tr>
+<td>jbyte</td>
+<td>byte</td>
+<td>有符号8位整型</td>
+</tr>
+<tr>
+<td>jchar</td>
+<td>char</td>
+<td>无符号16位整型</td>
+</tr>
+<tr>
+<td>jshort</td>
+<td>short</td>
+<td>有符号16位整型</td>
+</tr>
+<tr>
+<td>jint</td>
+<td>int</td>
+<td>32位整型</td>
+</tr>
+<tr>
+<td>jlong</td>
+<td>long</td>
+<td>64位整型</td>
+</tr>
+<tr>
+<td>jfloat</td>
+<td>float</td>
+<td>32位整型</td>
+</tr>
+<tr>
+<td>jdouble</td>
+<td>double</td>
+<td>64位整型</td>
+</tr>
+<tr>
+<td>void</td>
+<td>void</td>
+<td>无类型</td>
+</tr>
+</tbody>
+</table>
+<p>JNI中引用类型主要有类、对象和数组，这点也上符合Java的语法规范，对应的关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>JNI 类型</th>
+<th>Java引用类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobject</td>
+<td>Object</td>
+<td>Object类型</td>
+</tr>
+<tr>
+<td>jclass</td>
+<td>Class</td>
+<td>Class类型</td>
+</tr>
+<tr>
+<td>jstring</td>
+<td>String</td>
+<td>String类型</td>
+</tr>
+<tr>
+<td>jobjectArray</td>
+<td>Object[]</td>
+<td>对象数组</td>
+</tr>
+<tr>
+<td>jbooleanArray</td>
+<td>boolean[]</td>
+<td>boolean数组</td>
+</tr>
+<tr>
+<td>jbyteArray</td>
+<td>byte[]</td>
+<td>byte数组</td>
+</tr>
+<tr>
+<td>jcharArray</td>
+<td>char[]</td>
+<td>char数组</td>
+</tr>
+<tr>
+<td>jshortArray</td>
+<td>short[]</td>
+<td>short数组</td>
+</tr>
+<tr>
+<td>jintArray</td>
+<td>int[]</td>
+<td>int数组</td>
+</tr>
+<tr>
+<td>jlongArray</td>
+<td>long[]</td>
+<td>long数组</td>
+</tr>
+<tr>
+<td>jfloatArray</td>
+<td>float[]</td>
+<td>float数组</td>
+</tr>
+<tr>
+<td>jdoubleArray</td>
+<td>double[]</td>
+<td>double数组</td>
+</tr>
+<tr>
+<td>jthrowable</td>
+<td>Throwable</td>
+<td>Throwable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="jni类型签名">JNI类型签名</h3>
+<p>JNI的类型签名标识了一个特定的Java类型，这个类型可以是类和方法，也可以是数据类型。</p>
+<ul>
+<li>类型签名
+类的签名采用&quot;L+包名+类名+;&ldquo;标识，包名中将<code>.</code>替换为<code>/</code>即可。
+比如String类的签名：
+<code>Ljava/lang/String;</code> 
+注意末尾的<code>;</code>属于签名的一部分。
+再比如Android中Context类的签名：
+<code>Landroid/content/Context;</code></li>
+<li>基本数据类型签名
+基本数据类型的签名采用一系列大写字母来标识，如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Java类型</th>
+<th>签名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>Z</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>B</td>
+</tr>
+<tr>
+<td>char</td>
+<td>C</td>
+</tr>
+<tr>
+<td>short</td>
+<td>S</td>
+</tr>
+<tr>
+<td>int</td>
+<td>I</td>
+</tr>
+<tr>
+<td>long</td>
+<td>J</td>
+</tr>
+<tr>
+<td>float</td>
+<td>F</td>
+</tr>
+<tr>
+<td>double</td>
+<td>D</td>
+</tr>
+<tr>
+<td>void</td>
+<td>V</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现除了 <code>long</code>基本数据类型的签名为<code> J</code>之外其他的都比较容易辨识，估计是由于之前的类类型的签名开头为<code>L+包名+类名+;</code>设计者为了区分所以签名为<code>J</code></p>
+<ul>
+<li>数组的类型签名
+数组的类型签名比起类类型和基本数据类型的要稍微复杂一点，不过还是很好理解的。对于数组来说，它的签名为<code>[+类型签名</code>，举例说明：
+String[] 数组类型对应的签名：
+<code>[Ljava/lang/String;</code>
+可以发现，就是在String的类签名前加了个<code>[</code>
+同理基本数据类型签名int[]的签名：
+<code>[I</code>
+注意这里基本类型后面是不带分号的。
+那么多维数组呢？可以类推，int[][] 的签名为<code>[[I</code> ，而String[][]的签名为<code>[[Ljava/lang/String;</code></li>
+<li>方法的签名
+在JNI中会经常需要在C/C++代码中调用Java的函数，这时候就会用到方法的签名。方法的签名为<code>(+参数类型签名+)+返回值类型签名</code>，比如：
+方法： <code>boolean login(String username,String password)</code>的方法签名如下：
+<code>(Ljava/lang/String;Ljava/lang/String)B</code> 如果这里不理解的话，请再去看看之前关于基本类型，类类型的签名部分内容。</li>
+</ul>
+<blockquote>
+<p>小技巧:使用 类似于<code>javap -classpath pathdir -s -p com.sample.JavaCode </code> 的 javap -s -p 命令也可以帮助查看一些类中各种方法和成员变量的签名。</p>
+</blockquote>
+<h2 id="jni相关命名解释">JNI相关命名解释</h2>
+<ul>
+<li>函数名的格式遵循规则：<code>Java_包名_类名_方法名</code></li>
+<li>JNIEXPORT、JNICALL、JNIEnv和jobject 都是JNI标准中所定义的类型或者宏</li>
+<li>JNIEnv * : 指向JNI环境的指针，可以通过JNIEnv * 访问JNI提供的接口方法</li>
+<li>JNIEXPORT、JNICALL：是jni.h中所定义的宏。</li>
+</ul>
+<blockquote>
+<p>注：JNIEnv * 可以简单的理解为Java和C/C++ 之间相互调用的桥梁，我们可以通过JNIEnv * 调用C/C++定义的方法，也可以在C/C++中通过JNIEnv * 来调用Java类中的方法。下面将会讲到C/C++中调用Java的方法，注意JNIEnv *的作用。</p>
+</blockquote>
+<h2 id="在cc中调用java方法">在C/C++中调用Java方法</h2>
+<p>首先说明一点，在Android开发过程中使用NDK主要是为了提高代码的安全性，有些游戏公司可能是为了方便利用已有的C/C++开源库来进行平台移植，其实在性能提升方面，NDK的作用并不是很明显。所以有时候一些在Java中实现起来非常简单的代码放在JNI里面做会显得吃力不讨好，所以干脆就直接在JNI中调用Java的方法，我们只把加密和验证的一些逻辑写到JNI层就行了。
+在JNI中调用Java方法流程如下：</p>
+<ol>
+<li>在Java中定义一个<strong>静态</strong>方法供JNI调用，注意要是静态的。</li>
+<li>在JNI中利用env来调用Java中定义的静态方法</li>
+<li>调用声明好的静态方法</li>
+</ol>
+<p>可能流程说的比较抽象，用代码简单说明一下：</p>
+<ol>
+<li>
+<p>定义静态方法：</p>
+<pre><code> //对应包名：com.mrljdx.jni.HelloJNI
+ public static void helloJava() {    
+     System.out.println(&quot;Hello JavaCode&quot;);
+ }
+</code></pre>
+</li>
+<li>
+<p>JNI声明静态方法：</p>
+<pre><code> static void static_helloJava(JNIEnv *env){
+       jclass clazz = env-&gt;FindClass(&quot;com/mrljdx/jni/HelloJNI&quot;);
+       jmethodID mid = env-&gt;GetStaticMethodID(clazz, &quot;helloJava&quot;, &quot;()V&quot;);
+       env-&gt;CallStaticVoidMethod(clazz, mid);
+ }
+</code></pre>
+</li>
+<li>
+<p>调用声明好的静态方法:</p>
+<pre><code> static_helloJava(env);
+</code></pre>
+</li>
+</ol>
+<h2 id="在androidstudio中ndk编程配置注意事项">在AndroidStudio中NDK编程配置注意事项：</h2>
+<ol>
+<li>
+<p>在项目的<code>gradle.properties</code>中添加ndk支持：</p>
+<pre><code>android.useDeprecatedNdk=true
+</code></pre>
+</li>
+<li>
+<p>配置<code>build.gradle</code>看代码注释：</p>
+<pre><code> defaultConfig {    
+      minSdkVersion 9   
+      targetSdkVersion 23   
+      versionCode 1    
+      versionName &quot;1.0&quot;    
+     //配置ndk 支持   
+     ndk {        
+           //编译的so库名称 libsecurity.so
+           moduleName &quot;security&quot;       
+           //指定编译后的库支持的平台
+           abiFilters &quot;armeabi&quot;, &quot;mips&quot;, &quot;x86&quot;, &quot;armeabi-v7a&quot;  
+           //用于指定应用应该使用哪个标准库，此处添加c++库支持   
+           stl &quot;stlport_static&quot;    
+       }
+ }
+</code></pre>
+</li>
+<li>
+<p>在AndroidStudio中写JNI代码有一个比较爽的地方，就是Android.mk系统会在编译时自动帮你生成，你只需要配置build.gradle就行了。注意jni相关代码需要放在<code>src/main/jni</code>目录下。如果对gradle配置不了解可以参考我的博客：<a href="http://mrljdx.com/2016/03/17/Gradle%E5%AE%9E%E6%88%98%E5%8F%8A%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" target="_blank" rel="noopener noreffer">Gradle实战及学习建议</a></p>
+</li>
+</ol>
+<h2 id="小结">小结</h2>
+<p>在我们做产品的时候，应该考虑该用JNI&amp;NDK的时候就用，一切出发点是基于用户的体验和数据安全，我觉得在以下几种情况下建议使用NDK:</p>
+<ol>
+<li>重用现有的代码，比如C/C++的代码在Android中的重用。</li>
+<li>数据安全，比如将Http的请求加密和解密算法放在NDK中去实现，这样可以提高应用的安全。</li>
+<li>提升性能，由于Android设备制造商在手机中给每个应用分配了可用的最大RAM，有时候为了性能考虑，可以通过Native代码向系统来“借”一些内存，尽量少的使用系统分配给应用的内存。（参考Infoq：<a href="http://www.infoq.com/cn/presentations/android-memory-optimization" target="_blank" rel="noopener noreffer">Android内存优化</a>)</li>
+</ol>
+<h2 id="参考文章及书籍">参考文章及书籍</h2>
+<ul>
+<li><a href="http://item.jd.com/11104976.html" target="_blank" rel="noopener noreffer">《Android性能优化》</a> : 一本不厚的书，关于Android相关的性能优化建议都是满满的干货，适合有一定开发经验的人参考。</li>
+<li><a href="http://www.pedant.cn/2014/08/04/jni-tips-in-chinese/" target="_blank" rel="noopener noreffer">翻译:JNI Tips in Android Training Course</a> : 关于google官方的培训课程提出了在使用NDK做本地开发时的一些优化建议。</li>
+<li>[<a href="http://blog.csdn.net/xyang81/article/details/41759643" target="_blank" rel="noopener noreffer">JNI/NDK开发指南</a>](<a href="http://blog.csdn.net/xyang81/article/details/41759643">http://blog.csdn.net/xyang81/article/details/41759643</a>) ： 一个系列的文章，适合刚接触JNI/NDK开发的朋友学习。</li>
+<li><a href="http://item.jd.com/11760209.html" target="_blank" rel="noopener noreffer">《Android开发艺术探索》</a> ：关于JNI的介绍比少，如果你对Android开发想深入理解一些View冲突、属性动画那么可以推荐一看。如果只想学习JNI相关内容，推荐看  [<a href="http://blog.csdn.net/xyang81/article/details/41759643" target="_blank" rel="noopener noreffer">JNI/NDK开发指南</a>](<a href="http://blog.csdn.net/xyang81/article/details/41759643">http://blog.csdn.net/xyang81/article/details/41759643</a>) 的内容。</li>
+</ul>
+<h2 id="end">END</h2>
+<p>由于本人能力有限，文中如有疏漏和错误之处还请斧正。开卷有益，多多交流~ O(∩_∩)O哈哈~ 
+欢迎关注我的简书和<a href="http://mrljdx.com" target="_blank" rel="noopener noreffer">个人博客</a> 会不定期写一些在平时开发中遇到和解决问题和心得。</p>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-04-16</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/jni-ndk%E7%BC%96%E7%A8%8B%E5%B0%8F%E7%BB%93%E5%8F%8A%E5%BB%BA%E8%AE%AE/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/jnindk/">JNI&amp;NDK</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/eventbus3%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%94%A8%E6%B3%95/" class="prev" rel="prev" title="EventBus3新特性及用法"><i class="fas fa-angle-left fa-fw"></i>EventBus3新特性及用法</a>
+            <a href="/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93/" class="next" rel="next" title="Android应用开发框架经验小结">Android应用开发框架经验小结<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

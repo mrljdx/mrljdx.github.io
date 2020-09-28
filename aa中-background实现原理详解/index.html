@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>AA中@Background实现原理详解 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="AA中@Background实现原理详解" />
+<meta property="og:description" content="AndroidAnnotations中引入了@Background的注解方法,极大的简化了编写异步代码的工作量.使我们摆脱了麻烦的AsyncTask.
+下面我们来看一下官方介绍中,介绍的一个关于获取书签(BookMarks)的请求代码:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-12-30T10:39:10+00:00" />
+<meta property="article:modified_time" content="2015-12-30T10:39:10+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="AA中@Background实现原理详解"/>
+<meta name="twitter:description" content="AndroidAnnotations中引入了@Background的注解方法,极大的简化了编写异步代码的工作量.使我们摆脱了麻烦的AsyncTask.
+下面我们来看一下官方介绍中,介绍的一个关于获取书签(BookMarks)的请求代码:"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="http://mrljdx.com/picasso-glide-fresco%E6%AF%94%E8%BE%83/" /><link rel="next" href="http://mrljdx.com/%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E4%BA%A7%E5%93%81%E5%9B%A2%E9%98%9F%E7%9A%84%E6%95%88%E7%8E%87/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AA中@Background实现原理详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3\/"
+        },"genre": "posts","keywords": "AndroidAnnotations","wordcount":  2286 ,
+        "url": "http:\/\/mrljdx.com\/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3\/","datePublished": "2015-12-30T10:39:10+00:00","dateModified": "2015-12-30T10:39:10+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">AA中@Background实现原理详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-12-30">2015-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2286 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用asynctask">使用AsyncTask</a></li>
+    <li><a href="#使用background">使用@Background</a></li>
+    <li><a href="#background的实现原理分析">@Background的实现原理分析</a>
+      <ul>
+        <li><a href="#生成的注解代码">生成的注解代码</a></li>
+        <li><a href="#backgroundexecutor-中的关键方法">BackgroundExecutor 中的关键方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#background用法">@Background用法</a>
+      <ul>
+        <li><a href="#注解方法">注解方法</a></li>
+        <li><a href="#id">Id</a></li>
+        <li><a href="#serial">Serial</a></li>
+        <li><a href="#delay">Delay</a></li>
+      </ul>
+    </li>
+    <li><a href="#相关资料">相关资料</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>AndroidAnnotations中引入了@Background的注解方法,极大的简化了编写异步代码的工作量.使我们摆脱了麻烦的AsyncTask.
+下面我们来看一下官方介绍中,介绍的一个关于获取书签(BookMarks)的请求代码:</p>
+<h2 id="使用asynctask">使用AsyncTask</h2>
+<pre><code>public class BookmarksToClipboardActivity extends Activity {
+    //do some ...
+    
+    //点击更新书签
+    void updateBookmarksClicked() {
+        UpdateBookmarksTask task = new UpdateBookmarksTask();
+     
+        task.execute(search.getText().toString(), application.getUserId());
+    
+    }
+    //书签URL
+    private static final String BOOKMARK_URL = &quot;http://www.bookmarks.com/bookmarks/{userId}?search={search}&quot;;
+    //异步网络请求,从服务器获取书签
+    class UpdateBookmarksTask extends AsyncTask&lt;String, Void, Bookmarks&gt; {
+     
+        @Override
+        protected Bookmarks doInBackground(String... params) {
+          String searchString = params[0];
+          String userId = params[1];
+          //这里使用SpringAndroid作为网络请求框架
+          RestTemplate client = new RestTemplate();
+          //封装url请求数据
+          HashMap&lt;String, Object&gt; args = new HashMap&lt;String, Object&gt;();
+          args.put(&quot;search&quot;, searchString);
+          args.put(&quot;userId&quot;, userId);
+         
+          HttpHeaders httpHeaders = new HttpHeaders();
+          HttpEntity&lt;Bookmarks&gt; request = new HttpEntity&lt;Bookmarks&gt;(httpHeaders);
+          //获取网络Get请求后的返回值
+          ResponseEntity&lt;Bookmarks&gt; response = client.exchange(BOOKMARK_URL, HttpMethod.GET, request, Bookmarks.class, args);
+          Bookmarks bookmarks = response.getBody();
+          //异步返回结果值
+          return bookmarks;
+        }
+     
+        @Override
+        protected void onPostExecute(Bookmarks result) {
+          //处理返回结果
+          adapter.updateBookmarks(result);
+          bookmarkList.startAnimation(fadeIn);
+        }
+        
+    }
+    
+    // do some ...
+}
+</code></pre>
+<h2 id="使用background">使用@Background</h2>
+<p>** 定义请求客户端 **</p>
+<pre><code>//关于@Rest see @ https://github.com/excilys/androidannotations/wiki/Rest-API#rest
+@Rest(&quot;http://www.bookmarks.com&quot;)
+public interface BookmarkClient {
+  
+  @Get(&quot;/bookmarks/{userId}?search={search}&quot;)
+  Bookmarks getBookmarks(String userId,String search);
+ 
+}
+</code></pre>
+<p>** 在@EActivity下使用代码片段 **</p>
+<pre><code>@EActivity
+public class BookmarksToClipboardActivity extends Activity {
+        
+    //do some ...
+
+    //点击更新书签
+    @Click({R.id.updateBookmarksButton1, R.id.updateBookmarksButton2})
+    void updateBookmarksClicked() {
+        searchAsync(search.getText().toString(), application.getUserId());
+    }
+    
+    //申明&amp;网络请求实例化
+    @RestService
+    BookmarkClient restClient;
+    
+    //异步网络请求
+    @Background
+    void searchAsync(String userId, String searchString) {
+        //获取返回结果
+        Bookmarks bookmarks = restClient.getBookmarks(userId, searchString);
+        //处理返回结果
+        updateBookmarks(bookmarks);
+    }
+       
+    //Ui线程更新操作
+    @UiThread
+    void updateBookmarks(Bookmarks bookmarks) {
+        adapter.updateBookmarks(bookmarks);
+        bookmarkList.startAnimation(fadeIn);
+    }
+    
+    //do some ..
+}
+</code></pre>
+<h2 id="background的实现原理分析">@Background的实现原理分析</h2>
+<h3 id="生成的注解代码">生成的注解代码</h3>
+<p>AndroidAnnotations是一个在编译时生成代码的注解框架,以上面的网络请求为例,在使用@Background注解的代码如下:</p>
+<pre><code>public final class LoginActivity_ extends LoginActivity
+    implements HasViews, OnViewChangedListener{
+    
+    //do some ..
+    
+    //生成的代码
+    @Override
+    public void searchAsync(final String userId, final String searchString){
+        //BackgroundExceutor 维护了一个线程池
+        BackgroundExecutor.execute(new BackgroundExecutor.Task(&quot;&quot;, 0, &quot;&quot;) {
+    
+                @Override
+                public void execute() {
+                    try {
+                        BookmarksToClipboardActivity_.super.searchAsync(userId,searchString);
+                    } catch (Throwable e) {
+                        Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                    }
+                }
+    
+        }
+    }
+    
+    //do some ...
+}
+</code></pre>
+<h3 id="backgroundexecutor-中的关键方法">BackgroundExecutor 中的关键方法</h3>
+<pre><code>public class BackgroundExecutor {
+
+    private static final String TAG = &quot;BackgroundExecutor&quot;;
+    
+    //默认的Executor执行数量
+    public static final Executor DEFAULT_EXECUTOR = Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors());
+    private static Executor executor = DEFAULT_EXECUTOR;
+    
+    //执行的任务集合,用于管理后台线程任务集合
+    private static final List&lt;Task&gt; TASKS = new ArrayList&lt;Task&gt;();
+    private static final ThreadLocal&lt;String&gt; CURRENT_SERIAL = new ThreadLocal&lt;String&gt;();
+       
+    //BackgroundExceutor不能被实例化
+    private BackgroundExecutor() {
+    }
+    
+    public static abstract class Task implements Runnable {
+    
+            private String id;
+            private int remainingDelay;
+            private long targetTimeMillis; /* since epoch */
+            private String serial;
+            private boolean executionAsked;
+            private Future&lt;?&gt; future;
+    
+            /*
+             * A task can be cancelled after it has been submitted to the executor
+             * but before its run() method is called. In that case, run() will never
+             * be called, hence neither will postExecute(): the tasks with the same
+             * serial identifier (if any) will never be submitted.
+             * 
+             * Therefore, cancelAll() *must* call postExecute() if run() is not
+             * started.
+             * 
+             * This flag guarantees that either cancelAll() or run() manages this
+             * task post execution, but not both.
+             */
+            private AtomicBoolean managed = new AtomicBoolean();
+            
+            //对后台任务赋值,判断是否需要延迟执行,以及任务的id和执行序列
+            public Task(String id, int delay, String serial) {
+                if (!&quot;&quot;.equals(id)) {
+                    this.id = id;
+                }
+                if (delay &gt; 0) {
+                    remainingDelay = delay;
+                    targetTimeMillis = System.currentTimeMillis() + delay;
+                }
+                if (!&quot;&quot;.equals(serial)) {
+                    this.serial = serial;
+                }
+            }
+    
+            @Override
+            public void run() {
+                if (managed.getAndSet(true)) {
+                    /* cancelled and postExecute() already called */
+                    return;
+                }
+    
+                try {
+                    CURRENT_SERIAL.set(serial);
+                    execute();
+                } finally {
+                    /* handle next tasks */
+                    postExecute();
+                }
+            }
+    
+            public abstract void execute();
+    
+            private void postExecute() {
+                if (id == null &amp;&amp; serial == null) {
+                    /* nothing to do */
+                    return;
+                }
+                CURRENT_SERIAL.set(null);
+                synchronized (BackgroundExecutor.class) {
+                    /* execution complete */
+                    TASKS.remove(this);
+    
+                    if (serial != null) {
+                        Task next = take(serial);
+                        if (next != null) {
+                            if (next.remainingDelay != 0) {
+                                /* the delay may not have elapsed yet */
+                                next.remainingDelay = Math.max(0, (int) (targetTimeMillis - System.currentTimeMillis()));
+                            }
+                            /* a task having the same serial was queued, execute it */
+                            BackgroundExecutor.execute(next);
+                        }
+                    }
+                }
+            }
+    
+    }
+    
+    //执行后台任务,将任务添加到后台队列
+    public static synchronized void execute(Task task) {
+        Future&lt;?&gt; future = null;
+        //判断是否
+        if (task.serial == null || !hasSerialRunning(task.serial)) {
+            task.executionAsked = true;
+            future = directExecute(task, task.remainingDelay);
+        }
+        if (task.id != null || task.serial != null) {
+            /* keep task */
+            task.future = future;
+            TASKS.add(task);
+        }
+    }
+    
+}
+</code></pre>
+<p>通过分析BackgroundExecutor并结合AA的<a href="https://github.com/excilys/androidannotations/wiki/WorkingWithThreads#background" target="_blank" rel="noopener noreffer">@Background</a>可以了解到
+@Background让我们拜托了AsyncTask的束缚,使用@Background注解的方法并不会立即执行,而是会加入到** BackgroundExecutor**维护的执行线程池中.这也表示如果同时调用
+两个被@Background注解的方法,他们会并行执行.</p>
+<h2 id="background用法">@Background用法</h2>
+<h3 id="注解方法">注解方法</h3>
+<p>如果一个方法被@Background注解,那么表示这个方法会在一个非UI线程的线程中执行.
+示例如下:</p>
+<pre><code>void myMethod() {
+    someBackgroundWork(&quot;hello&quot;, 42);
+}
+
+@Background
+void someBackgroundWork(String aParam, long anotherParam) {
+    [...]
+}
+</code></pre>
+<h3 id="id">Id</h3>
+<p>在我们平时使用AyncTask时会面临一个问题,就是如果执行异步任务,那么怎么才能取消这个任务呢?这也是AsyncTask的一个设计缺陷,不过@Background解决了这个问题,就是使用Id.
+如果你想取消任何一个后台执行的任务, 可以使用 ** BackgroundExecutor.cancelAll(&ldquo;id&rdquo;);**方法.
+示例如下:</p>
+<pre><code>void myMethod() {
+    //执行一个后台任务
+    someCancellableBackground(&quot;hello&quot;, 42);
+    [...]
+    boolean mayInterruptIfRunning = true;
+    //取消执行id = &quot;cancellable_task&quot; 的任务 
+    BackgroundExecutor.cancelAll(&quot;cancellable_task&quot;, mayInterruptIfRunning);
+}
+
+@Background(id=&quot;cancellable_task&quot;)
+void someCancellableBackground(String aParam, long anotherParam) {
+    [...]
+}
+</code></pre>
+<p>一般取消执行任务的情况有,屏幕横竖屏切换,或者资源突然被回收了,亦或者从某一个加载页面返回需要取消当前页的请求等等.总之有效地控制后台任务能带来更好地用户体验以及提升应用性能.</p>
+<h3 id="serial">Serial</h3>
+<p>在一般情况下,@Background 注解的方法调用时会并行执行,没有先后顺序.如果你想要这些后台执行的任务有序执行,那么你可以定义 Serial 的值来实现,所有具有相同Serial的任务都会有序执行.
+示例如下:</p>
+<pre><code>void myMethod() {
+    for (int i = 0; i &lt; 10; i++)
+        someSequentialBackgroundMethod(i);
+}
+
+@Background(serial = &quot;test&quot;)
+void someSequentialBackgroundMethod(int i) {
+    SystemClock.sleep(new Random().nextInt(2000)+1000);
+    Log.d(&quot;AA&quot;, &quot;value : &quot; + i);
+}
+</code></pre>
+<p>那么为什么定义相同的 serial 就可以按照实例化的顺序执行呢?回到之前的<code>BackgroundExecutor</code> 我们可以看到同步执行代码片段:</p>
+<pre><code>synchronized (BackgroundExecutor.class) {
+                        /* execution complete */
+                        TASKS.remove(this);
+        
+                        if (serial != null) {
+                            Task next = take(serial);
+                            if (next != null) {
+                                if (next.remainingDelay != 0) {
+                                    /* the delay may not have elapsed yet */
+                                    next.remainingDelay = Math.max(0, (int) (targetTimeMillis - System.currentTimeMillis()));
+                                }
+                                /* a task having the same serial was queued, execute it */
+                                BackgroundExecutor.execute(next);
+                            }
+                        }
+}
+</code></pre>
+<p>这里会判断当前的serial 是否为空,如果不为空则会一个一个的从<code>List&lt;Task&gt; TASKS</code>中取出任务来有序执行.</p>
+<h3 id="delay">Delay</h3>
+<p>如果你想在执行一个后台任务之前加个延迟执行,你可以使用<code>delay</code>参数
+示例如下:</p>
+<pre><code>@Background(delay=2000)
+void doInBackgroundAfterTwoSeconds() {
+}
+</code></pre>
+<p>具体原理可以查看<code>BackgroundExecutor</code> 中的代码:</p>
+<pre><code>private void postExecute() {
+            if (id == null &amp;&amp; serial == null) {
+                /* nothing to do */
+                return;
+            }
+            CURRENT_SERIAL.set(null);
+            synchronized (BackgroundExecutor.class) {
+                /* execution complete */
+                TASKS.remove(this);
+
+                if (serial != null) {
+                    Task next = take(serial);
+                    if (next != null) {
+					    
+                        if (next.remainingDelay != 0) {
+                            /* the delay may not have elapsed yet */
+                            next.remainingDelay = Math.max(0, (int) (targetTimeMillis - System.currentTimeMillis()));
+                        }
+                        /* a task having the same serial was queued, execute it */
+                        BackgroundExecutor.execute(next);
+                    }
+                }
+            }
+}
+</code></pre>
+<h2 id="相关资料">相关资料</h2>
+<ol>
+<li><a href="http://androidannotations.org/" target="_blank" rel="noopener noreffer">AndroidAnnotations官网</a></li>
+<li><a href="https://github.com/excilys/androidannotations/wiki/WorkingWithThreads#background" target="_blank" rel="noopener noreffer">@Background</a></li>
+</ol>
+<p>以上就是@Background的使用相关的问题和原理分析.如果纰漏还请斧正.多多交流,开卷有益.O(∩_∩)O~</p>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-12-30</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/aa%E4%B8%AD-background%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/androidannotations/">androidannotations</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/picasso-glide-fresco%E6%AF%94%E8%BE%83/" class="prev" rel="prev" title="Picasso&amp;Glide&amp;Fresco比较"><i class="fas fa-angle-left fa-fw"></i>Picasso&amp;Glide&amp;Fresco比较</a>
+            <a href="/%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E4%BA%A7%E5%93%81%E5%9B%A2%E9%98%9F%E7%9A%84%E6%95%88%E7%8E%87/" class="next" rel="next" title="如何提升产品团队的效率">如何提升产品团队的效率<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

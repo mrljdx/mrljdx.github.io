@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>无关技术 - 分类 - 追云似梦</title>
+        <link>http://mrljdx.com/categories/%E6%97%A0%E5%85%B3%E6%8A%80%E6%9C%AF/</link>
+        <description>无关技术 - 分类 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 30 Dec 2015 16:11:15 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/categories/%E6%97%A0%E5%85%B3%E6%8A%80%E6%9C%AF/" rel="self" type="application/rss+xml" /><item>
+    <title>如何提升产品团队的效率</title>
+    <link>http://mrljdx.com/%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E4%BA%A7%E5%93%81%E5%9B%A2%E9%98%9F%E7%9A%84%E6%95%88%E7%8E%87/</link>
+    <pubDate>Wed, 30 Dec 2015 16:11:15 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E4%BA%A7%E5%93%81%E5%9B%A2%E9%98%9F%E7%9A%84%E6%95%88%E7%8E%87/</guid>
+    <description><![CDATA[<p>最近A总说团队的效率存在问题，那都有哪些问题呢？</p>
+<p>** 1，被要求加班，但是加班不知道干嘛。**</p>
+<p>** 2，每次产品会议，一开就是几个小时，而且会后没有任何结论。**</p>
+<p>** 3，产品开发完成后，投入运营后发现产品设计存在问题，而后又要加班修改产品缺陷。**</p>
+<p>** 4，处理一个小的功能点要协调各方面的资源，产品，设计，评审，开发一大堆流程。**</p>
+<p>** 5，产品开发完成后，没有测试直接投入运营，出了问题程序猿背黑锅。**</p>]]></description>
+</item></channel>
+</rss>

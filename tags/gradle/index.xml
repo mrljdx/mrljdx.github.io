@@ -1,0 +1,33 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Gradle - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/gradle/</link>
+        <description>Gradle - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 12 Jan 2016 14:49:21 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/gradle/" rel="self" type="application/rss+xml" /><item>
+    <title>Android中实用的Gradle配置</title>
+    <link>http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/</link>
+    <pubDate>Tue, 12 Jan 2016 14:49:21 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/</guid>
+    <description><![CDATA[<p>AndroidStudio已经成为Android开发的主流开发工具，如果你还在使用Eclipse，那么赶紧换吧。在AndroidStudio中，包的导入、插件的配置、打包编译等都是通过<code>/app/buidl.gradle</code>文件配置的。
+在平时的开发中，经常碰到的问题如下：</p>
+<ul>
+<li>友盟多渠道包打包</li>
+<li>包的混淆</li>
+<li>签名</li>
+<li>集成微博、微信等三方平台登录</li>
+<li>集成高德、百度等三方地图</li>
+<li>环信集成</li>
+<li>方法数超过65535数量限制</li>
+</ul>
+<p>下面简单介绍使用AndroidStudio使用Gradle编译的好处。</p>]]></description>
+</item><item>
+    <title>配置AA项目工程Gradle文件(翻译)</title>
+    <link>http://mrljdx.com/%E9%85%8D%E7%BD%AEaa%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8Bgradle%E6%96%87%E4%BB%B6%E7%BF%BB%E8%AF%91/</link>
+    <pubDate>Fri, 13 Feb 2015 09:43:59 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/%E9%85%8D%E7%BD%AEaa%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8Bgradle%E6%96%87%E4%BB%B6%E7%BF%BB%E8%AF%91/</guid>
+    <description><![CDATA[构建Gradle工程 注释处理的Gradle插件 首选方式 你可以通过使用Gradle插件[android-apt]来添加AndroidAnnot]]></description>
+</item></channel>
+</rss>

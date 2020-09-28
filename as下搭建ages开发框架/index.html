@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>AS下搭建AGES开发框架 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="AS下搭建AGES开发框架" />
+<meta property="og:description" content="使用AndroidStudio（以下简称AS）作为首选的开发工具已经很普及了，但是作为一个Eclipse的老手来说，转AS还是需要点时间去适应的。比如以前常用的快捷键，代码提示： Alt&#43;/ 在AS下是ctrl&#43;alt&#43;space 而 查看函数则由之前的鼠标悬浮变成了按F2查看，导入包则由之前的ctrl&#43;shift&#43;o编程了现在的alt&#43;enter 
+说了这么多不适应的快捷键，下面来谈谈如何在AS下搭建AEG开发框架。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2015-04-05T13:57:46+00:00" />
+<meta property="article:modified_time" content="2015-04-05T13:57:46+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="AS下搭建AGES开发框架"/>
+<meta name="twitter:description" content="使用AndroidStudio（以下简称AS）作为首选的开发工具已经很普及了，但是作为一个Eclipse的老手来说，转AS还是需要点时间去适应的。比如以前常用的快捷键，代码提示： Alt&#43;/ 在AS下是ctrl&#43;alt&#43;space 而 查看函数则由之前的鼠标悬浮变成了按F2查看，导入包则由之前的ctrl&#43;shift&#43;o编程了现在的alt&#43;enter 
+说了这么多不适应的快捷键，下面来谈谈如何在AS下搭建AEG开发框架。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/" /><link rel="prev" href="http://mrljdx.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" /><link rel="next" href="http://mrljdx.com/eactivity%E5%A2%9E%E5%BC%BAactivity/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AS下搭建AGES开发框架",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6\/"
+        },"genre": "posts","keywords": "android studio","wordcount":  1518 ,
+        "url": "http:\/\/mrljdx.com\/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6\/","datePublished": "2015-04-05T13:57:46+00:00","dateModified": "2015-04-05T13:57:46+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">AS下搭建AGES开发框架</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2015-04-05">2015-04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1518 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#准备工作">准备工作</a></li>
+    <li><a href="#在as下搭建的步骤">在AS下搭建的步骤</a></li>
+    <li><a href="#相关技术文档汇总">相关技术文档汇总</a></li>
+    <li><a href="#小结">小结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>使用AndroidStudio（以下简称AS）作为首选的开发工具已经很普及了，但是作为一个Eclipse的老手来说，转AS还是需要点时间去适应的。比如以前常用的快捷键，代码提示： <code>Alt+/</code> 在AS下是<code>ctrl+alt+space</code> 而 查看函数则由之前的鼠标悬浮变成了按<code>F2</code>查看，导入包则由之前的<code>ctrl+shift+o</code>编程了现在的<code>alt+enter</code> 
+说了这么多不适应的快捷键，下面来谈谈如何在AS下搭建AEG开发框架。</p>
+<p><strong>什么是AEGS开发框架？</strong>
+容我装X的解释一下<code>AndroidAnnotations+GreenDao+EventBus+SpringAndroid</code> 的简称AGES。
+至于AGES开发框架的使用，以后会专门介绍以及这个框架在项目中实践的例子。由于本文是介绍在AS中初步搭建AGES开发框架，我们还是回归主题，来看看如何搭建AGES开发框架吧。</p>
+<h2 id="准备工作">准备工作</h2>
+<ul>
+<li>下载AndroidAnnotations包:
+<ul>
+<li><a href="https://github.com/excilys/androidannotations/wiki/Download" target="_blank" rel="noopener noreffer">androidannotations-3.2</a></li>
+<li><a href="https://github.com/excilys/androidannotations/wiki/Download" target="_blank" rel="noopener noreffer">androidannotations-api-3.2.jar</a></li>
+</ul>
+</li>
+<li>下载GreenDao相关包：
+<ul>
+<li><a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.greenrobot%22%20AND%20a%3A%22greendao%22" target="_blank" rel="noopener noreffer">greendao-1.3.7.jar</a></li>
+<li><a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.greenrobot%22%20AND%20a%3A%22greendao-generator%22" target="_blank" rel="noopener noreffer">greendao-generator-1.3.1.jar</a></li>
+<li><a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22freemarker%22" target="_blank" rel="noopener noreffer">freemarker-2.3.22.jar</a></li>
+</ul>
+</li>
+<li>下载EventBus相关包：
+<ul>
+<li><a href="de.gsearch.maven.org/#search%7Cga%7C1%7Cg%3A%22reenrobot%22%20AND%20a%3A%22eventbus%22" rel="">eventbus-2.4.0.jar</a></li>
+</ul>
+</li>
+<li>下载SpringAndroid相关包：
+<ul>
+<li><a href="http://mvnrepository.com/artifact/org.springframework.android/spring-android-core" target="_blank" rel="noopener noreffer">spring-android-core-1.0.1.RELEASE.jar</a></li>
+<li><a href="http://mvnrepository.com/artifact/org.springframework.android/spring-android-rest-template/1.0.1.RELEASE" target="_blank" rel="noopener noreffer">spring-android-rest-template-1.0.1.RELEASE.jar</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="在as下搭建的步骤">在AS下搭建的步骤</h2>
+<p><strong>1. 下载好必须的安装包之后，按照如图所示，添加到AGESFramework工程中。</strong>
+为了更加直观的明白jar包是如何添加的，直接贴图。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://img.blog.csdn.net/20150405132718972"
+        data-srcset="http://img.blog.csdn.net/20150405132718972, http://img.blog.csdn.net/20150405132718972 1.5x, http://img.blog.csdn.net/20150405132718972 2x"
+        data-sizes="auto"
+        alt="http://img.blog.csdn.net/20150405132718972"
+        title="工程目录试图" />
+<strong>2. app下的build.gradle文件配置如下：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">apply plugin: &#39;com.android.application&#39;
+//添加android-apt插件
+apply plugin: &#39;android-apt&#39;
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath &#39;com.neenbedankt.gradle.plugins:android-apt:1.4&#39;
+    }
+}
+//对android-apt插件的参数定义
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile //win
+        //定义apt的注解包名和工程的包名一致
+        resourcePackageName &#39;com.mrljdx.agesframework&#39;
+    }
+}
+//设置默认编码格式
+tasks.withType(JavaCompile) { options.encoding = &#34;UTF-8&#34; }
+android {
+    compileSdkVersion 22
+    buildToolsVersion &#34;22.0.1&#34;
+
+    defaultConfig {
+        applicationId &#34;com.mrljdx.agesframework&#34;
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName &#34;1.0&#34;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;
+        }
+    }
+
+    packagingOptions {
+        exclude &#39;META-INF/license.txt&#39;
+        exclude &#39;META-INF/notice.txt&#39;
+    }
+}
+
+dependencies {
+    compile fileTree(dir: &#39;libs&#39;, include: [&#39;*.jar&#39;])
+    compile &#39;com.android.support:appcompat-v7:22.0.0&#39;
+    apt files(&#39;compile-lib/androidannotations-3.2.jar&#39;)
+    compile files(&#39;libs/androidannotations-api-3.2.jar&#39;)
+    compile files(&#39;libs/eventbus-2.4.0.jar&#39;)
+    compile files(&#39;libs/spring-android-core-1.0.1.RELEASE.jar&#39;)
+    compile files(&#39;libs/spring-android-rest-template-1.0.1.RELEASE.jar&#39;)
+    compile files(&#39;libs/greendao-1.3.7.jar&#39;)
+}
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>注：在配置完build.gradle文件之后需要到<code>AndroidManifest.xml</code> 就可以按照AndroidAnnotations的官方文档开发了。官方文档地址：<a href="http://androidannotations.org/" target="_blank" rel="noopener noreffer">AA Doc</a></p>
+</blockquote>
+<p><strong>3 以上两步仅配置完成了AGES中的A、E、S而GreenDao需要在AS当前工程建立一个java library模块，来专门负责生成需要的Dao类</strong>
+如图所示，greendao的模块，依赖两个包，一个是<code>freemarker-2.3.22.jar</code> 用来生成Dao类模版，<code>greendao-generator-1.3.1.jar</code> 用于提供生成Dao类的Schema和Entity。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://img.blog.csdn.net/20150405133101322"
+        data-srcset="http://img.blog.csdn.net/20150405133101322, http://img.blog.csdn.net/20150405133101322 1.5x, http://img.blog.csdn.net/20150405133101322 2x"
+        data-sizes="auto"
+        alt="http://img.blog.csdn.net/20150405133101322"
+        title="工程依赖" />
+在创建greendao模块之后，可以创建一个数据库类的生成类，如下所示，以添加一个User表为例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.mrljdx.greendao</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">de.greenrobot.daogenerator.DaoGenerator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">de.greenrobot.daogenerator.Entity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">de.greenrobot.daogenerator.Schema</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AGESDao</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Schema</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="s">&#34;com.mrljdx.agesframework.dao&#34;</span><span class="o">);</span>
+
+        <span class="n">UserEntity</span><span class="o">(</span><span class="n">schema</span><span class="o">);</span>
+
+        <span class="k">new</span> <span class="n">DaoGenerator</span><span class="o">().</span><span class="na">generateAll</span><span class="o">(</span><span class="n">schema</span><span class="o">,</span> <span class="s">&#34;app/src/main/java&#34;</span><span class="o">);</span> <span class="c1">//生成的目录地址
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">UserEntity</span><span class="o">(</span><span class="n">Schema</span> <span class="n">schema</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Entity</span> <span class="n">user</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="s">&#34;User&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addIdProperty</span><span class="o">().</span><span class="na">notNull</span><span class="o">().</span><span class="na">autoincrement</span><span class="o">();</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addIntProperty</span><span class="o">(</span><span class="s">&#34;sysno&#34;</span><span class="o">).</span><span class="na">notNull</span><span class="o">();</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;usname&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;nkname&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;mobile&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;email&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;avatar&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addStringProperty</span><span class="o">(</span><span class="s">&#34;birthday&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addIntProperty</span><span class="o">(</span><span class="s">&#34;gender&#34;</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">addIntProperty</span><span class="o">(</span><span class="s">&#34;level&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行这段代码之后，就会在工程目录com.mrljdx.agesframework下生成一个dao package，存放数据库相关的类文件。如图所示：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://img.blog.csdn.net/20150405133456832"
+        data-srcset="http://img.blog.csdn.net/20150405133456832, http://img.blog.csdn.net/20150405133456832 1.5x, http://img.blog.csdn.net/20150405133456832 2x"
+        data-sizes="auto"
+        alt="http://img.blog.csdn.net/20150405133456832"
+        title="Dao图" /></p>
+<blockquote>
+<p>GreenDao的使用文档和分析，网上很多，如果英文不错，推荐直接看官方文档和官方的Github，包括对数据库性能的比较，GreenDao比起其他的ORM数据库框架的性能要好。当然在实际项目中，还是要根据项目需要来选择。
+官方文档地址： <a href="http://greendao-orm.com/" target="_blank" rel="noopener noreffer">greenDao -Android ORM for SQLite </a> 
+GreenDao Github地址: <a href="https://github.com/greenrobot/greenDAO" target="_blank" rel="noopener noreffer">greenDao</a></p>
+</blockquote>
+<h2 id="相关技术文档汇总">相关技术文档汇总</h2>
+<p><strong>EventBus Github开源地址：</strong>
+<a href="https://github.com/greenrobot/EventBus">https://github.com/greenrobot/EventBus</a></p>
+<p><strong>AndroidAnnotations Cookbook:</strong>
+<a href="https://github.com/excilys/androidannotations/wiki/Cookbook">https://github.com/excilys/androidannotations/wiki/Cookbook</a></p>
+<p><strong>Spring Android RestTemplate Module Documentation:</strong>
+<a href="http://docs.spring.io/spring-android/docs/1.0.x/reference/htmlsingle/#rest-template">http://docs.spring.io/spring-android/docs/1.0.x/reference/htmlsingle/#rest-template</a></p>
+<p><strong>GreenDao官网</strong>
+<a href="http://greendao-orm.com/">http://greendao-orm.com/</a></p>
+<p><strong>GreenDao Github</strong>
+<a href="https://github.com/greenrobot/greenDAO">https://github.com/greenrobot/greenDAO</a></p>
+<h2 id="小结">小结</h2>
+<p>熟悉了在AS下如何构建gradle文件，就能很容易的从Eclipse转到AS下开发。关于AS的开发资料有很多，可以看我的另外一篇博客<a href="http://mrljdx.com/2015/02/22/AndroidStudio%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" target="_blank" rel="noopener noreffer">《AndroidStudio参考资料整理》</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2015-04-05</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-studio/">android studio</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="工厂方法模式"><i class="fas fa-angle-left fa-fw"></i>工厂方法模式</a>
+            <a href="/eactivity%E5%A2%9E%E5%BC%BAactivity/" class="next" rel="next" title="@EActivity增强Activity">@EActivity增强Activity<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,82 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>android studio - 标签 - 追云似梦</title>
+        <link>http://mrljdx.com/tags/android-studio/</link>
+        <description>android studio - 标签 - 追云似梦</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mrljdx@gmail.com (独孤)</managingEditor>
+            <webMaster>mrljdx@gmail.com (独孤)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 18 Dec 2015 14:28:50 &#43;0000</lastBuildDate><atom:link href="http://mrljdx.com/tags/android-studio/" rel="self" type="application/rss+xml" /><item>
+    <title>AndroidStudio使用问题集锦</title>
+    <link>http://mrljdx.com/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</link>
+    <pubDate>Fri, 18 Dec 2015 14:28:50 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/androidstudio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</guid>
+    <description><![CDATA[<h2 id="配置androidstudio让编译更快">配置AndroidStudio让编译更快</h2>
+<h3 id="在个人gradle文件夹下添加-gradleproperties-文件">在个人.gradle文件夹下添加 gradle.properties 文件：</h3>
+<p>文件内容如下:</p>
+<pre><code>org.gradle.daemon=true
+</code></pre>]]></description>
+</item><item>
+    <title>AS下搭建AGES开发框架</title>
+    <link>http://mrljdx.com/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/</link>
+    <pubDate>Sun, 05 Apr 2015 13:57:46 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/as%E4%B8%8B%E6%90%AD%E5%BB%BAages%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/</guid>
+    <description><![CDATA[<p>使用AndroidStudio（以下简称AS）作为首选的开发工具已经很普及了，但是作为一个Eclipse的老手来说，转AS还是需要点时间去适应的。比如以前常用的快捷键，代码提示： <code>Alt+/</code> 在AS下是<code>ctrl+alt+space</code> 而 查看函数则由之前的鼠标悬浮变成了按<code>F2</code>查看，导入包则由之前的<code>ctrl+shift+o</code>编程了现在的<code>alt+enter</code> 
+说了这么多不适应的快捷键，下面来谈谈如何在AS下搭建AEG开发框架。</p>]]></description>
+</item><item>
+    <title>AndroidStudio常用快捷键汇总</title>
+    <link>http://mrljdx.com/androidstudio%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB/</link>
+    <pubDate>Mon, 16 Mar 2015 23:09:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/androidstudio%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB/</guid>
+    <description><![CDATA[在这里记录平时在使用AndroidStudio过程中常用的快捷键，便于高开发效率，同时记录这篇博客便于后面查阅相关的快捷键。 由于Window]]></description>
+</item><item>
+    <title>AndroidStudio参考资料整理(持续更新)</title>
+    <link>http://mrljdx.com/androidstudio%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</link>
+    <pubDate>Sun, 22 Feb 2015 13:20:23 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/androidstudio%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
+    <description><![CDATA[<p>这篇文章主要记录一些关于AndroidStudio的参考资料，文章内容会不定期更新。主要记录博主在使用AndroidStudio的过程中碰到的一些问题以及这些解决这些问题的博客链接。</p>]]></description>
+</item><item>
+    <title>AndroidStudio问题集锦（持续更新中）</title>
+    <link>http://mrljdx.com/androidstudio%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</link>
+    <pubDate>Thu, 19 Feb 2015 13:39:38 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/androidstudio%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</guid>
+    <description><![CDATA[<p>在这里记录平时在使用AndroidStudio开发，遇到的问题。以及解决办法，如果大家也有相应的问题，可以在这里留言
+解决的问题都会集中展现在这里以供查阅。这篇文章会不定期更新，来汇总大家所遇到的问题。方便以后进行查阅。</p>]]></description>
+</item><item>
+    <title>AndroidStudio添加三方lib库</title>
+    <link>http://mrljdx.com/androidstudio%E6%B7%BB%E5%8A%A0%E4%B8%89%E6%96%B9lib%E5%BA%93/</link>
+    <pubDate>Tue, 17 Feb 2015 07:21:17 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/androidstudio%E6%B7%BB%E5%8A%A0%E4%B8%89%E6%96%B9lib%E5%BA%93/</guid>
+    <description><![CDATA[<h2 id="环境说明">环境说明</h2>
+<p>如今AndroidStudio(简称AS)已经比较成熟了，如今windows的版本已经是1.0.2了。现在Github上的项目也基本是AS的了，所以Eclipse现在已经不符合时代发展的潮流了。废话不多说，关于使用AS的便捷之处请自行Google脑补。</p>
+<h3 id="系统环境">系统环境：</h3>
+<blockquote>
+<ul>
+<li>windows 7 64bit system</li>
+</ul>
+</blockquote>
+<ul>
+<li>jdk 1.7</li>
+<li>AS version : 1.0.2</li>
+<li>Gradle version: 2.2.1</li>
+</ul>]]></description>
+</item><item>
+    <title>AndroidStudio简介</title>
+    <link>http://mrljdx.com/android-studio%E7%AE%80%E4%BB%8B/</link>
+    <pubDate>Tue, 10 Feb 2015 14:23:58 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://mrljdx.com/android-studio%E7%AE%80%E4%BB%8B/</guid>
+    <description><![CDATA[<p>Android Studio是Google官方基于IntelliJ IDEA开发的一款Android应用开发工具。这款工具提供以下的功能：</p>
+<ul>
+<li>基于Gradle的灵活编译系统</li>
+<li>能通过配置编译生成多个不同的apk文件</li>
+<li>强大的布局编辑器</li>
+<li>轻便的工具来捕获应用的性能、版本兼容性和一些其他的开发问题</li>
+<li>ProGuard和app签名(可以直接编译安装不需要像eclipse一样打包签名)</li>
+</ul>]]></description>
+</item></channel>
+</rss>

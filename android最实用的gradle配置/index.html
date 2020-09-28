@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Android中实用的Gradle配置 - 追云似梦</title><meta name="Description" content="Mrljdx‘s Blog 追云似梦"><meta property="og:title" content="Android中实用的Gradle配置" />
+<meta property="og:description" content="AndroidStudio已经成为Android开发的主流开发工具，如果你还在使用Eclipse，那么赶紧换吧。在AndroidStudio中，包的导入、插件的配置、打包编译等都是通过/app/buidl.gradle文件配置的。
+在平时的开发中，经常碰到的问题如下：
+
+友盟多渠道包打包
+包的混淆
+签名
+集成微博、微信等三方平台登录
+集成高德、百度等三方地图
+环信集成
+方法数超过65535数量限制
+
+下面简单介绍使用AndroidStudio使用Gradle编译的好处。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/" />
+<meta property="og:image" content="http://mrljdx.com/logo.png"/>
+<meta property="article:published_time" content="2016-01-12T14:49:21+00:00" />
+<meta property="article:modified_time" content="2016-01-12T14:49:21+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://mrljdx.com/logo.png"/>
+
+<meta name="twitter:title" content="Android中实用的Gradle配置"/>
+<meta name="twitter:description" content="AndroidStudio已经成为Android开发的主流开发工具，如果你还在使用Eclipse，那么赶紧换吧。在AndroidStudio中，包的导入、插件的配置、打包编译等都是通过/app/buidl.gradle文件配置的。
+在平时的开发中，经常碰到的问题如下：
+
+友盟多渠道包打包
+包的混淆
+签名
+集成微博、微信等三方平台登录
+集成高德、百度等三方地图
+环信集成
+方法数超过65535数量限制
+
+下面简单介绍使用AndroidStudio使用Gradle编译的好处。"/>
+<meta name="application-name" content="追云似梦">
+<meta name="apple-mobile-web-app-title" content="追云似梦"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://mrljdx.com/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/" /><link rel="prev" href="http://mrljdx.com/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" /><link rel="next" href="http://mrljdx.com/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Android中实用的Gradle配置",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/mrljdx.com\/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE\/"
+        },"genre": "posts","keywords": "Gradle","wordcount":  1660 ,
+        "url": "http:\/\/mrljdx.com\/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE\/","datePublished": "2016-01-12T14:49:21+00:00","dateModified": "2016-01-12T14:49:21+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx"},"author": {
+                "@type": "Person",
+                "name": "独孤"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 归档/Archive </a><a class="menu-item" href="/categories/"> 分类/Categories </a><a class="menu-item" href="/tags/"> 标签/Tags </a><a class="menu-item" href="/about/"> 关于/About </a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="追云似梦"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>追云似梦</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">归档/Archive</a><a class="menu-item" href="/categories/" title="">分类/Categories</a><a class="menu-item" href="/tags/" title="">标签/Tags</a><a class="menu-item" href="/about/" title="">关于/About</a><a class="menu-item" href="https://github.com/mrljdx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Android中实用的Gradle配置</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>独孤</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android/"><i class="far fa-folder fa-fw"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2016-01-12">2016-01-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1660 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>AndroidStudio已经成为Android开发的主流开发工具，如果你还在使用Eclipse，那么赶紧换吧。在AndroidStudio中，包的导入、插件的配置、打包编译等都是通过<code>/app/buidl.gradle</code>文件配置的。
+在平时的开发中，经常碰到的问题如下：</p>
+<ul>
+<li>友盟多渠道包打包</li>
+<li>包的混淆</li>
+<li>签名</li>
+<li>集成微博、微信等三方平台登录</li>
+<li>集成高德、百度等三方地图</li>
+<li>环信集成</li>
+<li>方法数超过65535数量限制</li>
+</ul>
+<p>下面简单介绍使用AndroidStudio使用Gradle编译的好处。</p>
+<ul>
+<li>通过配置使用正式签名+混淆，无需像Eclpise一样导出签名包再安装。因为Eclipse默认使用<code>debug.keystore</code></li>
+<li>团队间相互合作时，避免由于不同pc上的<code>debug.keystore</code>在同一台设备上运行时卸载应用后安装，节省开发调试时间</li>
+<li>通过配置，解决65535方法数量限制</li>
+<li>配置多渠道包打包及导出</li>
+<li>由于微信登录需要包为正式签名的包，使用<code>debug.keystore</code>签名的包无法调用微信Api，通过简单配置即可</li>
+<li>由于最终的App需要打包签名+混淆，如果直到App发布时再做混淆，这酸爽你懂的~</li>
+</ul>
+<p>问题也说了，好处也讲了，下面上代码：</p>
+<p><strong>build.gradle</strong></p>
+<pre><code>apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format(&quot;yyyy-MM-dd&quot;, TimeZone.getTimeZone(&quot;UTC&quot;))
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+tasks.withType(JavaCompile) { options.encoding = &quot;UTF-8&quot; }
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion &quot;22.0.1&quot;
+
+    defaultConfig {
+        applicationId &quot;com.package.sample&quot; //修改为你的应用包包名
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 13
+        versionName &quot;1.5.5&quot;
+
+        // dex突破65535的限制
+        multiDexEnabled true
+        // 对应AndroidManifest.xml 中的&lt;meta/&gt; 配置内容
+        manifestPlaceholders = [APP_CHANNEL: &quot;UMENG_CHANNEL&quot;]
+    }
+
+    //编译的java版本
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    signingConfigs {
+        debug {
+            // No debug config
+        }
+
+        release {
+            try {
+                //appsign.jks为正式签名key文件，位于本文放在app/目录下
+                storeFile file(&quot;appsign.jks&quot;)
+                //配置在gradle.properties文件下中具体代码，看下文
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+            catch (ex) {
+                throw new InvalidUserDataException(&quot;You should define RELEASE_STORE_PASSWORD and &quot; +
+                        &quot;RELEASE_KEY_ALIAS and&quot; + &quot;RELEASE_KEY_PASSWORD in gradle.properties.&quot;
+                )
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField &quot;boolean&quot;, &quot;LOG_DEBUG&quot;, &quot;true&quot;
+            versionNameSuffix &quot;-debug&quot;
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            // 不显示Log
+            buildConfigField &quot;boolean&quot;, &quot;LOG_DEBUG&quot;, &quot;true&quot;
+            versionNameSuffix &quot;-released&quot;
+            debuggable true
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant -&gt;
+                variant.outputs.each { output -&gt;
+                    def outputFile = output.outputFile
+                    if (outputFile != null &amp;&amp; outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为App_v1.0_2016-01-12_tencent.apk
+                        def fileName = &quot;App_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk&quot;
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+
+    }
+
+    lintOptions {
+        // if true, stop the gradle build if errors are found
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    //添加.so库依赖
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    // 渠道打包
+    productFlavors {
+        google {}
+        youyoumob {}
+        tencent {}
+        wandoujia {}
+        _360 {}
+        baidu {}
+        meizu {}
+        xiaomi {}
+        huawei {}
+    }
+    productFlavors.all { flavor -&gt;
+        flavor.manifestPlaceholders = [APP_CHANNEL: name]
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:design:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.+'
+    compile 'com.android.support:recyclerview-v7:22.+'
+    //引用本地库
+    compile files('libs/gson-2.2.4.jar')
+    //引用远程库
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //引入解决方法数超过65535限制的库
+    compile 'com.android.support:multidex:1.0.0'
+}
+</code></pre>
+<p>配置文件中<code>gradle.properties</code>文件内容</p>
+<pre><code>RELEASE_STORE_PASSWORD = ##签名密码
+RELEASE_KEY_ALIAS = ##秘钥别名
+RELEASE_KEY_PASSWORD= ##别名对应的密码
+</code></pre>
+<p>多渠道配置<code>AndroidManifest.xml</code>文件</p>
+<pre><code>&lt;application&gt;
+
+    .....
+
+    &lt;meta-data
+        android:name=&quot;UMENG_CHANNEL&quot;
+        android:value=&quot;${APP_CHANNEL}&quot; /&gt;
+
+&lt;/application&gt;
+</code></pre>
+<p>配置编译的包种类，选择release版本的渠道包编译，从而解决微信等三方平台授权的调试问题。
+如图：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://7u2j5d.com1.z0.glb.clouddn.com/A534C768-CA5F-47E6-8485-77F006F6746D.png"
+        data-srcset="http://7u2j5d.com1.z0.glb.clouddn.com/A534C768-CA5F-47E6-8485-77F006F6746D.png, http://7u2j5d.com1.z0.glb.clouddn.com/A534C768-CA5F-47E6-8485-77F006F6746D.png 1.5x, http://7u2j5d.com1.z0.glb.clouddn.com/A534C768-CA5F-47E6-8485-77F006F6746D.png 2x"
+        data-sizes="auto"
+        alt="http://7u2j5d.com1.z0.glb.clouddn.com/A534C768-CA5F-47E6-8485-77F006F6746D.png"
+        title="buildVariants" />
+在配置完成后，编译出的文件就是打包签名+混淆后的签名包，从此再也不用担心微信等三方平台需要正式签名app的问题了。跟平时调试开发一样没有任何不适，唯一的地方就是签名和混淆会导致编译的时间稍微长了一点，但是简化了之前的繁琐步骤。</p>
+<p>解决方法数65535数量限制，不仅仅需要配置build.gradle文件，另外需要在自定义Application中的<code>onCreate()</code>方法中加入如下代码：</p>
+<pre><code>@Override
+public void onCreate() {
+    //MultiDex 支持 65535 方法数量限制
+    MultiDex.install(getApplicationContext()); // 注意，一定要在super.onCreate()方法之前调用，否则无效
+    super.onCreate(); 
+}
+</code></pre>
+<p>&ndash;END&ndash;</p>
+<p>至此，已经介绍完了Android中比较实用的Gradle配置，这个基本上可以满足一般的App开发需求，如果在开发过程中需要配置调试等问题。请阅读《Android Gradle Plugin 手册》</p>
+<p><strong>参考资料</strong></p>
+<ol>
+<li>《Gradle Android Plugin 中文指导手册》：https://chaosleong.gitbooks.io/gradle-for-android/content/</li>
+<li>《Groovy 官方教程》-因为Gradle配置文件使用的是Groovy语法：http://www.groovy-lang.org/differences.html</li>
+<li>《Gradle插件用户指南(译)》： <a href="https://rinvay.github.io/android/2015/03/26/Gradle-Plugin-User-Guide(Translation)">https://rinvay.github.io/android/2015/03/26/Gradle-Plugin-User-Guide(Translation)</a></li>
+</ol>
+<hr></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2016-01-12</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/android%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84gradle%E9%85%8D%E7%BD%AE/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gradle/">Gradle</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%9C%A8android%E4%B8%AD%E5%B5%8C%E5%85%A5lua%E8%84%9A%E6%9C%AC-%E5%9F%BA%E4%BA%8Eandroidstudio%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="prev" rel="prev" title="在Android中嵌入Lua脚本-基于AndroidStudio开发环境"><i class="fas fa-angle-left fa-fw"></i>在Android中嵌入Lua脚本-基于AndroidStudio开发环境</a>
+            <a href="/android%E5%BC%80%E5%8F%91%E5%87%8F%E5%B0%91apk%E5%A4%A7%E5%B0%8F%E5%8F%8A%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E6%95%B0%E5%AE%9E%E8%B7%B5/" class="next" rel="next" title="Android开发减少Apk大小及统计方法数实践">Android开发减少Apk大小及统计方法数实践<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.75.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2015 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">独孤</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"E8NJY9DN9H","algoliaIndex":"blogindex","algoliaSearchKey":"fdf73c283e9085d6c2b42246f5bb5826","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
