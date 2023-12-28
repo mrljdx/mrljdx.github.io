@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="https://mrljdx.com/sitemap_style.xsl" type="text/xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://mrljdx.com/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/about/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/archive/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/blog/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/blog/farewell-past-embrace-innovation/</loc>
+        <lastmod>2023-12-26</lastmod>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/blog/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/blog/why-i-left-my-job-to-startup/</loc>
+        <lastmod>2023-12-26</lastmod>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/projects/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/tags/</loc>
+    </url>
+    <url>
+        <loc>https://mrljdx.com/tags/chuang-ye-si-kao/</loc>
+    </url>
+</urlset>
